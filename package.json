@@ -1,0 +1,30 @@
+{
+  "name": "haraka-tld",
+  "version": "1.0.0",
+  "description": "Haraka TLD utilities",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haraka/haraka-tld.git"
+  },
+  "keywords": [
+    "haraka",
+    "tld",
+    "domain"
+  ],
+  "author": "Matt Simerson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/haraka/haraka-tld/issues"
+  },
+  "homepage": "https://github.com/haraka/haraka-tld#readme",
+  "dependencies": {
+    "punycode": "^1.4.0"
+  }
+}
