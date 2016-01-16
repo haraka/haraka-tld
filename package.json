@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "0.0.99",
+  "version": "1.0.0",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "directories": {
@@ -18,7 +18,7 @@
     "tld",
     "domain"
   ],
-  "author": "Matt Simerson",
+  "author": "The Haraka Team",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/haraka/haraka-tld/issues"
@@ -28,6 +28,6 @@
     "punycode": "^1.4.0"
   },
   "devDependencies": {
-    "mocha": "^2.3.4"
+    "mocha": "*"
   }
 }
