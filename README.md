@@ -1,3 +1,8 @@
+[![Build Status][ci-img]][ci-url]
+[![Code Coverage][cov-img]][cov-url]
+[![Code Climate][clim-img]][clim-url]
+[![NPM][npm-img]][npm-url]
+
 # haraka-tld
 
 Haraka TLD utilities
@@ -89,3 +94,12 @@ This allows for additional 2nd and 3rd level TLDs from a single file. Used for s
 ./update_tld_files
 ```
 
+
+[ci-img]: https://travis-ci.org/haraka/haraka-tld.svg
+[ci-url]: https://travis-ci.org/haraka/haraka-tld
+[cov-img]: https://codecov.io/github/haraka/haraka-tld/coverage.svg
+[cov-url]: https://codecov.io/github/haraka/haraka-tld
+[clim-img]: https://codeclimate.com/github/haraka/haraka-tld/badges/gpa.svg
+[clim-url]: https://codeclimate.com/github/haraka/haraka-tld
+[npm-img]: https://nodei.co/npm/haraka-tld.png
+[npm-url]: https://www.npmjs.com/package/haraka-tld
