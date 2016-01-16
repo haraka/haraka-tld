@@ -26,5 +26,8 @@
   "homepage": "https://github.com/haraka/haraka-tld#readme",
   "dependencies": {
     "punycode": "^1.4.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4"
   }
 }

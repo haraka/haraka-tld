@@ -84,6 +84,7 @@ exports.split_hostname = function (host,level) {
     if (!level || (level && !(level >= 1 && level <= 3))) {
         level = 2;
     }
+
     var split = host.toLowerCase().split(/\./).reverse();
     if (!split[0]) return [split.reverse().join('.'), domain];
 
@@ -102,6 +103,7 @@ exports.split_hostname = function (host,level) {
     }
     // Domain
     domain = split.shift() + '.' + domain;
+    return [split.reverse().join('.'), domain];
 };
 
 function load_public_suffix_list() {

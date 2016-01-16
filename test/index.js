@@ -154,3 +154,11 @@ describe('is_public_suffix', function () {
         });
     });
 });
+
+describe('split_hostname', function () {
+    it('splits a hostname on domain boundary', function () {
+        var foo = tlds.split_hostname('host.sub1.sub2.domain.com');
+        assert.equal(foo[0],'host.sub1.sub2');
+        assert.equal(foo[1],'domain.com');
+    });
+});
