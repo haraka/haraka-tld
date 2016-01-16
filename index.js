@@ -80,29 +80,29 @@ exports.get_organizational_domain = function (host) {
     return orgName;
 };
 
-exports.split_hostname = function (host,level) {
+exports.split_hostname = function (host, level) {
     if (!level || (level && !(level >= 1 && level <= 3))) {
         level = 2;
     }
 
     var split = host.toLowerCase().split(/\./).reverse();
-    if (!split[0]) return [split.reverse().join('.'), domain];
-
     var domain = '';
     // TLD
-    if (level >= 1 && exports.top_level_tlds[split[0]]) {
+    if (level >= 1 && split[0] && exports.top_level_tlds[split[0]]) {
         domain = split.shift() + domain;
     }
     // 2nd TLD
-    if (level >= 2 && exports.two_level_tlds[split[0] + '.' + domain]) {
+    if (level >= 2 && split[0] && exports.two_level_tlds[split[0] + '.' + domain]) {
         domain = split.shift() + '.' + domain;
     }
     // 3rd TLD
-    if (level >= 3 && exports.three_level_tlds[split[0] + '.' + domain]) {
+    if (level >= 3 && split[0] && exports.three_level_tlds[split[0] + '.' + domain]) {
         domain = split.shift() + '.' + domain;
     }
     // Domain
-    domain = split.shift() + '.' + domain;
+    if (split[0]) {
+        domain = split.shift() + '.' + domain;
+    }
     return [split.reverse().join('.'), domain];
 };
 
