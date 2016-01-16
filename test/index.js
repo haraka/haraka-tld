@@ -144,6 +144,8 @@ var ps_test_cases = {
     'org': [ 'org', true ],
     'edu': [ 'edu', true ],
     'gov': [ 'gov', true ],
+    'empty': [ '', false ],
+    'null': [ '', false ],
 };
 
 describe('is_public_suffix', function () {
@@ -156,9 +158,23 @@ describe('is_public_suffix', function () {
 });
 
 describe('split_hostname', function () {
-    it('splits a hostname on domain boundary', function () {
+    it('splits on domain boundary', function () {
         var foo = tlds.split_hostname('host.sub1.sub2.domain.com');
         assert.equal(foo[0],'host.sub1.sub2');
         assert.equal(foo[1],'domain.com');
+    });
+    [1,2,3].forEach(function (level) {
+        it('splits on domain boundary, level ' + level, function () {
+            var foo = tlds.split_hostname('host.sub1.sub2.domain.com', level);
+            assert.equal(foo[0],'host.sub1.sub2');
+            assert.equal(foo[1],'domain.com');
+        });
+    });
+    it('splits empty host on TLD only', function () {
+        assert.deepEqual(tlds.split_hostname('com'), ['', 'com']);
+    });
+    it('splits a 3-level TLD', function () {
+        assert.deepEqual(tlds.split_hostname('host.b.topica.com', 4),
+        ['host', 'b.topica.com']);
     });
 });
