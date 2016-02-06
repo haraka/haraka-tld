@@ -86,12 +86,17 @@ This allows for additional 2nd and 3rd level TLDs from a single file. Used for s
 
 ## Updating
 
-* run the updater script (see below)
-* update package.json version
-* npm publish
+* run the update script (see below)
+* check dependencies for updates
+* update Changes.md file
+* update version in package.json
+* publish to npm
 
 ```sh
 ./update_tld_files
+grunt versioncheck
+vim Changes.md
+grunt release
 ```
 
 
