@@ -182,8 +182,8 @@ function load_list_from_file (name) {
     }
 
     fs.readFileSync(filePath, 'UTF-8')
-        .split(/\r\n|\r|\n/)
-        .forEach(function(line) {
+    .split(/\r\n|\r|\n/)
+    .forEach(function(line) {
 
         if (regex.comment.test(line)) return;
         if (regex.blank.test(line))   return;
