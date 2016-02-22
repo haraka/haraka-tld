@@ -175,7 +175,7 @@ function load_tld_files () {
 function load_list_from_file (name) {
     var result = [];
 
-    var filePath = path.resolve('node_modules','haraka-tld','etc', name);
+    var filePath = path.resolve(__dirname, 'etc', name);
     if (!fs.existsSync(filePath)) {
         // not loaded by Haraka, use local path
         filePath = path.resolve('etc', name);

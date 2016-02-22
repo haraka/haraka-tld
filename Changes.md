@@ -1,7 +1,7 @@
 
-1.0.3 - Feb 05, 2016
+1.0.4 - Feb 22, 2016
 
-* add .npmrc
+* use __dirname for installed base path
 
 1.0.2 - Feb 05, 2016
 
