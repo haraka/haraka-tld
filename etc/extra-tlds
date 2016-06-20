@@ -1,174 +1,346 @@
-<!DOCTYPE html
-	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
-<head>
-  <title>URIBL.COM - Realtime URI Blacklist</title>
-  <base href="http://rss.uribl.com/" />
-  <meta name="KEYWORDS" content="URIBLDNS, SpamAssassin, RHSBL, Domain Blacklist, Realtime Blacklist, DNS Blacklist, URI Blacklist, RBL, URI, Realtime, Blacklist, URIBL, Free" />
-  <meta name="DESCRIPTION" content="URIBL.COM is a free real-time URI blacklist (RHSBL) accessible via DNS lookups to identify spam email based on the links within the message.  Continuous auto-discovery of spam URIs makes URIBL the fastest and most accurate RHSBL available!  Integrates seemlessly into SpamAssassin" />
-  <meta name="COPYRIGHT" content="2005 uribl.com" />
-  <link rel="stylesheet" type="text/css" href="/style/style.css" />
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-</head>
-
-<body class="www">
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-56195016-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-<table class="toptable" cellspacing="0">
-  <tr class="nopad">
-    <td class="leftmenu">
-
-      <img src="/images/logo.gif" alt="logo" />
-
-        <table class="leftnavitem">
-          <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://rss.uribl.com/index.shtml">rss home</a></td>
-         </tr>
-          <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://www.uribl.com/index.shtml">uribl home</a></td>
-         </tr>
-          <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://www.uribl.com/about.shtml">about</a></td>
-         </tr>
-         <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://www.uribl.com/usage.shtml">usage</a></td>
-         </tr>
-         <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://www.uribl.com/mirrors.shtml">mirrors</a></td>
-         </tr>
-         <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://rss.uribl.com">rss feeds</a></td>
-         </tr>
-         <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://www.uribl.com/help.shtml">help us</a></td>
-         </tr>
-         <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://www.cafepress.com/uribl" target="_blank">store</a></td>
-         </tr>
-         <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://www.uribl.com/links.shtml">links</a></td>
-         </tr>
-         <tr class="pad">
-            <td class="leftnavitem"><a class="leftnavitem" href="http://www.uribl.com/contact.shtml">contact</a></td>
-         </tr>
-         <tr class="pad">
-	    <td class="leftnavitem"><a class="leftnavitem" href="http://www.uribl.com/faq.shtml">faq</a></td>
-         </tr>
-       </table>
-
-       <br />
-
-  </td>
-
-  <td class="rightframe">
-  
-    <table class="topnavbox" cellpadding="0">
-     <tr class="navspacer">
-       <td class="navspacer" colspan="2"></td>
-     </tr>
-     <tr class="topmenu">
-       <td rowspan="2" class="logo">
-         <img src="/images/logo_text_160.gif" alt="logo" />
-       </td>
-       <td class="nav1">
-          <a class="navitem" href="https://admin.uribl.com/?section=lookup;method=dologin">login</a> /
-          <a class="navitem" href="https://admin.uribl.com/?section=users;method=register">register</a> /
-          <a class="navitem" href="https://admin.uribl.com">lookup uri</a> /
-          <a class="navitem" href="https://admin.uribl.com/?section=lookup;method=submit">submit uri</a>
-       </td>
-     </tr>
-     <tr class="pad">
-       <td class="tagline" colspan="2"></td>
-     </tr>
-    </table>
-
-    <table class="contentarea">
-      <tr class="contentarea">
-        <td class="pad">
-
-
-
-
-<table class="content" width="100%">
-<tr>
-<td width="5%">
-<script type="text/javascript"><!--
-google_ad_client = "ca-pub-9296755632652667";
-google_ad_slot = "9522265306";
-google_ad_width = 120;
-google_ad_height = 600;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-
-</td>
-<td width="95%">
-
-
-<h2>403 Access Denied</h2>
-
-You are not authorized to view this page.  It is either no longer publically accessible, or you have been denied access to it due to automated or high volume requests.
-<br /><br />
-To access updated RSS feeds with no publication delay, you will need a <a href="http://www.uribl.com/datafeed.shtml">Datafeed Subscription</a>.
-<br /><br />
-Please contact the <a href="mailto:info@uribl.com?subject=403 Acess Denied">webmaster</a> if you need further assistance.
-
-</td>
-</tr>
-</table>
-
-          </td>
-        </tr>
-      </table>
- 
-    </td>
-  </tr>
-
-  <tr class="nopad">
-    <td class="leftmenu">
-      &nbsp;
-    </td>
-
-    <td class="footer">
-
-      <table class="contentarea">
-       <tr class="contentarea">
-        <td class="pad">
-
-          <hr />
-            <div class="footer">Copyright 2013-2014 URIBL.COM All rights reserved</div>
-            <div class="footer">Read the <span title="We use the Apache 2.0 License!"><a href="license.shtml">License</a></span> and <span title="We do not block mail, blah blah blah"><a href="disclaimer.shtml">Disclaimer</a></span> before using our service..</div>
-            <div class="footer"><span title="If you have a problem with the site, email the webmaster!"><a href="mailto: webmaster@uribl.com">webmaster@uribl.com</a></span></div>
-
-  <p>
-      <a class="nohover" href="http://validator.w3.org/check?uri=referer"><img
-          src="http://www.w3.org/Icons/valid-xhtml10"
-          alt="Valid XHTML 1.0!" height="31" width="88" /></a>
-    </p>
-    
-
-        </td>
-       </tr>
-     </table>
-   </td>
-  </tr>
-</table>
-
-
-
-</body>
-</html>
-
+110mb.com
+150m.com
+163.to
+1blu.de
+6a.org
+80.hk
+9k.com
+addr.com
+altervista.it
+altervista.org
+angelfire.com
+appspot.com
+asso.ws
+at.lv
+at.pn
+at.tc
+ath.cx
+au.pn
+azurewebsites.net
+bay.livefilestore.com
+be.tc
+bg.tc
+biz.tm
+biz.ua
+blog.com
+blog.de
+blog.friendster.com
+blog.ru
+blog4ever.com
+blogger.ca
+blogger.cf
+blogger.ch
+blogger.co.id
+blogger.co.il
+blogger.com.au
+blogger.com.co
+blogger.com.my
+blogger.com.pe
+blogger.com.ph
+blogger.cv
+blogger.jp
+blogger.pl
+blogger.re
+blogger.se
+blogspot.ca
+blogspot.ch
+blogspot.co.nz
+blogspot.co.uk
+blogspot.com
+blogspot.com.ar
+blogspot.com.au
+blogspot.com.br
+blogspot.com.es
+blogspot.com.tr
+blogspot.cv
+blogspot.cz
+blogspot.de
+blogspot.fi
+blogspot.fr
+blogspot.in
+blogspot.it
+blogspot.jp
+blogspot.mx
+blogspot.pt
+blogspot.re
+blogspot.se
+blogspot.tw
+blu.livefilestore.com
+br.tc
+bravehost.com
+bravejournal.com
+bravepages.com
+by.ru
+ca.pn
+cc.cc
+ce.ms
+ch.lv
+ch.pn
+chat.ru
+chez.com
+cjb.net
+cloud.prohosting.com
+cloudapp.net
+cloudfront.net
+cn.pn
+co.at.lv
+co.at.pn
+co.at.tc
+co.be
+co.cc
+co.cu
+co.kg
+co.nf
+co.uk.pn
+com.au.pn
+com.de
+com.sapo.pt
+com.us
+com.vc
+corp.st
+cz.tc
+de.ki
+de.lv
+de.pn
+de.tc
+dk.tc
+dns2go.com
+do.sapo.pt
+docs.google.com
+dyn.dhs.org
+dyndns-at-home.com
+dyndns-at-work.com
+dyndns-blog.com
+dyndns-free.com
+dyndns-home.com
+dyndns-ip.com
+dyndns-mail.com
+dyndns-office.com
+dyndns-pics.com
+dyndns-remote.com
+dyndns-server.com
+dyndns-web.com
+dyndns-wiki.com
+dyndns-work.com
+dyndns.biz
+dyndns.dk
+dyndns.info
+dyndns.org
+dyndns.tv
+dyndns.ws
+emltrk.com
+en.alibaba.com
+es.pn
+es.tc
+es.tl
+esy.es
+eu.tc
+euro.tm
+extra.hu
+fileave.com
+fr.pn
+fr.tc
+free.fr
+freehostia.com
+freeservercity.com
+fromru.su
+front.ru
+funpic.de
+fx.to
+geocities.com
+geocities.jp
+getmyip.com
+gigazu.net
+gmxhome.de
+go.com
+go.ro
+gob.ar
+gob.cl
+gob.ve
+googlegroups.com
+googlepages.com
+gov.iq
+gov.ml
+gov.pg
+gov.pn
+government.pn
+gratishost.com
+grouply.com
+groups.live.com
+helloweb.eu
+hk.tc
+home.pl
+home.ro
+home.sapo.pt
+homeip.net
+homepage.t-online.de
+hop.clickbank.net
+host.sk
+hostevo.com
+hotbox.ru
+hotmail.ru
+hu2.ru
+hut2.ru
+ibelgique.com
+iblogger.org
+ic.cz
+id.ru
+idoo.com
+iespana.es
+ifrance.com
+in.net
+int.tc
+interia.pl
+interii.pl
+iquebec.com
+isuisse.com
+it.pn
+it.tc
+iwebsource.com
+jimdo.com
+jino-net.ru
+jp.pn
+jpn.com
+kickme.to
+kimsufi.com
+kr.tc
+krovatka.su
+kwik.to
+land.ru
+leadpages.net
+livejournal.com
+mail.ru
+mail15.su
+mail2k.ru
+mail333.su
+mine.nu
+mj.am
+mj.is
+mjt.lu
+mobile.web.tr
+mooo.com
+multiply.com
+mx.tc
+mydyndns.org
+mygbiz.com
+myvnc.com
+na.by
+narod.ru
+nazwa.pl
+neostrada.pl
+net.tc
+net.vc
+netfirms.com
+netsolhost.com
+newmail.ru
+nextmail.ru
+nightmail.ru
+ning.com
+nm.ru
+no-ip.biz
+no-ip.ca
+no-ip.co.uk
+no-ip.com
+no-ip.info
+no-ip.net
+no-ip.org
+no.sapo.pt
+no.tc
+notlong.com
+ocn.ne.jp
+one.pl
+onlinehome.de
+onmicrosoft.com
+or.at.lv
+org.vc
+ovh.net
+page.tl
+paginas.sapo.pt
+perso.neuf.fr
+perso.sfr.fr
+perso.tc
+ph.tc
+pisem.su
+pl.tc
+pochta.com
+pochta.ru
+pochtamt.ru
+pop3.ru
+privat.t-online.de
+pro.tc
+proboards.com
+profile.live.com
+prserv.net
+qip.ru
+qld.edu.au
+rbcmail.ru
+re.it
+redirectme.net
+republika.pl
+rhcloud.com
+rm.ru
+ru.tc
+sakura.ne.jp
+sapo.pt
+se.tc
+selfip.com
+selfip.net
+sendgrid.org
+servebbs.com
+servebeer.com
+serveblog.net
+serveftp.com
+shop.co
+shutterfly.com
+site.tc
+skydrive.live.com
+smtp.ru
+societe.st
+sol.ru
+sosblog.com
+spaces.live.com
+spaces.msn.com
+sytes.net
+szm.com
+t3.to
+t35.com
+t35.net
+th.tc
+to.it
+tripod.com
+tumblr.com
+ucoz.com
+ucoz.net
+ucoz.ru
+uk.pn
+uk.to
+unblog.fr
+uni.cc
+unlugar.com
+url.st
+us.pn
+us.tc
+us.to
+user.icpnet.pl
+vv.cc
+we.bs
+web-soft.ru
+web.aplus.net
+web.fc2.com
+web.officelive.com
+webcindario.com
+webs.com
+websitewelcome.com
+weebly.com
+whsites.net
+wix.com
+wordpress.com
+wz.cz
+x.fc2.com
+xanga.com
+xf.cz
+xorg.pl
+yolasite.com
+z8.ru
+zapto.org
+zmail.ru
