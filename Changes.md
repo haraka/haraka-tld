@@ -1,4 +1,14 @@
 
+1.0.6 - Jun 20, 2016
+
+* update TLD files
+* added curl -S (report errors) and -f (don't save files when HTTP errors
+  encountered)
+
+1.0.5 - May 16, 2016
+
+* updated TLD files
+
 1.0.4 - Feb 22, 2016
 
 * use __dirname for installed base path
