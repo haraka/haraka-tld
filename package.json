@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "directories": {
@@ -25,13 +25,13 @@
   },
   "homepage": "https://github.com/haraka/haraka-tld#readme",
   "dependencies": {
-    "punycode": "^1.4.0"
+    "punycode": "*"
   },
   "devDependencies": {
     "grunt": "*",
     "grunt-eslint": "*",
     "grunt-mocha-test": "*",
-    "grunt-release": "^0.13.0",
+    "grunt-release": "*",
     "grunt-version-check": "*",
     "mocha": "*"
   }
