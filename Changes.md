@@ -1,4 +1,9 @@
 
+1.0.7 - Jul 20, 2016
+
+* update TLD files
+* update dep version numbers
+
 1.0.6 - Jun 20, 2016
 
 * update TLD files
