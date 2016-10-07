@@ -2,10 +2,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-// Please pull this list from, and only from https://publicsuffix.org/list/public_suffix_list.dat , 
+// Please pull this list from, and only from https://publicsuffix.org/list/public_suffix_list.dat,
 // rather than any other VCS sites. Pulling from any other URL is not guaranteed to be supported.
 
-// Instructions on pulling and using this list can be found at https://publicsuffix.org/list/ .
+// Instructions on pulling and using this list can be found at https://publicsuffix.org/list/.
 
 // ===BEGIN ICANN DOMAINS===
 
@@ -4367,9 +4367,17 @@ edu.my
 mil.my
 name.my
 
-// mz : http://www.gobin.info/domainname/mz-template.doc
-*.mz
-!teledata.mz
+// mz : http://www.uem.mz/
+// Submitted by registry <antonio@uem.mz>
+mz
+ac.mz
+adv.mz
+co.mz
+edu.mz
+gov.mz
+mil.mz
+net.mz
+org.mz
 
 // na : http://www.na-nic.com.na/
 // http://www.info.na/domain/
@@ -11614,6 +11622,10 @@ xen.prgmr.com
 // priv.at : http://www.nic.priv.at/
 // Submitted by registry <lendl@nic.at>
 priv.at
+
+// Protonet GmbH : http://protonet.io
+// Submitted by Martin Meier <admin@protonet.io>
+protonet.io
 
 // Publication Presse Communication SARL : https://ppcom.fr
 // Submitted by Yaacov Akiba Slama <admin@chirurgiens-dentistes-en-france.fr>
