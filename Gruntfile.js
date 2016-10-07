@@ -11,7 +11,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     eslint: {
       main: {
-        src: ['Gruntfile.js','index.js','lib/**/*.js']
+        src: ['*.js']
       },
       test: {
         src: ['test/**/*.js'],
