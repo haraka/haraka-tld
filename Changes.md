@@ -1,4 +1,9 @@
 
+1.0.10 - Oct 06, 2016
+
+* update TLD files
+* update lint / code coverage meta
+
 1.0.9 - Aug 22, 2016
 
 * update TLD files

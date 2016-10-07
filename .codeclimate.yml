@@ -7,6 +7,9 @@ engines:
       - javascript
   eslint:
     enabled: true
+    channel: "eslint-3"
+    config:
+      config: ".eslintrc.json"
   fixme:
     enabled: true
     checks:
@@ -16,12 +19,6 @@ engines:
         enabled: false
 ratings:
   paths:
-  - "**.inc"
   - "**.js"
-  - "**.jsx"
-  - "**.module"
-  - "**.php"
-  - "**.py"
-  - "**.rb"
 exclude_paths:
 - test/

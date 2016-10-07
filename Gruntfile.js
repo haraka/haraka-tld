@@ -25,14 +25,17 @@ module.exports = function(grunt) {
             }
         },
         versioncheck: {
+          target: {
             options: {
                 skip: ['semver', 'npm', 'lodash'],
                 hideUpToDate: false
             }
+          }
         },
     });
 
     grunt.registerTask('lint',    ['eslint']);
     grunt.registerTask('test',    ['mochaTest']);
+    grunt.registerTask('ver',     ['versioncheck']);
     grunt.registerTask('default', ['eslint','mochaTest']);
 };
