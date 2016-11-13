@@ -704,7 +704,9 @@ org.cw
 cx
 gov.cx
 
-// cy : https://en.wikipedia.org/wiki/.cy
+// cy : http://www.nic.cy/
+// Submitted by registry Panayiotou Fotia <cydns@ucy.ac.cy>
+cy
 ac.cy
 biz.cy
 com.cy
@@ -2546,9 +2548,7 @@ arao.kumamoto.jp
 aso.kumamoto.jp
 choyo.kumamoto.jp
 gyokuto.kumamoto.jp
-hitoyoshi.kumamoto.jp
 kamiamakusa.kumamoto.jp
-kashima.kumamoto.jp
 kikuchi.kumamoto.jp
 kumamoto.kumamoto.jp
 mashiki.kumamoto.jp
@@ -10652,6 +10652,10 @@ beep.pl
 *.compute.estate
 *.alces.network
 
+// alwaysdata : https://www.alwaysdata.com
+// Submitted by Cyril <admin@alwaysdata.com>
+*.alwaysdata.net
+
 // Amazon CloudFront : https://aws.amazon.com/cloudfront/
 // Submitted by Donavan Miller <donavanm@amazon.com>
 cloudfront.net
@@ -10832,6 +10836,20 @@ cdn77-ssl.net
 r.cdn77.net
 rsc.cdn77.org
 ssl.origin.cdn77-secure.org
+
+// Cloud DNS Ltd : http://www.cloudns.net
+// Submitted by Aleksander Hristov <noc@cloudns.net>
+cloudns.asia
+cloudns.biz
+cloudns.club
+cloudns.cc
+cloudns.eu
+cloudns.in
+cloudns.info
+cloudns.org
+cloudns.pro
+cloudns.pw
+cloudns.us
 
 // CoDNS B.V.
 co.nl
@@ -11181,6 +11199,18 @@ webhop.org
 worse-than.tv
 writesthisblog.com
 
+// ddnss.de : https://www.ddnss.de/
+// Submitted by Robert Niedziela <webmaster@ddnss.de>
+ddnss.de
+dyn.ddnss.de
+dyndns.ddnss.de
+dyndns1.de
+dyn-ip24.de
+home-webserver.de
+dyn.home-webserver.de
+myhome-server.de
+ddnss.org
+
 // dynv6 : https://dynv6.com
 // Submitted by Dominik Menke <dom@digineo.de> 2016-01-18
 dynv6.net
@@ -11287,6 +11317,16 @@ fbx-os.fr
 fbxos.fr
 freebox-os.fr
 freeboxos.fr
+
+// Fusion Intranet : https://www.fusion-intranet.com
+// Submitted by Matthias Burtscher <matthias.burtscher@fusonic.net>
+myfusion.cloud
+
+// Futureweb OG : http://www.futureweb.at
+// Submitted by Andreas Schnederle-Wagner <schnederle@futureweb.at>
+futuremailing.at
+*.ex.ortsinfo.at
+*.kunden.ortsinfo.at
 
 // GDS : https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains
 // Submitted by David Illsley <david.illsley@digital.cabinet-office.gov.uk>
@@ -11399,6 +11439,7 @@ codespot.com
 googleapis.com
 googlecode.com
 pagespeedmobilizer.com
+publishproxy.com
 withgoogle.com
 withyoutube.com
 
@@ -11426,6 +11467,36 @@ iki.fi
 biz.at
 info.at
 
+// Interlegis : http://www.interlegis.leg.br
+// Submitted by Gabriel Ferreira <registrobr@interlegis.leg.br>
+ac.leg.br
+al.leg.br
+am.leg.br
+ap.leg.br
+ba.leg.br
+ce.leg.br
+df.leg.br
+es.leg.br
+go.leg.br
+ma.leg.br
+mg.leg.br
+ms.leg.br
+mt.leg.br
+pa.leg.br
+pb.leg.br
+pe.leg.br
+pi.leg.br
+pr.leg.br
+rj.leg.br
+rn.leg.br
+ro.leg.br
+rr.leg.br
+rs.leg.br
+sc.leg.br
+se.leg.br
+sp.leg.br
+to.leg.br
+
 // Joyent : https://www.joyent.com/
 // Submitted by Brian Bennett <brian.bennett@joyent.com>
 *.triton.zone
@@ -11434,6 +11505,14 @@ info.at
 // JS.ORG : http://dns.js.org
 // Submitted by Stefan Keim <admin@js.org>
 js.org
+
+// Keyweb AG : https://www.keyweb.de
+// Submitted by Martin Dannehl <postmaster@keymachine.de>
+keymachine.de
+
+// KnightPoint Systems, LLC : http://www.knightpoint.com/
+// Submitted by Roy Keene <rkeene@knightpoint.com>
+knightpoint.systems
 
 // .KRD : http://nic.krd/data/krd/Registration%20Policy.pdf
 co.krd
@@ -11574,6 +11653,10 @@ nyc.mn
 // Submitted by Eddie Jones <eddie@onefoldmedia.com>
 nid.io
 
+// OpenCraft GmbH : http://opencraft.com/
+// Submitted by Sven Marnach <sven@opencraft.com>
+opencraft.hosting
+
 // Opera Software, A.S.A.
 // Submitted by Yngve Pettersen <yngve@opera.com>
 operaunite.com
@@ -11654,6 +11737,12 @@ rhcloud.com
 // Submitted by Chris Kastorff <info@rethinkdb.com>
 hzc.io
 
+// Revitalised Limited : http://www.revitalised.co.uk
+// Submitted by Jack Price <jack@revitalised.co.uk>
+wellbeingzone.eu
+ptplus.fit
+wellbeingzone.co.uk
+
 // Sandstorm Development Group, Inc. : https://sandcats.io/
 // Submitted by Asheesh Laroia <asheesh@sandstorm.io>
 sandcats.io
@@ -11663,11 +11752,28 @@ sandcats.io
 logoip.de
 logoip.com
 
+// Securepoint GmbH : https://www.securepoint.de
+// Submitted by Erik Anders <erik.anders@securepoint.de>
+firewall-gateway.com
+firewall-gateway.de
+my-gateway.de
+my-router.de
+spdns.de
+spdns.eu
+firewall-gateway.net
+my-firewall.org
+myfirewall.org
+spdns.org
+
 // Service Online LLC : http://drs.ua/
 // Submitted by Serhii Bulakh <support@drs.ua>
 biz.ua
 co.ua
 pp.ua
+
+// ShiftEdit : https://shiftedit.net/
+// Submitted by Adam Jimenez <adam@shiftcreate.com>
+shiftedit.io
 
 // Shopblocks : http://www.shopblocks.com/
 // Submitted by Alex Bowers <alex@shopblocks.com>
@@ -11675,9 +11781,11 @@ myshopblocks.com
 
 // SinaAppEngine : http://sae.sina.com.cn/
 // Submitted by SinaAppEngine <saesupport@sinacloud.com>
+1kapp.com
+appchizi.com
+applinzi.com
 sinaapp.com
 vipsinaapp.com
-1kapp.com
 
 // Skyhat : http://www.skyhat.io
 // Submitted by Shante Adam <shante@skyhat.io>
@@ -11690,6 +11798,11 @@ beta.bounty-full.com
 static.land
 dev.static.land
 sites.static.land
+
+// SourceLair PC : https://www.sourcelair.com
+// Submitted by Antonis Kalipetis <akalipetis@sourcelair.com>
+apps.lair.io
+*.stolos.io
 
 // SpaceKit : https://www.spacekit.io/
 // Submitted by Reza Akhavan <spacekit.io@gmail.com>
@@ -11715,6 +11828,10 @@ i234.me
 myds.me
 synology.me
 
+// TAIFUN Software AG : http://taifun-software.de
+// Submitted by Bjoern Henke <dev-server@taifun-software.de>
+taifun-dns.de
+
 // TASK geographical domains (www.task.gda.pl/uslugi/dns)
 gda.pl
 gdansk.pl
@@ -11726,6 +11843,12 @@ sopot.pl
 // Submitted by Dustin Ward <dward@townnews.com>
 bloxcms.com
 townnews-staging.com
+
+// TransIP : htts://www.transip.nl
+// Submitted by Rory Breuk <rbreuk@transip.nl>
+*.transurl.be
+*.transurl.eu
+*.transurl.nl
 
 // TuxFamily : http://tuxfamily.org
 // Submitted by TuxFamily administrators <adm@staff.tuxfamily.org>
@@ -11758,5 +11881,9 @@ yolasite.com
 // Submitted by registry <hostmaster@nic.za.net>
 za.net
 za.org
+
+// Zeit, Inc. : https://zeit.domains/
+// Submitted by Olli Vanhoja <olli@zeit.co>
+now.sh
 
 // ===END PRIVATE DOMAINS===
