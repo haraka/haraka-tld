@@ -60,9 +60,9 @@ var od_test_cases = {
     // TLD with some 2-level rules.
     // TLD with only 1 (wildcard) rule.
   'cy': [ 'cy', null],
-  'c.cy': [ 'c.cy', null],
-  'b.c.cy': [ 'b.c.cy', null],
-  'a.b.c.cy': [ 'a.b.c.cy', null],
+  'ac.cy': [ 'ac.cy', null],
+  'biz.cy': [ 'biz.cy', null],
+  'com.cy': [ 'com.cy', null],
 
     // More complex TLD.
   'jp': [ 'jp', null],
