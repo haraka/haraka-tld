@@ -114,9 +114,9 @@ var od_test_cases = {
     // Same as above, but punycoded.
   'xn--85x722f.com.cn': [ 'xn--85x722f.com.cn', 'xn--85x722f.com.cn'],
   'xn--85x722f.xn--55qx5d.cn': [ 'xn--85x722f.xn--55qx5d.cn',
-        'xn--85x722f.xn--55qx5d.cn'],
+    'xn--85x722f.xn--55qx5d.cn'],
   'www.xn--85x722f.xn--55qx5d.cn': [ 'www.xn--85x722f.xn--55qx5d.cn',
-            'xn--85x722f.xn--55qx5d.cn'],
+    'xn--85x722f.xn--55qx5d.cn'],
   'shishi.xn--55qx5d.cn': [ 'shishi.xn--55qx5d.cn', 'shishi.xn--55qx5d.cn'],
   'xn--55qx5d.cn': [ 'xn--55qx5d.cn', null],
     // 'xn--85x722f.xn--fiqs8s': [ 'xn--85x722f.xn--fiqs8s',

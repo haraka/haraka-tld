@@ -37,7 +37,7 @@ exports.is_public_suffix = function (host) {
 
   var puny;
   try { puny = punycode.toUnicode(host); }
-    catch (ignore) {}
+  catch (ignore) {}
 
   if (puny && exports.public_suffix_list[puny]) return true;
 
