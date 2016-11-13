@@ -60,9 +60,9 @@ var od_test_cases = {
     // TLD with some 2-level rules.
     // TLD with only 1 (wildcard) rule.
   'cy': [ 'cy', null],
-  'c.cy': [ 'c.cy', null],
-  'b.c.cy': [ 'b.c.cy', null],
-  'a.b.c.cy': [ 'a.b.c.cy', null],
+  'ac.cy': [ 'ac.cy', null],
+  'biz.cy': [ 'biz.cy', null],
+  'com.cy': [ 'com.cy', null],
 
     // More complex TLD.
   'jp': [ 'jp', null],
@@ -114,9 +114,9 @@ var od_test_cases = {
     // Same as above, but punycoded.
   'xn--85x722f.com.cn': [ 'xn--85x722f.com.cn', 'xn--85x722f.com.cn'],
   'xn--85x722f.xn--55qx5d.cn': [ 'xn--85x722f.xn--55qx5d.cn',
-        'xn--85x722f.xn--55qx5d.cn'],
+    'xn--85x722f.xn--55qx5d.cn'],
   'www.xn--85x722f.xn--55qx5d.cn': [ 'www.xn--85x722f.xn--55qx5d.cn',
-            'xn--85x722f.xn--55qx5d.cn'],
+    'xn--85x722f.xn--55qx5d.cn'],
   'shishi.xn--55qx5d.cn': [ 'shishi.xn--55qx5d.cn', 'shishi.xn--55qx5d.cn'],
   'xn--55qx5d.cn': [ 'xn--55qx5d.cn', null],
     // 'xn--85x722f.xn--fiqs8s': [ 'xn--85x722f.xn--fiqs8s',

@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "directories": {
@@ -9,7 +9,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha",
     "lint": "./node_modules/.bin/eslint *.js test",
-    "coverage": "NODE_ENV=cov ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha"
+    "cover": "NODE_ENV=cov ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha"
   },
   "repository": {
     "type": "git",
