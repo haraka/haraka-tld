@@ -1,3 +1,7 @@
+1.0.12 - Dec 28, 2016
+
+* update TLD files
+
 1.0.11 - Nov 13, 2016
 
 * update TLD files
