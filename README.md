@@ -5,6 +5,8 @@
 
 # haraka-tld
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/haraka/haraka-tld.svg)](https://greenkeeper.io/)
+
 Haraka TLD utilities
 
 ## Functions exported
