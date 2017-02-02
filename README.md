@@ -1,8 +1,8 @@
 [![Build Status][ci-img]][ci-url]
 [![Code Coverage][cov-img]][cov-url]
 [![Code Climate][clim-img]][clim-url]
+[![Greenkeeper badge][gk-img]][gk-url]
 [![NPM][npm-img]][npm-url]
-[![Greenkeeper badge](https://badges.greenkeeper.io/haraka/haraka-tld.svg)](https://greenkeeper.io/)
 
 # haraka-tld
 
@@ -100,16 +100,14 @@ This allows for additional 2nd and 3rd level TLDs from a single file. Used for s
 ## Updating
 
 * run the update script (see below)
-* check dependencies for updates
 * update Changes.md file
 * update version in package.json
 * publish to npm
 
 ```sh
 ./update_tld_files
-grunt versioncheck
-vim Changes.md
-grunt release
+vim Changes.md package.json
+npm release
 ```
 
 
@@ -121,3 +119,6 @@ grunt release
 [clim-url]: https://codeclimate.com/github/haraka/haraka-tld
 [npm-img]: https://nodei.co/npm/haraka-tld.png
 [npm-url]: https://www.npmjs.com/package/haraka-tld
+[gk-img]: https://badges.greenkeeper.io/haraka/haraka-tld.svg
+[gk-url]: https://greenkeeper.io/
+

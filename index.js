@@ -106,7 +106,7 @@ exports.split_hostname = function (host, level) {
   return [split.reverse().join('.'), domain];
 };
 
-function load_public_suffix_list() {
+function load_public_suffix_list () {
   load_list_from_file('public-suffix-list').forEach(function (entry) {
         // Parsing rules: http://publicsuffix.org/list/
         // Each line is only read up to the first whitespace
@@ -183,7 +183,7 @@ function load_list_from_file (name) {
 
   fs.readFileSync(filePath, 'UTF-8')
     .split(/\r\n|\r|\n/)
-    .forEach(function(line) {
+    .forEach(function (line) {
 
       if (regex.comment.test(line)) return;
       if (regex.blank.test(line))   return;
