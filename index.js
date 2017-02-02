@@ -30,7 +30,7 @@ exports.is_public_suffix = function (host) {
 
   var wildHost = '*.' + up_one_level;
   if (exports.public_suffix_list[wildHost]) {
-        // check exception list
+    // check exception list
     if (exports.public_suffix_list['!'+host]) return false;
     return true;           // matched a wildcard, ex: *.uk
   }
@@ -45,9 +45,9 @@ exports.is_public_suffix = function (host) {
 };
 
 exports.get_organizational_domain = function (host) {
-    // the domain that was registered with a domain name registrar. See
-    // https://datatracker.ietf.org/doc/draft-kucherawy-dmarc-base/?include_text=1
-    //   section 3.2
+  // the domain that was registered with a domain name registrar. See
+  // https://datatracker.ietf.org/doc/draft-kucherawy-dmarc-base/?include_text=1
+  //   section 3.2
 
   if (!host) return null;
   host = host.toLowerCase();
@@ -55,8 +55,8 @@ exports.get_organizational_domain = function (host) {
     // www.example.com -> [ com, example, www ]
   var labels = host.split('.').reverse();
 
-    // 4.3 Search the public suffix list for the name that matches the
-    //     largest number of labels found in the subject DNS domain.
+  // 4.3 Search the public suffix list for the name that matches the
+  //     largest number of labels found in the subject DNS domain.
   var greatest = 0;
   for (var i = 1; i <= labels.length; i++) {
     if (!labels[i-1]) return null;                   // dot w/o label
@@ -69,9 +69,9 @@ exports.get_organizational_domain = function (host) {
     }
   }
 
-    // 4.4 Construct a new DNS domain name using the name that matched
-    //     from the public suffix list and prefixing to it the "x+1"th
-    //     label from the subject domain.
+  // 4.4 Construct a new DNS domain name using the name that matched
+  //     from the public suffix list and prefixing to it the "x+1"th
+  //     label from the subject domain.
   if (greatest === 0) return null;             // no valid TLD
   if (greatest  >  labels.length) return null; // not enough labels
   if (greatest === labels.length) return host; // same
@@ -106,7 +106,7 @@ exports.split_hostname = function (host, level) {
   return [split.reverse().join('.'), domain];
 };
 
-function load_public_suffix_list() {
+function load_public_suffix_list () {
   load_list_from_file('public-suffix-list').forEach(function (entry) {
         // Parsing rules: http://publicsuffix.org/list/
         // Each line is only read up to the first whitespace
@@ -183,7 +183,7 @@ function load_list_from_file (name) {
 
   fs.readFileSync(filePath, 'UTF-8')
     .split(/\r\n|\r|\n/)
-    .forEach(function(line) {
+    .forEach(function (line) {
 
       if (regex.comment.test(line)) return;
       if (regex.blank.test(line))   return;
