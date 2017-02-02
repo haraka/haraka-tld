@@ -8,6 +8,18 @@
 
 Haraka TLD utilities
 
+## Installation
+
+    npm install haraka-tld
+
+## Usage
+
+    var tlds = require('haraka-tld');
+    if (tlds.get_organizational_domain('mail.example.com') === 'example.com') {
+        // do something
+    }
+)
+
 ## Functions exported
 
 ### get_organizational_domain
