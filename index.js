@@ -52,7 +52,7 @@ exports.get_organizational_domain = function (host) {
   if (!host) return null;
   host = host.toLowerCase();
 
-    // www.example.com -> [ com, example, www ]
+  // www.example.com -> [ com, example, www ]
   var labels = host.split('.').reverse();
 
   // 4.3 Search the public suffix list for the name that matches the
@@ -87,19 +87,19 @@ exports.split_hostname = function (host, level) {
 
   var split = host.toLowerCase().split(/\./).reverse();
   var domain = '';
-    // TLD
+  // TLD
   if (level >= 1 && split[0] && exports.top_level_tlds[split[0]]) {
     domain = split.shift() + domain;
   }
-    // 2nd TLD
+  // 2nd TLD
   if (level >= 2 && split[0] && exports.two_level_tlds[split[0] + '.' + domain]) {
     domain = split.shift() + '.' + domain;
   }
-    // 3rd TLD
+  // 3rd TLD
   if (level >= 3 && split[0] && exports.three_level_tlds[split[0] + '.' + domain]) {
     domain = split.shift() + '.' + domain;
   }
-    // Domain
+  // Domain
   if (split[0]) {
     domain = split.shift() + '.' + domain;
   }
@@ -108,21 +108,21 @@ exports.split_hostname = function (host, level) {
 
 function load_public_suffix_list () {
   load_list_from_file('public-suffix-list').forEach(function (entry) {
-        // Parsing rules: http://publicsuffix.org/list/
-        // Each line is only read up to the first whitespace
+    // Parsing rules: http://publicsuffix.org/list/
+    // Each line is only read up to the first whitespace
     var suffix = entry.split(/\s/).shift();
 
-        // Each line which is not entirely whitespace or begins with a comment
-        // contains a rule.
+    // Each line which is not entirely whitespace or begins with a comment
+    // contains a rule.
     if (!suffix) return;                            // empty string
     if ('/' === suffix.substring(0,1)) return;      // comment
 
-        // A rule may begin with a "!" (exclamation mark). If it does, it is
-        // labelled as a "exception rule" and then treated as if the exclamation
-        // mark is not present.
+    // A rule may begin with a "!" (exclamation mark). If it does, it is
+    // labelled as a "exception rule" and then treated as if the exclamation
+    // mark is not present.
     if ('!' === suffix.substring(0,1)) {
       var eName = suffix.substring(1);   // remove ! prefix
-            // bbc.co.uk -> co.uk
+      // bbc.co.uk -> co.uk
       var up_one = suffix.split('.').slice(1).join('.');
       if (exports.public_suffix_list[up_one]) {
         exports.public_suffix_list[up_one].push(eName);
@@ -169,7 +169,7 @@ function load_tld_files () {
     ' 1=' + Object.keys(exports.top_level_tlds).length +
     ' 2=' + Object.keys(exports.two_level_tlds).length +
     ' 3=' + Object.keys(exports.three_level_tlds).length
-    );
+  );
 }
 
 function load_list_from_file (name) {
@@ -177,7 +177,7 @@ function load_list_from_file (name) {
 
   var filePath = path.resolve(__dirname, 'etc', name);
   if (!fs.existsSync(filePath)) {
-        // not loaded by Haraka, use local path
+    // not loaded by Haraka, use local path
     filePath = path.resolve('etc', name);
   }
 

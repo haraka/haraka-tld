@@ -6,7 +6,7 @@ var tlds = require('../index');
 
 describe('haraka-tld', function () {
   it('exports lists with reasonable qty', function (done) {
-        // console.log(tlds);
+    // console.log(tlds);
     assert.ok(Object.keys(tlds.public_suffix_list).length > 7000);
     assert.ok(Object.keys(tlds.top_level_tlds).length > 1000);
     assert.ok(Object.keys(tlds.two_level_tlds).length > 5000);
@@ -18,30 +18,30 @@ describe('haraka-tld', function () {
 var od_test_cases = {
   null: [ null, null ],
 
-    // Mixed case.
+  // Mixed case.
   COM: [ 'COM', null],
   'example.COM': [ 'example.COM', 'example.com'],
   'WwW.example.COM': [ 'WwW.example.COM', 'example.com'],
 
-    // Leading dot.
+  // Leading dot.
   '.com': [ '.com', null],
   '.example': [ '.example', null],
   '.example.com': [ '.example.com', null],
   '.example.example': [ '.example.example', null],
 
-    // Unlisted TLD.
+  // Unlisted TLD.
   'example': [ 'example', null],
   'example.example': [ 'example.example', null],
-    // _org_domain(test, 'b.example.example', 'example.example');
-    // _org_domain(test, 'a.b.example.example', 'example.example');
+  // _org_domain(test, 'b.example.example', 'example.example');
+  // _org_domain(test, 'a.b.example.example', 'example.example');
 
-    // Listed, but non-Internet, TLD.
+  // Listed, but non-Internet, TLD.
   'local': [ 'local', null],
   'example.local': [ 'example.local', null],
   'b.example.local': [ 'b.example.local', null],
   'a.b.example.local': [ 'a.b.example.local', null],
 
-    // TLD with only 1 rule.
+  // TLD with only 1 rule.
   'biz': [ 'biz', null],
   'domain.biz': [ 'domain.biz', 'domain.biz'],
   'b.domain.biz': [ 'b.domain.biz', 'domain.biz'],
@@ -57,14 +57,14 @@ var od_test_cases = {
   'a.b.example.uk.com': [ 'a.b.example.uk.com', 'example.uk.com'],
   'test.ac': [ 'test.ac', 'test.ac'],
 
-    // TLD with some 2-level rules.
-    // TLD with only 1 (wildcard) rule.
+  // TLD with some 2-level rules.
+  // TLD with only 1 (wildcard) rule.
   'cy': [ 'cy', null],
   'ac.cy': [ 'ac.cy', null],
   'biz.cy': [ 'biz.cy', null],
   'com.cy': [ 'com.cy', null],
 
-    // More complex TLD.
+  // More complex TLD.
   'jp': [ 'jp', null],
   'test.jp': [ 'test.jp', 'test.jp'],
   'www.test.jp': [ 'www.test.jp', 'test.jp'],
@@ -82,14 +82,14 @@ var od_test_cases = {
   'city.kobe.jp': [ 'city.kobe.jp', 'city.kobe.jp'],
   'www.city.kobe.jp': [ 'www.city.kobe.jp', 'city.kobe.jp'],
 
-    // TLD with a wildcard rule and exceptions.
+  // TLD with a wildcard rule and exceptions.
   'ck': [ 'ck', null],
   'test.ck': [ 'test.ck', null],
   'b.test.ck': [ 'b.test.ck', 'b.test.ck'],
   'a.b.test.ck': [ 'a.b.test.ck', 'b.test.ck'],
   'www.ck': [ 'www.ck', 'www.ck'],
   'www.www.ck': [ 'www.www.ck', 'www.ck'],
-    // US K12.
+  // US K12.
   'us': [ 'us', null],
   'test.us': [ 'test.us', 'test.us'],
   'www.test.us': [ 'www.test.us', 'test.us'],
@@ -100,7 +100,7 @@ var od_test_cases = {
   'test.k12.ak.us': [ 'test.k12.ak.us', 'test.k12.ak.us'],
   'www.test.k12.ak.us': [ 'www.test.k12.ak.us', 'test.k12.ak.us'],
 
-    // IDN labels.
+  // IDN labels.
   '食狮.com.cn': [ '食狮.com.cn', '食狮.com.cn'],
   '食狮.公司.cn': [ '食狮.公司.cn', '食狮.公司.cn'],
   'www.食狮.公司.cn': [ 'www.食狮.公司.cn', '食狮.公司.cn'],
@@ -111,7 +111,7 @@ var od_test_cases = {
   'shishi.中国': [ 'shishi.中国', 'shishi.中国'],
   '中国': [ '中国', null],
 
-    // Same as above, but punycoded.
+  // Same as above, but punycoded.
   'xn--85x722f.com.cn': [ 'xn--85x722f.com.cn', 'xn--85x722f.com.cn'],
   'xn--85x722f.xn--55qx5d.cn': [ 'xn--85x722f.xn--55qx5d.cn',
     'xn--85x722f.xn--55qx5d.cn'],
@@ -119,11 +119,11 @@ var od_test_cases = {
     'xn--85x722f.xn--55qx5d.cn'],
   'shishi.xn--55qx5d.cn': [ 'shishi.xn--55qx5d.cn', 'shishi.xn--55qx5d.cn'],
   'xn--55qx5d.cn': [ 'xn--55qx5d.cn', null],
-    // 'xn--85x722f.xn--fiqs8s': [ 'xn--85x722f.xn--fiqs8s',
-    //     'xn--85x722f.xn--fiqs8s'],
-    // 'www.xn--85x722f.xn--fiqs8s': [ 'www.xn--85x722f.xn--fiqs8s',
-    //         'xn--85x722f.xn--fiqs8s'],
-    // 'shishi.xn--fiqs8s': [ 'shishi.xn--fiqs8s', 'shishi.xn--fiqs8s'],
+  // 'xn--85x722f.xn--fiqs8s': [ 'xn--85x722f.xn--fiqs8s',
+  //     'xn--85x722f.xn--fiqs8s'],
+  // 'www.xn--85x722f.xn--fiqs8s': [ 'www.xn--85x722f.xn--fiqs8s',
+  //         'xn--85x722f.xn--fiqs8s'],
+  // 'shishi.xn--fiqs8s': [ 'shishi.xn--fiqs8s', 'shishi.xn--fiqs8s'],
   'xn--fiqs8s': [ 'xn--fiqs8s', null],
 };
 
@@ -175,6 +175,6 @@ describe('split_hostname', function () {
   });
   it('splits a 3-level TLD', function () {
     assert.deepEqual(tlds.split_hostname('host.b.topica.com', 4),
-        ['host', 'b.topica.com']);
+      ['host', 'b.topica.com']);
   });
 });
