@@ -1,5 +1,6 @@
 # 1.0.15 - 2017-06-16
 
+* update TLD files
 * update for eslint4 compat
 
 # 1.0.14 - 2017-05-22
