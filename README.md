@@ -1,4 +1,5 @@
 [![Build Status][ci-img]][ci-url]
+[![Windows Build Status][ci-win-img]][ci-win-url]
 [![Code Coverage][cov-img]][cov-url]
 [![Code Climate][clim-img]][clim-url]
 [![Greenkeeper badge][gk-img]][gk-url]
@@ -113,6 +114,8 @@ npm release
 
 [ci-img]: https://travis-ci.org/haraka/haraka-tld.svg
 [ci-url]: https://travis-ci.org/haraka/haraka-tld
+[ci-win-img]: https://ci.appveyor.com/api/projects/status/j58d7ekpgxgivao8?svg=true
+[ci-win-url]: https://ci.appveyor.com/project/msimerson/haraka-tld
 [cov-img]: https://codecov.io/github/haraka/haraka-tld/coverage.svg
 [cov-url]: https://codecov.io/github/haraka/haraka-tld
 [clim-img]: https://codeclimate.com/github/haraka/haraka-tld/badges/gpa.svg
