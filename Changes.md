@@ -1,3 +1,9 @@
+
+# 1.0.16 - 2017-07-30
+
+* update TLD files
+* dev/CI updates
+
 # 1.0.15 - 2017-06-16
 
 * update TLD files
