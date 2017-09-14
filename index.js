@@ -1,13 +1,13 @@
 'use strict';
 
 // node build-ins
-var fs       = require('fs');
-var path     = require('path');
+const fs       = require('fs');
+const path     = require('path');
 
 // npm modules (dependencies)
-var punycode = require('punycode');
+const punycode = require('punycode');
 
-var regex = {
+const regex = {
   comment:        /^\s*[;#].*$/,
   blank:          /^\s*$/,
   line:           /^\s*(.*?)\s*$/,
@@ -25,17 +25,17 @@ exports.is_public_suffix = function (host) {
   host = host.toLowerCase();
   if (exports.public_suffix_list[host]) return true;
 
-  var up_one_level = host.split('.').slice(1).join('.'); // co.uk -> uk
+  const up_one_level = host.split('.').slice(1).join('.'); // co.uk -> uk
   if (!up_one_level) return false;   // no dot?
 
-  var wildHost = '*.' + up_one_level;
+  const wildHost = '*.' + up_one_level;
   if (exports.public_suffix_list[wildHost]) {
     // check exception list
     if (exports.public_suffix_list['!'+host]) return false;
     return true;           // matched a wildcard, ex: *.uk
   }
 
-  var puny;
+  let puny;
   try { puny = punycode.toUnicode(host); }
   catch (ignore) {}
 
@@ -53,14 +53,14 @@ exports.get_organizational_domain = function (host) {
   host = host.toLowerCase();
 
   // www.example.com -> [ com, example, www ]
-  var labels = host.split('.').reverse();
+  const labels = host.split('.').reverse();
 
   // 4.3 Search the public suffix list for the name that matches the
   //     largest number of labels found in the subject DNS domain.
-  var greatest = 0;
-  for (var i = 1; i <= labels.length; i++) {
+  let greatest = 0;
+  for (let i = 1; i <= labels.length; i++) {
     if (!labels[i-1]) return null;                   // dot w/o label
-    var tld = labels.slice(0,i).reverse().join('.');
+    const tld = labels.slice(0,i).reverse().join('.');
     if (exports.is_public_suffix(tld)) {
       greatest = +(i + 1);
     }
@@ -76,7 +76,7 @@ exports.get_organizational_domain = function (host) {
   if (greatest  >  labels.length) return null; // not enough labels
   if (greatest === labels.length) return host; // same
 
-  var orgName = labels.slice(0, greatest).reverse().join('.');
+  const orgName = labels.slice(0, greatest).reverse().join('.');
   return orgName;
 };
 
@@ -85,8 +85,8 @@ exports.split_hostname = function (host, level) {
     level = 2;
   }
 
-  var split = host.toLowerCase().split(/\./).reverse();
-  var domain = '';
+  const split = host.toLowerCase().split(/\./).reverse();
+  let domain = '';
   // TLD
   if (level >= 1 && split[0] && exports.top_level_tlds[split[0]]) {
     domain = split.shift() + domain;
@@ -110,7 +110,7 @@ function load_public_suffix_list () {
   load_list_from_file('public-suffix-list').forEach(function (entry) {
     // Parsing rules: http://publicsuffix.org/list/
     // Each line is only read up to the first whitespace
-    var suffix = entry.split(/\s/).shift();
+    const suffix = entry.split(/\s/).shift();
 
     // Each line which is not entirely whitespace or begins with a comment
     // contains a rule.
@@ -121,9 +121,9 @@ function load_public_suffix_list () {
     // labelled as a "exception rule" and then treated as if the exclamation
     // mark is not present.
     if ('!' === suffix.substring(0,1)) {
-      var eName = suffix.substring(1);   // remove ! prefix
+      const eName = suffix.substring(1);   // remove ! prefix
       // bbc.co.uk -> co.uk
-      var up_one = suffix.split('.').slice(1).join('.');
+      const up_one = suffix.split('.').slice(1).join('.');
       if (exports.public_suffix_list[up_one]) {
         exports.public_suffix_list[up_one].push(eName);
       }
@@ -156,7 +156,7 @@ function load_tld_files () {
   });
 
   load_list_from_file('extra-tlds').forEach(function (tld) {
-    var s = tld.split(/\./);
+    const s = tld.split(/\./);
     if (s.length === 2) {
       exports.two_level_tlds[tld] = 1;
     }
@@ -173,9 +173,9 @@ function load_tld_files () {
 }
 
 function load_list_from_file (name) {
-  var result = [];
+  const result = [];
 
-  var filePath = path.resolve(__dirname, 'etc', name);
+  let filePath = path.resolve(__dirname, 'etc', name);
   if (!fs.existsSync(filePath)) {
     // not loaded by Haraka, use local path
     filePath = path.resolve('etc', name);
@@ -188,7 +188,7 @@ function load_list_from_file (name) {
       if (regex.comment.test(line)) return;
       if (regex.blank.test(line))   return;
 
-      var line_data = regex.line.exec(line);
+      const line_data = regex.line.exec(line);
       if (!line_data) return;
 
       result.push(line_data[1].trim().toLowerCase());
