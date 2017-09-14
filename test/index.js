@@ -1,8 +1,8 @@
 'use strict';
 
-var assert = require('assert');
+const assert = require('assert');
 
-var tlds = require('../index');
+const tlds = require('../index');
 
 describe('haraka-tld', function () {
   it('exports lists with reasonable qty', function (done) {
@@ -15,7 +15,7 @@ describe('haraka-tld', function () {
   });
 });
 
-var od_test_cases = {
+const od_test_cases = {
   null: [ null, null ],
 
   // Mixed case.
@@ -129,14 +129,14 @@ var od_test_cases = {
 
 describe('get_organizational_domain, test suite', function () {
   Object.keys(od_test_cases).forEach(function (descr) {
-    var tc = od_test_cases[descr];
+    const tc = od_test_cases[descr];
     it(descr, function () {
       assert.equal(tlds.get_organizational_domain(tc[0]), tc[1]);
     });
   });
 });
 
-var ps_test_cases = {
+const ps_test_cases = {
   'com': [ 'com', true ],
   'COM (uc)': [ 'COM', true ],
   'net': [ 'net', true ],
@@ -150,7 +150,7 @@ var ps_test_cases = {
 
 describe('is_public_suffix', function () {
   Object.keys(ps_test_cases).forEach(function (descr) {
-    var tc = ps_test_cases[descr];
+    const tc = ps_test_cases[descr];
     it(descr, function () {
       assert.equal(tlds.is_public_suffix(tc[0]), tc[1]);
     });
@@ -159,13 +159,13 @@ describe('is_public_suffix', function () {
 
 describe('split_hostname', function () {
   it('splits on domain boundary', function () {
-    var foo = tlds.split_hostname('host.sub1.sub2.domain.com');
+    const foo = tlds.split_hostname('host.sub1.sub2.domain.com');
     assert.equal(foo[0],'host.sub1.sub2');
     assert.equal(foo[1],'domain.com');
   });
   [1,2,3].forEach(function (level) {
     it('splits on domain boundary, level ' + level, function () {
-      var foo = tlds.split_hostname('host.sub1.sub2.domain.com', level);
+      const foo = tlds.split_hostname('host.sub1.sub2.domain.com', level);
       assert.equal(foo[0],'host.sub1.sub2');
       assert.equal(foo[1],'domain.com');
     });
