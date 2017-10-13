@@ -1,16 +1,119 @@
 #!/bin/bash
-# Update Haraka TLD files
+#
+#  Update Haraka TLD files
+#
 
-CURL=$(which curl 2>/dev/null)
 
-if [ $? -ne 0 ]; then
-    echo "Error: curl not found"
-    exit 1
+# downloads host file and strips it of invalid lines
+#
+# expects:
+#   string url
+#   string target file name
+#
+function downloadHostFile()
+{
+	# check arguments
+	if [ -v 1 ] ||
+       [ -v 2 ]
+	then
+		>&2 echo "Error: usage of downloadHostFile():"
+		>&2 echo "       downloadHostFile source-url target-file"
+		exit 4
+	fi
+
+	# create temporary file
+	tmpFile=$(mktemp)
+
+	# download file to temporary file
+	curl -f -s -S -o "${tmpFile}" "${1}"
+
+	if [ $? -ne 0 ]
+	then
+		rm "${tmpFile}"
+
+		>&2 echo "Error: failed to download file from \"${1}\" to \"${2}\""
+		exit 5
+	fi
+
+	# create second temporary file
+	tmpFile2=$(mktemp)
+
+	grep -Pi '^[\/*!]{0,1}((?![*"'"'"'!#$%&()+,\/:;<=>?@\[\\\]^`{|}\ ]).){1,255}$' \
+		"${tmpFile}" | idn > "${tmpFile2}" | sort
+
+	if [ $? -ne 0 ]
+	then
+		rm "${tmpFile}"
+		rm "${tmpFile2}"
+
+		>&2 echo "Error: failed parse download file"
+		exit 6
+	fi
+
+	rm "${tmpFile}"
+
+	if [ $FORCE -eq 0 ] &&
+       [ -f "${2}" ]
+	then
+		oldFileLines=$(wc -l "${2}" | cut -d ' ' -f 1)
+		newFileLines=$(wc -l "${tmpFile2}" | cut -d ' ' -f 1)
+
+		tenP=$(awk '{ res = $1 * 0.1; printf "%.0f", res }' <<< $oldFileLines)
+		minN=$(( oldFileLines - tenP ))
+		maxN=$(( oldFileLines + tenP ))
+
+		if [ $newFileLines -lt $minN ] ||
+           [ $newFileLines -gt $maxN ]
+		then
+			rm "${tmpFile2}"
+
+			>&2 echo "Error: file \"${2}\" downloaded from \"${1}\""
+			>&2 echo "       differs from the current file by more than 10% (old: ${oldFileLines} vs new: ${newFileLines})"
+			>&2 echo "       specify --force to override and continue anyway"
+			exit 7
+		fi
+	fi
+
+	# move file to target destination
+	mv "${tmpFile2}" "${2}"
+}
+
+
+FORCE=0
+
+# change directory to script's directory
+cd "$(realpath $(dirname "${0}"))"
+
+if [ $# -eq 1 ] &&
+   [ "${1}" == "--force" ]
+then
+	FORCE=1
+elif
+	[ $# -ne 0 ]
+then
+	>&2 echo "usage: $(basename "${0}") [--force]"
+	exit 1
 fi
 
-$CURL -f -s -S -o etc/public-suffix-list https://publicsuffix.org/list/effective_tld_names.dat
+2>&1 which curl > /dev/null
 
-$CURL -f -s -S -o etc/top-level-tlds https://data.iana.org/TLD/tlds-alpha-by-domain.txt
-$CURL -f -s -S -o etc/two-level-tlds http://george.surbl.org/two-level-tlds
-$CURL -f -s -S -o etc/three-level-tlds http://george.surbl.org/three-level-tlds
-$CURL -f -s -S -o etc/extra-tlds http://rss.uribl.com/hosters/hosters.txt
+if [ $? -ne 0 ]
+then
+	>&2 echo "Error: curl not found"
+	exit 2
+fi
+
+2>&1 which idn > /dev/null
+
+if [ $? -ne 0 ]
+then
+	>&2 echo "Error: idn not found"
+	exit 3
+fi
+
+downloadHostFile "https://publicsuffix.org/list/effective_tld_names.dat"  "./etc/public-suffix-list"
+
+downloadHostFile "https://data.iana.org/TLD/tlds-alpha-by-domain.txt"     "./etc/top-level-tlds"
+downloadHostFile "http://george.surbl.org/two-level-tlds"                 "./etc/two-level-tlds"
+downloadHostFile "http://george.surbl.org/three-level-tlds"               "./etc/three-level-tlds"
+downloadHostFile "http://rss.uribl.com/hosters/hosters.txt"               "./etc/extra-tlds"
