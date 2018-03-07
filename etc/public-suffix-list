@@ -337,12 +337,14 @@ tksat.bo
 transporte.bo
 wiki.bo
 br
+9guacu.br
 abc.br
 adm.br
 adv.br
 agr.br
 aju.br
 am.br
+anani.br
 aparecida.br
 arq.br
 art.br
@@ -355,6 +357,7 @@ blog.br
 bmd.br
 boavista.br
 bsb.br
+campinagrande.br
 campinas.br
 caxias.br
 cim.br
@@ -365,6 +368,7 @@ contagem.br
 coop.br
 cri.br
 cuiaba.br
+curitiba.br
 def.br
 ecn.br
 eco.br
@@ -382,6 +386,7 @@ fm.br
 fnd.br
 fortal.br
 fot.br
+foz.br
 fst.br
 g12.br
 ggf.br
@@ -429,6 +434,8 @@ lel.br
 londrina.br
 macapa.br
 maceio.br
+manaus.br
+maringa.br
 mat.br
 med.br
 mil.br
@@ -458,8 +465,13 @@ recife.br
 ribeirao.br
 rio.br
 riobranco.br
+riopreto.br
 salvador.br
 sampa.br
+santamaria.br
+santoandre.br
+saobernardo.br
+saogonca.br
 sjc.br
 slg.br
 slz.br
@@ -3177,7 +3189,16 @@ tsuru.yamanashi.jp
 uenohara.yamanashi.jp
 yamanakako.yamanashi.jp
 yamanashi.yamanashi.jp
-*.ke
+ke
+ac.ke
+co.ke
+go.ke
+info.ke
+me.ke
+mobi.ke
+ne.ke
+or.ke
+sc.ke
 kg
 org.kg
 net.kg
@@ -7401,6 +7422,7 @@ certmgr.org
 xenapponazure.com
 virtueeldomein.nl
 c66.me
+cloud66.ws
 jdevcloud.com
 wpdevcloud.com
 cloudaccess.host
@@ -7426,6 +7448,7 @@ cloudns.org
 cloudns.pro
 cloudns.pw
 cloudns.us
+cloudeity.net
 co.nl
 co.no
 webhosting.be
@@ -7942,7 +7965,6 @@ fbx-os.fr
 fbxos.fr
 freebox-os.fr
 freeboxos.fr
-myfusion.cloud
 *.futurecms.at
 futurehosting.at
 futuremailing.at
@@ -8091,6 +8113,8 @@ edu.krd
 git-repos.de
 lcube-server.de
 svn-repos.de
+linkyard.cloud
+linkyard-cloud.ch
 we.bs
 barsy.bg
 barsyonline.com
@@ -8110,6 +8134,7 @@ co.pl
 azurewebsites.net
 azure-mobile.net
 cloudapp.net
+mozilla-iot.org
 bmoattachments.org
 net.ru
 org.ru
@@ -8293,6 +8318,7 @@ wellbeingzone.co.uk
 sandcats.io
 logoip.de
 logoip.com
+schokokeks.net
 scrysec.com
 firewall-gateway.com
 firewall-gateway.de
@@ -8396,6 +8422,7 @@ hk.org
 ltd.hk
 inc.hk
 lib.de.us
+2038.io
 router.management
 v-info.info
 wedeploy.io
@@ -8406,6 +8433,7 @@ wmflabs.org
 cistron.nl
 demon.nl
 xs4all.space
+official.academy
 yolasite.com
 ybo.faith
 yombo.me

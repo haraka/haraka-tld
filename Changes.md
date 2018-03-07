@@ -1,4 +1,8 @@
 
+# 1.0.19 - 2018-03-07
+
+* update TLD files
+
 # 1.0.18 - 2017-12-30
 
 * update TLD files
