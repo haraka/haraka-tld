@@ -3322,7 +3322,14 @@ jeonbuk.kr
 jeonnam.kr
 seoul.kr
 ulsan.kr
-*.kw
+kw
+com.kw
+edu.kw
+emb.kw
+gov.kw
+ind.kw
+net.kw
+org.kw
 ky
 edu.ky
 gov.ky
@@ -6630,7 +6637,6 @@ istanbul
 itau
 itv
 iveco
-iwc
 jaguar
 java
 jcb
@@ -6757,7 +6763,6 @@ meme
 memorial
 men
 menu
-meo
 merckmsd
 metlife
 miami
@@ -6972,7 +6977,6 @@ sandvik
 sandvikcoromant
 sanofi
 sap
-sapo
 sarl
 sas
 save
