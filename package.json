@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "directories": {
@@ -21,7 +21,7 @@
     "tld",
     "domain"
   ],
-  "author": "The Haraka Team",
+  "author": "Haraka Team <haraka.mail@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/haraka/haraka-tld/issues"
