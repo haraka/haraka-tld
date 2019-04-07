@@ -14,6 +14,6 @@ after_success:
     - npm install istanbul codecov
     - chmod ugo+r ./test/data/noread
     - npm run cover
-    - ./node_modules/.bin/codecov
+    - node node_modules/.bin/codecov
 
 sudo: false

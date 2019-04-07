@@ -7,9 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "./node_modules/.bin/_mocha",
-    "lint": "./node_modules/.bin/eslint *.js test",
-    "lintfix": "./node_modules/.bin/eslint --fix *.js test",
+    "test": "node node_modules/.bin/_mocha",
+    "lint": "node node_modules/.bin/eslint *.js test",
+    "lintfix": "node node_modules/.bin/eslint --fix *.js test",
     "cover": "NODE_ENV=cov ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha"
   },
   "repository": {
