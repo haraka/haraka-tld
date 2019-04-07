@@ -13,7 +13,7 @@ describe('haraka-tld', function () {
     assert.ok(Object.keys(tlds.three_level_tlds).length > 2000);
     done();
   });
-});
+})
 
 const od_test_cases = {
   null: [ null, null ],
@@ -112,12 +112,10 @@ const od_test_cases = {
   '中国': [ '中国', null],
 
   // Same as above, but punycoded.
-  'xn--85x722f.com.cn': [ 'xn--85x722f.com.cn', 'xn--85x722f.com.cn'],
-  'xn--85x722f.xn--55qx5d.cn': [ 'xn--85x722f.xn--55qx5d.cn',
-    'xn--85x722f.xn--55qx5d.cn'],
-  'www.xn--85x722f.xn--55qx5d.cn': [ 'www.xn--85x722f.xn--55qx5d.cn',
-    'xn--85x722f.xn--55qx5d.cn'],
-  'shishi.xn--55qx5d.cn': [ 'shishi.xn--55qx5d.cn', 'shishi.xn--55qx5d.cn'],
+  'xn--85x722f.com.cn': [ 'xn--85x722f.com.cn', '食狮.com.cn'],
+  'xn--85x722f.xn--55qx5d.cn': [ 'xn--85x722f.xn--55qx5d.cn', '食狮.公司.cn'],
+  'www.xn--85x722f.xn--55qx5d.cn': [ 'www.xn--85x722f.xn--55qx5d.cn', '食狮.公司.cn'],
+  'shishi.xn--55qx5d.cn': [ 'shishi.xn--55qx5d.cn', 'shishi.公司.cn'],
   'xn--55qx5d.cn': [ 'xn--55qx5d.cn', null],
   // 'xn--85x722f.xn--fiqs8s': [ 'xn--85x722f.xn--fiqs8s',
   //     'xn--85x722f.xn--fiqs8s'],
@@ -125,16 +123,18 @@ const od_test_cases = {
   //         'xn--85x722f.xn--fiqs8s'],
   // 'shishi.xn--fiqs8s': [ 'shishi.xn--fiqs8s', 'shishi.xn--fiqs8s'],
   'xn--fiqs8s': [ 'xn--fiqs8s', null],
+  // 'atweek.xn--90aekg1c8b.xn--p1ai': [ 'atweek.xn--90aekg1c8b.xn--p1ai', null ],
+  'atweek.xn--90aekg1c8b.xn--p1ai': [ 'atweek.xn--90aekg1c8b.xn--p1ai', 'зтъбги.рф' ],
 };
 
-describe('get_organizational_domain, test suite', function () {
-  Object.keys(od_test_cases).forEach(function (descr) {
+describe('get_organizational_domain, test suite', () => {
+  Object.keys(od_test_cases).forEach((descr) => {
     const tc = od_test_cases[descr];
     it(descr, function () {
       assert.equal(tlds.get_organizational_domain(tc[0]), tc[1]);
     });
-  });
-});
+  })
+})
 
 const ps_test_cases = {
   'com': [ 'com', true ],
@@ -146,35 +146,38 @@ const ps_test_cases = {
   'gov': [ 'gov', true ],
   'empty': [ '', false ],
   'null': [ '', false ],
-};
+}
 
-describe('is_public_suffix', function () {
-  Object.keys(ps_test_cases).forEach(function (descr) {
+describe('is_public_suffix', () => {
+  Object.keys(ps_test_cases).forEach((descr) => {
     const tc = ps_test_cases[descr];
     it(descr, function () {
       assert.equal(tlds.is_public_suffix(tc[0]), tc[1]);
-    });
-  });
-});
+    })
+  })
+})
 
-describe('split_hostname', function () {
+describe('split_hostname', () => {
   it('splits on domain boundary', function () {
     const foo = tlds.split_hostname('host.sub1.sub2.domain.com');
     assert.equal(foo[0],'host.sub1.sub2');
     assert.equal(foo[1],'domain.com');
   });
+
   [1,2,3].forEach(function (level) {
     it(`splits on domain boundary, level ${level}`, function () {
       const foo = tlds.split_hostname('host.sub1.sub2.domain.com', level);
       assert.equal(foo[0],'host.sub1.sub2');
       assert.equal(foo[1],'domain.com');
-    });
-  });
+    })
+  })
+
   it('splits empty host on TLD only', function () {
     assert.deepEqual(tlds.split_hostname('com'), ['', 'com']);
-  });
+  })
+
   it('splits a 3-level TLD', function () {
     assert.deepEqual(tlds.split_hostname('host.b.topica.com', 4),
       ['host', 'b.topica.com']);
-  });
-});
+  })
+})

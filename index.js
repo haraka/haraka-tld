@@ -11,18 +11,30 @@ const regex = {
   comment:        /^\s*[;#].*$/,
   blank:          /^\s*$/,
   line:           /^\s*(.*?)\s*$/,
-};
+}
 
 module.exports = exports = {
   public_suffix_list: {},
   top_level_tlds: {},
   two_level_tlds: {},
   three_level_tlds: {},
-};
+}
+
+function normalizeHost (host) {
+  host = host.toLowerCase();
+
+  if (/^xn--|\.xn--/.test(host)) {
+    try { host = punycode.toUnicode(host); }
+    catch (ignore) {}
+  }
+
+  return host;
+}
 
 exports.is_public_suffix = function (host) {
   if (!host) return false;
-  host = host.toLowerCase();
+  host = normalizeHost(host);
+
   if (exports.public_suffix_list[host]) return true;
 
   const up_one_level = host.split('.').slice(1).join('.'); // co.uk -> uk
@@ -35,14 +47,8 @@ exports.is_public_suffix = function (host) {
     return true;           // matched a wildcard, ex: *.uk
   }
 
-  let puny;
-  try { puny = punycode.toUnicode(host); }
-  catch (ignore) {}
-
-  if (puny && exports.public_suffix_list[puny]) return true;
-
   return false;
-};
+}
 
 exports.get_organizational_domain = function (host) {
   // the domain that was registered with a domain name registrar. See
@@ -50,7 +56,7 @@ exports.get_organizational_domain = function (host) {
   //   section 3.2
 
   if (!host) return null;
-  host = host.toLowerCase();
+  host = normalizeHost(host);
 
   // www.example.com -> [ com, example, www ]
   const labels = host.split('.').reverse();
@@ -78,7 +84,7 @@ exports.get_organizational_domain = function (host) {
 
   const orgName = labels.slice(0, greatest).reverse().join('.');
   return orgName;
-};
+}
 
 exports.split_hostname = function (host, level) {
   if (!level || (level && !(level >= 1 && level <= 3))) {
@@ -104,10 +110,10 @@ exports.split_hostname = function (host, level) {
     domain = split.shift() + '.' + domain;
   }
   return [split.reverse().join('.'), domain];
-};
+}
 
 function load_public_suffix_list () {
-  load_list_from_file('public-suffix-list').forEach(function (entry) {
+  load_list_from_file('public-suffix-list').forEach((entry) => {
     // Parsing rules: http://publicsuffix.org/list/
     // Each line is only read up to the first whitespace
     const suffix = entry.split(/\s/).shift();
@@ -136,24 +142,23 @@ function load_public_suffix_list () {
     }
 
     exports.public_suffix_list[suffix] = [];
-  });
+  })
 
-  console.log('loaded '+ Object.keys(exports.public_suffix_list).length +
-        ' Public Suffixes');
+  console.log(`loaded ${Object.keys(exports.public_suffix_list).length} Public Suffixes`);
 }
 
 function load_tld_files () {
   load_list_from_file('top-level-tlds').forEach(function (tld) {
     exports.top_level_tlds[tld] = 1;
-  });
+  })
 
   load_list_from_file('two-level-tlds').forEach(function (tld) {
     exports.two_level_tlds[tld] = 1;
-  });
+  })
 
   load_list_from_file('three-level-tlds').forEach(function (tld) {
     exports.three_level_tlds[tld] = 1;
-  });
+  })
 
   load_list_from_file('extra-tlds').forEach(function (tld) {
     const s = tld.split(/\./);
@@ -163,7 +168,7 @@ function load_tld_files () {
     else if (s.length === 3) {
       exports.three_level_tlds[tld] = 1;
     }
-  });
+  })
 
   console.log('loaded TLD files:' +
     ' 1=' + Object.keys(exports.top_level_tlds).length +
@@ -183,7 +188,7 @@ function load_list_from_file (name) {
 
   fs.readFileSync(filePath, 'UTF-8')
     .split(/\r\n|\r|\n/)
-    .forEach(function (line) {
+    .forEach((line) => {
 
       if (regex.comment.test(line)) return;
       if (regex.blank.test(line))   return;
