@@ -12,7 +12,7 @@ describe('haraka-tld', function () {
     assert.ok(Object.keys(tlds.two_level_tlds).length > 5000);
     assert.ok(Object.keys(tlds.three_level_tlds).length > 2000);
     done();
-  });
+  })
 })
 
 const od_test_cases = {
@@ -164,7 +164,7 @@ describe('split_hostname', () => {
     assert.equal(foo[1],'domain.com');
   });
 
-  [1,2,3].forEach(function (level) {
+  [1,2,3].forEach(level => {
     it(`splits on domain boundary, level ${level}`, function () {
       const foo = tlds.split_hostname('host.sub1.sub2.domain.com', level);
       assert.equal(foo[0],'host.sub1.sub2');

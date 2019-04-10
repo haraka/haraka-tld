@@ -7,6 +7,9 @@ const path     = require('path');
 // npm modules (dependencies)
 const punycode = require('punycode');
 
+// local deps
+const update   = require('./lib/update');
+
 const regex = {
   comment:        /^\s*[;#].*$/,
   blank:          /^\s*$/,
@@ -203,3 +206,13 @@ function load_list_from_file (name) {
 
 load_tld_files();
 load_public_suffix_list();
+
+// every 15 days, check for an update. If updated, download, install,
+// and then read it into the exported object
+setInterval(() => {
+  update.updatePSLfile().then(updated => {
+    if (updated) load_public_suffix_list();
+  }).catch((err) => {
+    console.error(err.message)
+  });
+}, 15 * 86400 * 1000); // each 15 days
