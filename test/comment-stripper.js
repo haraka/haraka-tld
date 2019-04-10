@@ -13,8 +13,6 @@ describe('comment-stripper', function () {
     const ws = fs.createWriteStream(outFile)
     // console.log(ws);
     rs.pipe(new CommentStripper()).pipe(ws)
-    ws.on('close', () => {
-      done()
-    })
+    ws.on('close', done);
   })
 })
