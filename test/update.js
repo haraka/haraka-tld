@@ -1,6 +1,15 @@
 
 const assert = require('assert')
+const fs     = require('fs')
+const path   = require('path')
+
 const update = require('../lib/update')
+
+after(function (done) {
+  fs.unlink(path.join('test', 'fixtures', 'tmpfile'), () => {
+    done()
+  })
+})
 
 describe('getFileStats', function () {
   it('get fs.stats from default existing PSL', function (done) {
