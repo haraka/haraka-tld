@@ -1,4 +1,10 @@
 
+## 1.0.24 - 2019-04-09
+
+- add an automatic PSL updater, updates the PSL each 15 days
+    - assuming no ill effects, after some release validation, extend to the other TLD files
+    - and say goodbye to `update TLD files` releases
+
 ## 1.0.23 - 2019-03-30
 
 * update TLD files
