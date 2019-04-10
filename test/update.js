@@ -101,7 +101,8 @@ describe('download', function () {
       })
   })
 
-  it('use HTTP GET to fetch newer PSL', function (done) {
+  // avoid transient errors, only run these manually
+  it.skip('use HTTP GET to fetch newer PSL', function (done) {
     this.slow(1000);
     this.timeout(3000);
     update.download(null, testOpts).then((installed) => {
