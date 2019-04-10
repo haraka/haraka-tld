@@ -1,5 +1,5 @@
 environment:
-  nodejs_version: "6"
+  nodejs_version: "8"
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -14,7 +14,7 @@ before_test:
   - npm --version
 
 test_script:
-  - node_modules\.bin\_mocha
+  - npm test
 
 after_test:
 
