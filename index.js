@@ -215,4 +215,7 @@ setInterval(() => {
   }).catch((err) => {
     console.error(err.message)
   });
-}, 15 * 86400 * 1000); // each 15 days
+}, 15 * 86400 * 1000).unref(); // each 15 days
+
+// the .unref() on the interval tells node to ignore this
+// timer when deciding whether the process is done.
