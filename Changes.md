@@ -4,6 +4,10 @@
 - bump version
 - replace travis & AppVeyor with GH workflow
 
+## 2019-08-19
+
+- unref interval, so node.js process exits normally (#52)
+
 ## 1.0.24 - 2019-04-09
 
 - add an automatic PSL updater, updates the PSL each 15 days

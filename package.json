@@ -10,7 +10,7 @@
     "test": "npx mocha",
     "lint": "npx eslint *.js lib/*.js test",
     "lintfix": "npx eslint --fix *.js lib/*.js test",
-    "cover": "NODE_ENV=cov npx istanbul cover npm test"
+    "cover": "npx nyc --reporter=lcov npm test"
   },
   "repository": {
     "type": "git",

@@ -2,7 +2,6 @@
 [![Windows Build Status][ci-win-img]][ci-win-url]
 [![Code Coverage][cov-img]][cov-url]
 [![Code Climate][clim-img]][clim-url]
-[![Greenkeeper badge][gk-img]][gk-url]
 [![NPM][npm-img]][npm-url]
 
 # haraka-tld
@@ -15,7 +14,7 @@ Haraka TLD utilities
 
 ## Usage
 
-    var tlds = require('haraka-tld');
+    const tlds = require('haraka-tld');
     if (tlds.get_organizational_domain('mail.example.com') === 'example.com') {
         // do something
     }
@@ -37,9 +36,9 @@ get_organizational_domain('mail.example.com'); // -> example.com
 
 ### Haraka usage example:
 
-    var tlds = require('haraka-tld');
-    var from_dom = tlds.get_organizational_domain(connection.transaction.mail_from.host);
-    var to_dom = tlds.get_organizational_domain(connection.transaction.rcpt_to.host);
+    const tlds = require('haraka-tld');
+    const from_dom = tlds.get_organizational_domain(connection.transaction.mail_from.host);
+    const to_dom = tlds.get_organizational_domain(connection.transaction.rcpt_to.host);
     if (from_dom == to_dom) {
         // the envelope sender domain matches the envelope receiver domain
         // eg: root@mail.example.com would match sysadmin@example.com
@@ -49,7 +48,7 @@ get_organizational_domain('mail.example.com'); // -> example.com
 
 Split FQDN to host and domain
 
-    var split = tlds.split_hostname('host.sub1.sub2.domain.com');
+    const split = tlds.split_hostname('host.sub1.sub2.domain.com');
     // split[0] = 'host.sub1.sub2';
     // split[1] = 'domain.com';
 
@@ -112,16 +111,14 @@ npm release
 ```
 
 
-[ci-img]: https://travis-ci.org/haraka/haraka-tld.svg
-[ci-url]: https://travis-ci.org/haraka/haraka-tld
-[ci-win-img]: https://ci.appveyor.com/api/projects/status/j58d7ekpgxgivao8?svg=true
-[ci-win-url]: https://ci.appveyor.com/project/msimerson/haraka-tld
+[ci-img]: https://github.com/haraka/haraka-tld/workflows/Module%20Tests/badge.svg
+[ci-url]: https://github.com/haraka/haraka-tld/actions?query=workflow%3A%22Module+Tests%22
+[ci-win-img]: https://github.com/haraka/haraka-tld/workflows/Module%20Tests%20-%20Windows/badge.svg
+[ci-win-url]: https://github.com/haraka/haraka-tld/actions?query=workflow%3A%22Module+Tests+-+Windows%22
 [cov-img]: https://codecov.io/github/haraka/haraka-tld/coverage.svg
 [cov-url]: https://codecov.io/github/haraka/haraka-tld
 [clim-img]: https://codeclimate.com/github/haraka/haraka-tld/badges/gpa.svg
 [clim-url]: https://codeclimate.com/github/haraka/haraka-tld
 [npm-img]: https://nodei.co/npm/haraka-tld.png
 [npm-url]: https://www.npmjs.com/package/haraka-tld
-[gk-img]: https://badges.greenkeeper.io/haraka/haraka-tld.svg
-[gk-url]: https://greenkeeper.io/
 
