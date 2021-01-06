@@ -37,3 +37,4 @@ node_modules
 test/fixtures/out
 
 package-lock.json
+.nyc_output

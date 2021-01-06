@@ -43,10 +43,10 @@ exports.is_public_suffix = function (host) {
   const up_one_level = host.split('.').slice(1).join('.'); // co.uk -> uk
   if (!up_one_level) return false;   // no dot?
 
-  const wildHost = '*.' + up_one_level;
+  const wildHost = `*.${  up_one_level}`;
   if (exports.public_suffix_list[wildHost]) {
     // check exception list
-    if (exports.public_suffix_list['!'+host]) return false;
+    if (exports.public_suffix_list[`!${host}`]) return false;
     return true;           // matched a wildcard, ex: *.uk
   }
 
@@ -73,7 +73,7 @@ exports.get_organizational_domain = function (host) {
     if (exports.is_public_suffix(tld)) {
       greatest = +(i + 1);
     }
-    else if (exports.public_suffix_list['!'+tld]) {
+    else if (exports.public_suffix_list[`!${tld}`]) {
       greatest = i;
     }
   }
@@ -101,16 +101,16 @@ exports.split_hostname = function (host, level) {
     domain = split.shift() + domain;
   }
   // 2nd TLD
-  if (level >= 2 && split[0] && exports.two_level_tlds[split[0] + '.' + domain]) {
-    domain = split.shift() + '.' + domain;
+  if (level >= 2 && split[0] && exports.two_level_tlds[`${split[0]}.${domain}`]) {
+    domain = `${split.shift()}.${domain}`;
   }
   // 3rd TLD
-  if (level >= 3 && split[0] && exports.three_level_tlds[split[0] + '.' + domain]) {
-    domain = split.shift() + '.' + domain;
+  if (level >= 3 && split[0] && exports.three_level_tlds[`${split[0]}.${domain}`]) {
+    domain = `${split.shift()}.${domain}`;
   }
   // Domain
   if (split[0]) {
-    domain = split.shift() + '.' + domain;
+    domain = `${split.shift()}.${domain}`;
   }
   return [split.reverse().join('.'), domain];
 }
@@ -136,11 +136,11 @@ function load_public_suffix_list () {
       if (exports.public_suffix_list[up_one]) {
         exports.public_suffix_list[up_one].push(eName);
       }
-      else if (exports.public_suffix_list['*.'+up_one]) {
-        exports.public_suffix_list['*.'+up_one].push(eName);
+      else if (exports.public_suffix_list[`*.${up_one}`]) {
+        exports.public_suffix_list[`*.${up_one}`].push(eName);
       }
       else {
-        console.error('unable to find parent for exception: ' + eName);
+        console.error(`unable to find parent for exception: ${eName}`);
       }
     }
 
@@ -173,10 +173,10 @@ function load_tld_files () {
     }
   })
 
-  console.log('loaded TLD files:' +
-    ' 1=' + Object.keys(exports.top_level_tlds).length +
-    ' 2=' + Object.keys(exports.two_level_tlds).length +
-    ' 3=' + Object.keys(exports.three_level_tlds).length
+  console.log(`loaded TLD files:
+  1=${Object.keys(exports.top_level_tlds).length}
+  2=${Object.keys(exports.two_level_tlds).length}
+  3=${Object.keys(exports.three_level_tlds).length}`
   );
 }
 
