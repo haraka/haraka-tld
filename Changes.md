@@ -1,4 +1,9 @@
 
+## 1.0.28 - 2021-06-09
+
+- update TLD files & bump version
+- allow disabling logging with env.HARAKA_LOGS_SUPPRESS
+
 ## 1.0.27 - 2021-01-05
 
 - update TLD files & bump version
