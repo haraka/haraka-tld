@@ -18,10 +18,15 @@ const regex = {
 
 const logger = {
   log: (message) => {
-    if (process.env.HARAKA_TLD_LOG_LOADING === undefined || process.env.HARAKA_TLD_LOG_LOADING !== 'false')
-      console.log(message);
+    switch (process.env.HARAKA_LOGS_SUPPRESS) {
+      case undefined:
+      case "false":
+      case "0":
+        console.log(message);
+    }
   },
-}
+};
+
 
 module.exports = exports = {
   public_suffix_list: {},
