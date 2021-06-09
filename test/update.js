@@ -39,7 +39,7 @@ describe('isRemoteNewer', function () {
         assert.equal(isNewer, false)
       }
       done()
-    })
+    }).catch(done)
   })
 
   it('a HTTP POST returns false when remote non-existing', function (done) {
@@ -53,7 +53,7 @@ describe('isRemoteNewer', function () {
     update.isRemoteNewer('non/exist', { path: '/invalid/url' }).then(isNewer => {
       assert.equal(isNewer, false)
       done()
-    }) // .catch(done)
+    }).catch(done)
   })
 })
 
@@ -64,7 +64,7 @@ describe('getWritableStream', function () {
       assert.equal(ws.writable, true);
       ws.close();
       done();
-    })
+    }).catch(done)
   })
 
   it('throws when it cannot open file', function (done) {
