@@ -16,6 +16,18 @@ const regex = {
   line:           /^\s*(.*?)\s*$/,
 }
 
+const logger = {
+  log: (message) => {
+    switch (process.env.HARAKA_LOGS_SUPPRESS) {
+      case undefined:
+      case "false":
+      case "0":
+        console.log(message);
+    }
+  },
+};
+
+
 module.exports = exports = {
   public_suffix_list: {},
   top_level_tlds: {},
@@ -147,7 +159,7 @@ function load_public_suffix_list () {
     exports.public_suffix_list[suffix] = [];
   })
 
-  console.log(`loaded ${Object.keys(exports.public_suffix_list).length} Public Suffixes`);
+  logger.log(`loaded ${Object.keys(exports.public_suffix_list).length} Public Suffixes`);
 }
 
 function load_tld_files () {
@@ -173,7 +185,7 @@ function load_tld_files () {
     }
   })
 
-  console.log(`loaded TLD files:
+  logger.log(`loaded TLD files:
   1=${Object.keys(exports.top_level_tlds).length}
   2=${Object.keys(exports.two_level_tlds).length}
   3=${Object.keys(exports.three_level_tlds).length}`
