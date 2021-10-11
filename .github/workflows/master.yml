@@ -11,7 +11,7 @@ env:
 
 jobs:
 
-  publish-gpr:
+  publish-npm:
     runs-on: ubuntu-latest
 
     steps:
