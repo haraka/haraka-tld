@@ -1,4 +1,5 @@
 .github
+.codeclimate.yml
 .DS_Store
 .editorconfig
 .gitignore
