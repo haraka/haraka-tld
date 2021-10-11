@@ -18,7 +18,7 @@ Haraka TLD utilities
     if (tlds.get_organizational_domain('mail.example.com') === 'example.com') {
         // do something
     }
-)
+
 
 ## Functions exported
 
@@ -106,8 +106,8 @@ This allows for additional 2nd and 3rd level TLDs from a single file. Used for s
 
 ```sh
 ./update_tld_files
-vim Changes.md package.json
-npm release
+.release/do.sh patch
+.release/push.sh
 ```
 
 
