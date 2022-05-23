@@ -1,6 +1,6 @@
 name: Lint
 
-on: [ push, pull_request ]
+on: [ push ]
 
 env:
   CI: true
@@ -19,7 +19,7 @@ jobs:
         fetch-depth: 1
 
     - uses: actions/setup-node@v3
-      name: Use Node.js ${{ env.node-version }}
+      name: Node ${{ env.node-version }}
       with:
         node-version: ${{ env.node-version }}
 

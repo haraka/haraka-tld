@@ -1,6 +1,6 @@
-name: Module Tests
+name: Tests
 
-on: [ push, pull_request ]
+on: [ push ]
 
 env:
   CI: true
@@ -19,15 +19,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      name: Checkout Module
       with:
         fetch-depth: 1
 
     - uses: actions/setup-node@v3
-      name: Use Node.js ${{ matrix.node-version }}
+      name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
       with:
         node-version: ${{ matrix.node-version }}
 
     - run: npm install
 
-    - run: npm run test
+    - run: npm test
