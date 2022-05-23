@@ -2,6 +2,12 @@
 ##### 1.N.N
 
 
+#### 1.0.30 - 2022-05-23
+
+- update TLD files
+- dep(\*): pin major versions
+
+
 #### 1.0.29 - 2021-10-10
 
 - update TLD files

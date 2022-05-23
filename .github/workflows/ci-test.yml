@@ -1,6 +1,9 @@
-name: Module Tests
+name: Tests
 
-on: [ push, pull_request ]
+on: [ push ]
+
+env:
+  CI: true
 
 jobs:
 
@@ -11,25 +14,19 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
-        node-version: [ 12.x, 14.x, 16.x ]
+        node-version: [ 14, 16, 18 ]
       fail-fast: false
 
     steps:
     - uses: actions/checkout@v2
-      name: Checkout Module
       with:
         fetch-depth: 1
 
-    - uses: actions/setup-node@v1
-      name: Use Node.js ${{ matrix.node-version }}
+    - uses: actions/setup-node@v3
+      name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: npm install
-      run: npm install
+    - run: npm install
 
-    - name: Run test suite
-      run: npm run test
-
-      env:
-        CI: true
+    - run: npm test
