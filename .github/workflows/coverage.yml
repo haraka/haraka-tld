@@ -1,13 +1,8 @@
-name: Lint
+name: Test Coverage
 
 on: [ push ]
 
 env:
-  CI: true
-  node-version: 16
-
-env:
-  CI: true
   node-version: 16
 
 jobs:
@@ -20,14 +15,27 @@ jobs:
       with:
         node-version: ${{ env.node-version }}
 
-  lint:
+  coverage:
     runs-on: ubuntu-latest
     needs: node
     steps:
+
     - uses: actions/checkout@v2
-      name: Checkout Module
       with:
         fetch-depth: 1
 
     - run: npm install
-    - run: npm run lint
+    - name: run coverage
+      run: |
+        npm install --no-save nyc
+        npx nyc --reporter=lcov npm test
+
+    - name: codecov
+      uses: codecov/codecov-action@v2
+      with:
+        verbose: true
+
+    - name: coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}

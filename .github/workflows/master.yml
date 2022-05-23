@@ -1,4 +1,3 @@
-
 name: publish
 
 on:
@@ -8,24 +7,27 @@ on:
 
 env:
   CI: true
-  node_version: 16
+  node-version: 16
 
 jobs:
 
+  node:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-node@v3
+      name: Node ${{ env.node-version }}
+      with:
+        node-version: ${{ env.node-version }}
+        registry-url: https://registry.npmjs.org/
+
   publish-npm:
     runs-on: ubuntu-latest
-
+    needs: node
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      - name: Setup node.js ${{ env.node_version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ env.node_version }}
-          registry-url: https://registry.npmjs.org/
 
       - run: npm install
 
