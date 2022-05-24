@@ -6,10 +6,6 @@ env:
   CI: true
   node-version: 16
 
-env:
-  CI: true
-  node-version: 16
-
 jobs:
 
   node:
