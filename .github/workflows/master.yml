@@ -10,24 +10,16 @@ env:
   node-version: 16
 
 jobs:
-
-  node:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/setup-node@v3
-      name: Node ${{ env.node-version }}
-      with:
-        node-version: ${{ env.node-version }}
-        registry-url: https://registry.npmjs.org/
-
   publish-npm:
     runs-on: ubuntu-latest
-    needs: node
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        name: Node ${{ env.node-version }}
         with:
-          fetch-depth: 0
+          node-version: ${{ env.node-version }}
+          registry-url: https://registry.npmjs.org/
+
+      - uses: actions/checkout@v3
 
       - run: npm install
 

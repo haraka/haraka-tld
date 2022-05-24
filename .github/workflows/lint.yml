@@ -7,23 +7,16 @@ env:
   node-version: 16
 
 jobs:
-
-  node:
+  lint:
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/setup-node@v3
       name: Node ${{ env.node-version }}
       with:
         node-version: ${{ env.node-version }}
 
-  lint:
-    runs-on: ubuntu-latest
-    needs: node
-    steps:
-    - uses: actions/checkout@v2
-      name: Checkout Module
-      with:
-        fetch-depth: 1
+    - uses: actions/checkout@v3
 
     - run: npm install
     - run: npm run lint
