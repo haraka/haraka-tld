@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on: [ push ]
 
@@ -7,8 +7,14 @@ env:
 
 jobs:
 
-  ci-test:
+  lint:
+    uses: haraka/.github/.github/workflows/lint.yml@master
 
+  coverage:
+    uses: haraka/.github/.github/workflows/coverage.yml@master
+
+  test:
+    needs: lint
     runs-on: ${{ matrix.os }}
 
     strategy:
