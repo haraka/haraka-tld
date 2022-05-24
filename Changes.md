@@ -1,6 +1,10 @@
 
 ##### 1.N.N
 
+- ci: reusable workflows from haraka/.github
+- replace some promises with async/await
+- update codeclimate config
+
 
 #### 1.0.30 - 2022-05-23
 

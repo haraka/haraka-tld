@@ -7,7 +7,6 @@ on:
 
 env:
   CI: true
-  node-version: 16
 
 jobs:
   publish:
