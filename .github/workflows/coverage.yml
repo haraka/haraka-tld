@@ -33,7 +33,7 @@ jobs:
     - name: codecov
       uses: codecov/codecov-action@v2
       with:
-        verbose: true
+        verbose: false
 
     - name: coveralls
       uses: coverallsapp/github-action@master
