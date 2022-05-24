@@ -10,4 +10,4 @@ env:
 
 jobs:
   publish:
-    uses: haraka/.github/.github/workflows/coverage.yml@master
+    uses: haraka/.github/.github/workflows/publish.yml@master
