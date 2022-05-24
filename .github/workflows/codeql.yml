@@ -10,5 +10,5 @@ on:
     - cron: '18 7 * * 4'
 
 jobs:
-  call-codeql:
+  codeql:
     uses: haraka/.github/.github/workflows/codeql.yml@master

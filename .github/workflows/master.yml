@@ -10,26 +10,5 @@ env:
   node-version: 16
 
 jobs:
-  publish-npm:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-node@v3
-        name: Node ${{ env.node-version }}
-        with:
-          node-version: ${{ env.node-version }}
-          registry-url: https://registry.npmjs.org/
-
-      - uses: actions/checkout@v3
-
-      - run: npm install
-
-      - run: npm run test
-
-      - name: publish to NPM
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
-      - name: GitHub Release
-        uses: justincy/github-action-npm-release@2.0.1
-        id: release
+  publish:
+    uses: haraka/.github/.github/workflows/coverage.yml@master
