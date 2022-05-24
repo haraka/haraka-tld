@@ -27,7 +27,6 @@ const logger = {
   },
 };
 
-
 module.exports = exports = {
   public_suffix_list: {},
   top_level_tlds: {},

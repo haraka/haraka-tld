@@ -8,9 +8,8 @@
   },
   "scripts": {
     "test": "npx mocha",
-    "lint": "npx eslint *.js lib/*.js test",
-    "lintfix": "npx eslint --fix *.js lib/*.js test",
-    "cover": "npx nyc --reporter=lcov npm test"
+    "lint": "npx eslint *.js lib test",
+    "lintfix": "npx eslint --fix *.js lib test"
   },
   "repository": {
     "type": "git",

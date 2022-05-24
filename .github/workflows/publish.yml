@@ -1,0 +1,13 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  CI: true
+
+jobs:
+  publish:
+    uses: haraka/.github/.github/workflows/coverage.yml@master

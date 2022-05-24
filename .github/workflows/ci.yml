@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on: [ push ]
 
@@ -7,8 +7,14 @@ env:
 
 jobs:
 
-  ci-test:
+  lint:
+    uses: haraka/.github/.github/workflows/lint.yml@master
 
+  coverage:
+    uses: haraka/.github/.github/workflows/coverage.yml@master
+
+  test:
+    needs: lint
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -18,9 +24,7 @@ jobs:
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
+    - uses: actions/checkout@v3
 
     - uses: actions/setup-node@v3
       name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
