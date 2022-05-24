@@ -11,4 +11,4 @@ on:
 
 jobs:
   call-codeql:
-    uses: haraka/.github/workflows/codeql.yml@master
+    uses: haraka/.github/.github/workflows/codeql.yml@master
