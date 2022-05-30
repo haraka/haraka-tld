@@ -32,6 +32,6 @@
   "devDependencies": {
     "eslint": "8",
     "eslint-plugin-haraka": "*",
-    "mocha": "9"
+    "mocha": "10"
   }
 }
