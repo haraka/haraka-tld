@@ -2,7 +2,7 @@
 ### Unreleased
 
 
-### [1.0.32] - 2022-06-05
+### [1.0.33] - 2022-06-05
  
 - ci: reusable workflows from haraka/.github
 - ci: fix publish workflow (#66)
