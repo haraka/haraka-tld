@@ -3,26 +3,13 @@
 
 
 ### [1.0.31] - 2022-06-05
-
-#### Added
-
-- 
-
-#### Fixed
-
-- 
-
-#### Changed
-
-- 
+ 
 - ci: fix publish workflow (#66)
-- CI workflow tweaks (#64)
-- Create codeql.yml (#65)
-
-
+- ci: workflow tweaks (#64)
+- ci: add codeql.yml (#65)
 - ci: reusable workflows from haraka/.github
-- replace some promises with async/await
-- update codeclimate config
+- ci: update codeclimate config
+- chore: replace some promises with async/await
 
 
 #### 1.0.30 - 2022-05-23
@@ -179,4 +166,6 @@
 ### 1.0.1 - Feb 05, 2016
 
 * update path to etc dir
+
+
 [1.0.31]: https://github.com/haraka/haraka-tld/releases/tag/1.0.31
