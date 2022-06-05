@@ -17,12 +17,14 @@ engines:
         enabled: false
       TODO:
         enabled: false
+
 checks:
   return-statements:
     enabled: false
   method-complexity:
     config:
       threshold: 10
+
 ratings:
   paths:
   - "**.js"
