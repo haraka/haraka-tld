@@ -4,10 +4,10 @@
 
 ### [1.0.31] - 2022-06-05
  
+- ci: reusable workflows from haraka/.github
 - ci: fix publish workflow (#66)
 - ci: workflow tweaks (#64)
 - ci: add codeql.yml (#65)
-- ci: reusable workflows from haraka/.github
 - ci: update codeclimate config
 - chore: replace some promises with async/await
 
