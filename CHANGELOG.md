@@ -2,7 +2,7 @@
 ### Unreleased
 
 
-### [1.0.31] - 2022-06-05
+### [1.0.32] - 2022-06-05
  
 - ci: reusable workflows from haraka/.github
 - ci: fix publish workflow (#66)
@@ -168,4 +168,4 @@
 * update path to etc dir
 
 
-[1.0.31]: https://github.com/haraka/haraka-tld/releases/tag/1.0.31
+[1.0.32]: https://github.com/haraka/haraka-tld/releases/tag/1.0.31
