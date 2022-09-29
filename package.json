@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.0.34",
+  "version": "1.1.0",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "directories": {
