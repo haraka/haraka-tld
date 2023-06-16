@@ -99,16 +99,15 @@ This allows for additional 2nd and 3rd level TLDs from a single file. Used for s
 
 ## Updating
 
-* run the update script (see below)
-* update Changes.md file
-* update version in package.json
-* publish to npm
+* use the .release scripts. If the .release dir is empty (first time), populate it with `git submodule update --init --recursive`.
 
 ```sh
 ./update_tld_files
-.release/do.sh patch
-.release/push.sh
+.release/start.sh patch
+.release/submit.sh
 ```
+
+* update CHANGELOG.md file
 
 
 [ci-img]: https://github.com/haraka/haraka-tld/workflows/Module%20Tests/badge.svg
