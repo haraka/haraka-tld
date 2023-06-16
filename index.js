@@ -223,7 +223,7 @@ load_public_suffix_list();
 setInterval(() => {
   update.updatePSLfile().then(updated => {
     if (updated) load_public_suffix_list();
-  }).catch((err) => {
+  }).catch(err => {
     console.error(err.message)
   });
 }, 15 * 86400 * 1000).unref(); // each 15 days

@@ -6,22 +6,19 @@ const path   = require('path')
 const update = require('../lib/update')
 
 after(function (done) {
-  fs.unlink(path.join('test', 'fixtures', 'tmpfile'), () => {
-    done()
-  })
+  fs.unlink(path.join('test', 'fixtures', 'tmpfile'), done)
 })
 
 describe('getFileStats', function () {
   it('get fs.stats from default existing PSL', function (done) {
     update.getFileStats().then((stats) => {
-      // console.log(stats);
       assert.ok(stats.size > 10000, stats.size)
       done()
     }).catch(done);
   })
 
   it('returns null from a missing file', function (done) {
-    update.getFileStats('etc/nonexist').then((stats) => {
+    update.getFileStats(path.join('etc','nonexist')).then(stats => {
       assert.equal(stats, null)
       done();
     }).catch(done);
@@ -30,6 +27,7 @@ describe('getFileStats', function () {
 
 describe('isRemoteNewer', function () {
   this.slow(500);
+  this.timeout(3000)
   it('a HTTP POST returns false if remote file is newer', function (done) {
     update.isRemoteNewer(null).then(isNewer => {
       if (isNewer) {
@@ -59,8 +57,8 @@ describe('isRemoteNewer', function () {
 
 describe('getWritableStream', function () {
   it('opens a file for writing a stream to', function (done) {
-    update.getWritableStream('test/fixtures/tmpfile').then(ws => {
-      // console.log(ws);
+    const filePath = path.join('test', 'fixtures', 'tmpfile')
+    update.getWritableStream(filePath).then(ws => {
       assert.equal(ws.writable, true);
       ws.close();
       done();
@@ -68,7 +66,8 @@ describe('getWritableStream', function () {
   })
 
   it('throws when it cannot open file', function (done) {
-    update.getWritableStream('test/fixtures/unwritable/tmpfile')
+    const filePath = path.join('test', 'fixtures', 'unwritable', 'tmpfile')
+    update.getWritableStream(filePath)
       .then(ws => {
         assert.ok(!ws);  // shouldn't ever get here
         done();
@@ -89,7 +88,8 @@ describe('download', function () {
   }
 
   it('errors if it cannot open tmp file', function (done) {
-    update.download('test/fixtures/unwritable/test', testOpts)
+    const filePath = path.join('test', 'fixtures', 'unwritable', 'test')
+    update.download(filePath, testOpts)
       .then((installed) => {
         assert.equal(installed, false); // should never get here
         done()
