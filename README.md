@@ -99,15 +99,15 @@ This allows for additional 2nd and 3rd level TLDs from a single file. Used for s
 
 ## Updating
 
-* use the .release scripts. If the .release dir is empty (first time), populate it with `git submodule update --init --recursive`.
+* update the TLD files with `./update_tld_files`
+* use the .release scripts to roll a new release. If the .release dir is empty (first time), populate it with `git submodule update --init --recursive`.
 
 ```sh
-./update_tld_files
 .release/start.sh patch
+$edit CHANGELOG.md
+git add . && git commit
 .release/submit.sh
 ```
-
-* update CHANGELOG.md file
 
 
 [ci-img]: https://github.com/haraka/haraka-tld/workflows/Module%20Tests/badge.svg
