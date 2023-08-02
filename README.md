@@ -86,7 +86,7 @@ The list of TLDs valid on the internet. [Update URL](http://data.iana.org/TLD/tl
 
 * two-level-tlds
 
-A list of 2nd level TLDs. [Update URL](http://george.surbl.org/two-level-tlds)
+A list of 2nd level TLDs. [Update URL](http://www.surbl.org/static/two-level-tlds)
 
 * three-level-tlds
 
