@@ -2,6 +2,12 @@
 ### Unreleased
 
 
+### [1.2.0] - 2023-12-12
+
+- dep(punycode): correctly specify (with trailing /)
+    - to override built-in, which emits warnings
+
+
 ### [1.1.2] - 2023-12-11
 
 - updated TLD files
@@ -192,3 +198,4 @@
 [1.1.0]: https://github.com/haraka/haraka-tld/releases/tag/1.1.0
 [1.1.1]: https://github.com/haraka/haraka-tld/releases/tag/1.1.1
 [1.1.2]: https://github.com/haraka/haraka-tld/releases/tag/1.1.2
+[1.2.0]: https://github.com/haraka/haraka-tld/releases/tag/1.2.0

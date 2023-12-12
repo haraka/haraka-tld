@@ -5,7 +5,7 @@ const fs       = require('fs');
 const path     = require('path');
 
 // npm modules (dependencies)
-const punycode = require('punycode');
+const punycode = require('punycode/');
 
 // local deps
 const update   = require('./lib/update');
