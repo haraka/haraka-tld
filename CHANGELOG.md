@@ -2,6 +2,12 @@
 ### Unreleased
 
 
+### [1.1.2] - 2023-12-11
+
+- updated TLD files
+- Update README.md (#78)
+
+
 ### [1.1.1] - 2023-06-16
 
 - updated TLD files
@@ -185,3 +191,4 @@
 [1.0.34]: https://github.com/haraka/haraka-tld/releases/tag/1.0.33
 [1.1.0]: https://github.com/haraka/haraka-tld/releases/tag/1.1.0
 [1.1.1]: https://github.com/haraka/haraka-tld/releases/tag/1.1.1
+[1.1.2]: https://github.com/haraka/haraka-tld/releases/tag/1.1.2
