@@ -1,7 +1,7 @@
 [![Build Status][ci-img]][ci-url]
-[![Windows Build Status][ci-win-img]][ci-win-url]
 [![Code Coverage][cov-img]][cov-url]
 [![Code Climate][clim-img]][clim-url]
+
 [![NPM][npm-img]][npm-url]
 
 # haraka-tld
@@ -110,10 +110,9 @@ git add . && git commit
 ```
 
 
-[ci-img]: https://github.com/haraka/haraka-tld/workflows/Module%20Tests/badge.svg
-[ci-url]: https://github.com/haraka/haraka-tld/actions?query=workflow%3A%22Module+Tests%22
-[ci-win-img]: https://github.com/haraka/haraka-tld/workflows/Module%20Tests%20-%20Windows/badge.svg
-[ci-win-url]: https://github.com/haraka/haraka-tld/actions?query=workflow%3A%22Module+Tests+-+Windows%22
+
+[ci-img]: https://github.com/haraka/haraka-tld/actions/workflows/ci.yml/badge.svg
+[ci-url]: https://github.com/haraka/haraka-tld/actions/workflows/ci.yml
 [cov-img]: https://codecov.io/github/haraka/haraka-tld/coverage.svg
 [cov-url]: https://codecov.io/github/haraka/haraka-tld
 [clim-img]: https://codeclimate.com/github/haraka/haraka-tld/badges/gpa.svg
