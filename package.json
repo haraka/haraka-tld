@@ -1,15 +1,16 @@
 {
   "name": "haraka-tld",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "npx mocha",
-    "lint": "npx eslint *.js lib test",
-    "lintfix": "npx eslint --fix *.js lib test"
+    "test": "npx mocha@^10",
+    "lint": "npx eslint@^8 *.js lib test",
+    "lintfix": "npx eslint@^8 --fix *.js lib test",
+    "versions": "npx dependency-version-checker check"
   },
   "repository": {
     "type": "git",
@@ -27,11 +28,9 @@
   },
   "homepage": "https://github.com/haraka/haraka-tld#readme",
   "dependencies": {
-    "punycode": "^2.3.1"
+    "punycode.js": "^2.3.1"
   },
   "devDependencies": {
-    "eslint": "^8.55.0",
-    "eslint-plugin-haraka": "*",
-    "mocha": "^10.2.0"
+    "eslint-plugin-haraka": "*"
   }
 }
