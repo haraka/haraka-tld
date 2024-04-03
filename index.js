@@ -1,13 +1,10 @@
 'use strict';
 
-// node build-ins
 const fs       = require('fs');
 const path     = require('path');
 
-// npm modules (dependencies)
-const punycode = require('punycode/');
+const punycode = require('punycode.js');
 
-// local deps
 const update   = require('./lib/update');
 
 const regex = {

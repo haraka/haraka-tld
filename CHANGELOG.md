@@ -2,6 +2,13 @@
 ### Unreleased
 
 
+### [1.2.1] - 2024-04-03
+
+- dep(punycode): specify as punycode.js
+  - which always avoid name conflict with stale node.js built-in
+- doc(README): update ci badge URLs (#82)
+
+
 ### [1.2.0] - 2023-12-12
 
 - dep(punycode): correctly specify (with trailing /)
@@ -199,3 +206,4 @@
 [1.1.1]: https://github.com/haraka/haraka-tld/releases/tag/1.1.1
 [1.1.2]: https://github.com/haraka/haraka-tld/releases/tag/1.1.2
 [1.2.0]: https://github.com/haraka/haraka-tld/releases/tag/1.2.0
+[1.2.1]: https://github.com/haraka/haraka-tld/releases/tag/1.2.1
