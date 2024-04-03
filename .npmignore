@@ -59,3 +59,4 @@ codecov.yml
 
 http/bower_components
 http/node_modules
+test

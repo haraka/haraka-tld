@@ -7,6 +7,8 @@
 - dep(punycode): specify as punycode.js
   - which always avoid name conflict with stale node.js built-in
 - doc(README): update ci badge URLs (#82)
+- dep(mocha & eslint): remove from devDeps (install with npx)
+- pkg: add ./test to .npmignore
 
 
 ### [1.2.0] - 2023-12-12
