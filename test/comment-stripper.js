@@ -1,5 +1,4 @@
-
-const fs   = require('fs')
+const fs = require('fs')
 const path = require('path')
 
 const CommentStripper = require('../lib/comment-stripper')
@@ -13,6 +12,6 @@ describe('comment-stripper', function () {
     const ws = fs.createWriteStream(outFile)
     // console.log(ws);
     rs.pipe(new CommentStripper()).pipe(ws)
-    ws.on('close', done);
+    ws.on('close', done)
   })
 })

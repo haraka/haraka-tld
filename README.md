@@ -19,7 +19,6 @@ Haraka TLD utilities
         // do something
     }
 
-
 ## Functions exported
 
 ### get_organizational_domain
@@ -61,7 +60,6 @@ Split FQDN to host and domain
         // false
     }
 
-
 ## Directly access lists
 
 ### Check for a TLD
@@ -70,37 +68,35 @@ Split FQDN to host and domain
         // true
     }
 
-
 ## The following files are included
 
-* public-suffix-list
+- public-suffix-list
 
 A list of all Public Suffixes (the parts of a domain name exactly
 one level below the registrar). Includes punycoded international domains, is
 maintained by the Mozilla project, and accomplishes roughly the same task
 as the \*-tlds files.
 
-* top-level-tlds
+- top-level-tlds
 
 The list of TLDs valid on the internet. [Update URL](http://data.iana.org/TLD/tlds-alpha-by-domain.txt)
 
-* two-level-tlds
+- two-level-tlds
 
 A list of 2nd level TLDs. [Update URL](http://www.surbl.org/static/two-level-tlds)
 
-* three-level-tlds
+- three-level-tlds
 
 A list of 3rd level TLDs. [Update URL](http://www.surbl.org/tld/three-level-tlds)
 
-* extra-tlds
+- extra-tlds
 
 This allows for additional 2nd and 3rd level TLDs from a single file. Used for site customizations or for the URIBL hosters.txt. [Update URL](http://rss.uribl.com/hosters/hosters.txt)
 
-
 ## Updating
 
-* update the TLD files with `./update_tld_files`
-* use the .release scripts to roll a new release. If the .release dir is empty (first time), populate it with `git submodule update --init --recursive`.
+- update the TLD files with `./update_tld_files`
+- use the .release scripts to roll a new release. If the .release dir is empty (first time), populate it with `git submodule update --init --recursive`.
 
 ```sh
 .release/start.sh patch
@@ -108,8 +104,6 @@ $edit CHANGELOG.md
 git add . && git commit
 .release/submit.sh
 ```
-
-
 
 [ci-img]: https://github.com/haraka/haraka-tld/actions/workflows/ci.yml/badge.svg
 [ci-url]: https://github.com/haraka/haraka-tld/actions/workflows/ci.yml
@@ -119,4 +113,3 @@ git add . && git commit
 [clim-url]: https://codeclimate.com/github/haraka/haraka-tld
 [npm-img]: https://nodei.co/npm/haraka-tld.png
 [npm-url]: https://www.npmjs.com/package/haraka-tld
-

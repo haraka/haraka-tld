@@ -4,12 +4,12 @@ engines:
     enabled: true
     config:
       languages:
-      - javascript
+        - javascript
   eslint:
     enabled: true
-    channel: "eslint-8"
+    channel: 'eslint-8'
     config:
-      config: ".eslintrc.yaml"
+      config: '.eslintrc.yaml'
   fixme:
     enabled: true
     checks:
@@ -27,6 +27,6 @@ checks:
 
 ratings:
   paths:
-  - "**.js"
+    - '**.js'
 exclude_paths:
-- test/
+  - test/
