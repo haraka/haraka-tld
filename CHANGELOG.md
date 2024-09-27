@@ -3,6 +3,9 @@
 ### [1.2.2] - 2024-09-27
 
 - updated TLD files
+- doc(CONTRIBUTORS): added
+- chore: automated code formatting
+- lint: remove duplicate / stale rules from .eslintrc
 
 ### [1.2.1] - 2024-04-03
 
