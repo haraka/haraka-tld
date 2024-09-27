@@ -2,6 +2,11 @@
 ### Unreleased
 
 
+### [1.2.2] - 2024-09-27
+
+- updated TLD files
+
+
 ### [1.2.1] - 2024-04-03
 
 - dep(punycode): specify as punycode.js
@@ -209,3 +214,4 @@
 [1.1.2]: https://github.com/haraka/haraka-tld/releases/tag/1.1.2
 [1.2.0]: https://github.com/haraka/haraka-tld/releases/tag/1.2.0
 [1.2.1]: https://github.com/haraka/haraka-tld/releases/tag/1.2.1
+[1.2.2]: https://github.com/haraka/haraka-tld/releases/tag/1.2.2
