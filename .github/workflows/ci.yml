@@ -1,12 +1,11 @@
 name: CI
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 env:
   CI: true
 
 jobs:
-
   lint:
     uses: haraka/.github/.github/workflows/lint.yml@master
 
@@ -14,21 +13,21 @@ jobs:
     uses: haraka/.github/.github/workflows/coverage.yml@master
 
   test:
-    needs: [ lint, get-lts ]
+    needs: [lint, get-lts]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ubuntu-latest, windows-latest]
         node-version: ${{ fromJson(needs.get-lts.outputs.active) }}
       fail-fast: false
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm test
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
 
   get-lts:
     runs-on: ubuntu-latest
