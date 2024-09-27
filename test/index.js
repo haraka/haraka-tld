@@ -169,7 +169,6 @@ describe('split_hostname', () => {
     assert.equal(foo[0], 'host.sub1.sub2')
     assert.equal(foo[1], 'domain.com')
   })
-
   ;[1, 2, 3].forEach((level) => {
     it(`splits on domain boundary, level ${level}`, function () {
       const foo = tlds.split_hostname('host.sub1.sub2.domain.com', level)
