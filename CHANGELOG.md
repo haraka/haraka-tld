@@ -1,4 +1,13 @@
+# Changelog
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/).
+
 ### Unreleased
+
+### [1.2.3] - 2025-01-09
+
+- updated TLD files
+- lint: updated to eslint 9
 
 ### [1.2.2] - 2024-09-27
 
@@ -181,3 +190,12 @@
 [1.2.0]: https://github.com/haraka/haraka-tld/releases/tag/1.2.0
 [1.2.1]: https://github.com/haraka/haraka-tld/releases/tag/1.2.1
 [1.2.2]: https://github.com/haraka/haraka-tld/releases/tag/1.2.2
+[1.2.3]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.3
+[1.0.11]: https://github.com/haraka/haraka-tld/releases/tag/1.0.11
+[1.0.27]: https://github.com/haraka/haraka-tld/releases/tag/1.0.27
+[1.0.29]: https://github.com/haraka/haraka-tld/releases/tag/1.0.29
+[1.0.30]: https://github.com/haraka/haraka-tld/releases/tag/1.0.30
+[1.0.31]: https://github.com/haraka/haraka-tld/releases/tag/1.0.31
+[1.0.8]: https://github.com/haraka/haraka-tld/releases/tag/1.0.8
+[1.04]: https://github.com/haraka/haraka-tld/releases/tag/1.04
+[1.0.6]: https://github.com/haraka/haraka-tld/releases/tag/v1.0.6
