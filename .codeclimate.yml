@@ -7,9 +7,9 @@ engines:
         - javascript
   eslint:
     enabled: true
-    channel: 'eslint-8'
+    channel: 'eslint-9'
     config:
-      config: '.eslintrc.yaml'
+      config: 'eslint.config.mjs'
   fixme:
     enabled: true
     checks:

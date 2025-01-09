@@ -2,8 +2,6 @@
 [![Code Coverage][cov-img]][cov-url]
 [![Code Climate][clim-img]][clim-url]
 
-[![NPM][npm-img]][npm-url]
-
 # haraka-tld
 
 Haraka TLD utilities
@@ -111,5 +109,3 @@ git add . && git commit
 [cov-url]: https://codecov.io/github/haraka/haraka-tld
 [clim-img]: https://codeclimate.com/github/haraka/haraka-tld/badges/gpa.svg
 [clim-url]: https://codeclimate.com/github/haraka/haraka-tld
-[npm-img]: https://nodei.co/npm/haraka-tld.png
-[npm-url]: https://www.npmjs.com/package/haraka-tld
