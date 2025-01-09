@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 - updated TLD files
 - lint: updated to eslint 9
+- prefix node builtin modules with 'node:'
 
 ### [1.2.2] - 2024-09-27
 
