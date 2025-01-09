@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "files": [
@@ -13,8 +13,8 @@
   },
   "scripts": {
     "format": "npm run prettier:fix && npm run lint:fix",
-    "lint": "npx eslint@^8 *.js lib test",
-    "lint:fix": "npx eslint@^8 --fix *.js lib test",
+    "lint": "npx eslint *.js lib test",
+    "lint:fix": "npx eslint --fix *.js lib test",
     "prettier": "npx prettier . --check",
     "prettier:fix": "npx prettier . --write --log-level=warn",
     "test": "npx mocha@^10",
@@ -40,6 +40,6 @@
     "punycode.js": "^2.3.1"
   },
   "devDependencies": {
-    "@haraka/eslint-config": "^1.1.5"
+    "@haraka/eslint-config": "^2.0.2"
   }
 }
