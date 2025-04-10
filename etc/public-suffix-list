@@ -3405,11 +3405,15 @@ rep.kp
 tra.kp
 kr
 ac.kr
+ai.kr
 co.kr
 es.kr
 go.kr
 hs.kr
+io.kr
+it.kr
 kg.kr
+me.kr
 mil.kr
 ms.kr
 ne.kr
@@ -3571,12 +3575,18 @@ name.mk
 net.mk
 org.mk
 ml
+ac.ml
+art.ml
+asso.ml
 com.ml
 edu.ml
 gouv.ml
 gov.ml
+info.ml
+inst.ml
 net.ml
 org.ml
+pr.ml
 presse.ml
 *.mm
 mn
@@ -5225,11 +5235,15 @@ ug
 ac.ug
 co.ug
 com.ug
+edu.ug
 go.ug
+gov.ug
+mil.ug
 ne.ug
 or.ug
 org.ug
 sc.ug
+us.ug
 uk
 ac.uk
 co.uk
@@ -5496,6 +5510,7 @@ co.ve
 com.ve
 e12.ve
 edu.ve
+emprende.ve
 firm.ve
 gob.ve
 gov.ve
@@ -5511,6 +5526,7 @@ store.ve
 tec.ve
 web.ve
 vg
+edu.vg
 vi
 co.vi
 com.vi
@@ -6242,7 +6258,6 @@ juniper
 kaufen
 kddi
 kerryhotels
-kerrylogistics
 kerryproperties
 kfh
 kia
@@ -6292,7 +6307,6 @@ limited
 limo
 lincoln
 link
-lipsy
 live
 living
 llc
@@ -6915,6 +6929,7 @@ edgesuite-staging.net
 barsy.ca
 *.compute.estate
 *.alces.network
+alibabacloudcs.com
 kasserver.com
 altervista.org
 alwaysdata.net
@@ -7490,6 +7505,7 @@ studio.ap-southeast-2.sagemaker.aws
 studio.ap-southeast-3.sagemaker.aws
 studio.ca-central-1.sagemaker.aws
 studio.eu-central-1.sagemaker.aws
+studio.eu-central-2.sagemaker.aws
 studio.eu-north-1.sagemaker.aws
 studio.eu-south-1.sagemaker.aws
 studio.eu-south-2.sagemaker.aws
@@ -7521,6 +7537,8 @@ analytics-gateway.eu-west-1.amazonaws.com
 analytics-gateway.us-east-1.amazonaws.com
 analytics-gateway.us-east-2.amazonaws.com
 analytics-gateway.us-west-2.amazonaws.com
+appwrite.global
+*.appwrite.run
 amplifyapp.com
 *.awsapprunner.com
 webview-assets.aws-cloud9.af-south-1.amazonaws.com
@@ -7621,6 +7639,15 @@ us-west-2.elasticbeanstalk.com
 *.elb.amazonaws.com
 awsglobalaccelerator.com
 *.private.repost.aws
+transfer-webapp.ap-northeast-1.on.aws
+transfer-webapp.ap-southeast-1.on.aws
+transfer-webapp.ap-southeast-2.on.aws
+transfer-webapp.eu-central-1.on.aws
+transfer-webapp.eu-north-1.on.aws
+transfer-webapp.eu-west-1.on.aws
+transfer-webapp.us-east-1.on.aws
+transfer-webapp.us-east-2.on.aws
+transfer-webapp.us-west-2.on.aws
 eero.online
 eero-stage.online
 apigee.io
@@ -7668,6 +7695,7 @@ bnr.la
 bitbucket.io
 blackbaudcdn.net
 of.je
+square.site
 bluebite.io
 boomla.net
 boutir.com
@@ -7678,12 +7706,17 @@ bplaced.de
 square7.de
 bplaced.net
 square7.net
+brave.app
+*.s.brave.app
+brave.io
 *.s.brave.io
 shop.brendly.hr
 shop.brendly.rs
 browsersafetymark.io
 radio.am
 radio.fm
+cdn.bubble.io
+bubbleapps.io
 uk0.bigv.io
 dh.bytemark.co.uk
 vm.bytemark.co.uk
@@ -7797,6 +7830,8 @@ csb.app
 preview.csb.app
 co.nl
 co.no
+devinapps.com
+staging.devinapps.com
 webhosting.be
 hosting-cluster.nl
 ctfcloud.net
@@ -7853,6 +7888,7 @@ definima.io
 definima.net
 deno.dev
 deno-staging.dev
+deno.net
 dedyn.io
 deta.app
 deta.dev
@@ -7862,6 +7898,7 @@ you2.pl
 ondigitalocean.app
 *.digitaloceanspaces.com
 us.kg
+dpdns.org
 discordsays.com
 discordsez.com
 jozi.biz
@@ -8644,6 +8681,7 @@ in-dsl.net
 in-vpn.net
 in-dsl.org
 in-vpn.org
+oninferno.net
 biz.at
 info.at
 info.cx
@@ -8688,7 +8726,9 @@ apps-1and1.net
 websitebuilder.online
 app-ionos.space
 iopsys.se
+*.inbrowser.dev
 *.dweb.link
+*.inbrowser.link
 ipifony.net
 ir.md
 is-a-good.dev
@@ -8793,6 +8833,7 @@ koobin.events
 webthings.io
 krellian.net
 oya.to
+laravel.cloud
 git-repos.de
 lcube-server.de
 svn-repos.de
@@ -8822,6 +8863,8 @@ ggff.net
 *.user.localcert.dev
 localcert.net
 localhostcert.net
+localtonet.com
+*.localto.net
 lodz.pl
 pabianice.pl
 plock.pl
@@ -8835,6 +8878,8 @@ loginline.services
 loginline.site
 lohmus.me
 servers.run
+lovable.app
+lovableproject.com
 krasnik.pl
 leczna.pl
 lubartow.pl
@@ -9188,6 +9233,8 @@ httpbin.org
 prequalifyme.today
 xen.prgmr.com
 priv.at
+c01.kr
+eliv-dns.kr
 protonet.io
 sub.psl.hrsn.dev
 *.wc.psl.hrsn.dev
@@ -9275,6 +9322,8 @@ adimo.co.uk
 itcouldbewor.se
 aus.basketball
 nz.basketball
+subsc-pay.com
+subsc-pay.net
 git-pages.rit.edu
 rocky.page
 rub.de
@@ -9484,6 +9533,8 @@ quizzes.cx
 researched.cx
 tests.cx
 surveys.so
+ipfs.storacha.link
+ipfs.w3s.link
 storebase.store
 storipress.app
 storj.farm
@@ -9607,6 +9658,7 @@ it.com
 unison-services.cloud
 virtual-user.de
 virtualuser.de
+obj.ag
 name.pm
 sch.tf
 biz.wf
@@ -9626,8 +9678,8 @@ vercel.dev
 vusercontent.net
 now.sh
 2038.io
-router.management
 v-info.info
+deus-canvas.com
 voorloper.cloud
 *.vultrobjects.com
 wafflecell.com
@@ -9643,6 +9695,7 @@ pleskns.com
 wp2.host
 pdns.page
 plesk.page
+cpanel.site
 wpsquared.site
 *.wadl.top
 remotewd.com
@@ -9652,6 +9705,8 @@ toolforge.org
 wmcloud.org
 wmflabs.org
 wdh.app
+windsurf.app
+windsurf.build
 panel.gg
 daemon.panel.gg
 wixsite.com
@@ -9690,7 +9745,9 @@ za.net
 za.org
 zap.cloud
 zeabur.app
+*.zerops.app
 bss.design
 basicserver.io
 virtualserver.io
 enterprisecloud.nu
+zone.id
