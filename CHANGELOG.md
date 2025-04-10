@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### [1.2.4] - 2025-04-10
 
-- 
+- updated TLD files
 
 ### [1.2.3] - 2025-01-09
 
