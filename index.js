@@ -98,6 +98,8 @@ exports.get_organizational_domain = function (host) {
 }
 
 exports.split_hostname = function (host, level) {
+  if (typeof host !== 'string') return []
+
   if (!level || (level && !(level >= 1 && level <= 3))) {
     level = 2
   }
