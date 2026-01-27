@@ -4,7 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
-### [1.2.6] - 2026-01-27
+### [1.2.7] - 2026-01-27
 
 - updated TLD files
 - in split_hostname, verify host input is a string
@@ -210,5 +210,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 [1.2.2]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.2
 [1.2.3]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.3
 [1.2.4]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.4
-[1.2.5]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.5
-[1.2.6]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.6
+[1.2.7]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.7
