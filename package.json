@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "files": [
@@ -40,7 +40,7 @@
     "punycode.js": "^2.3.1"
   },
   "devDependencies": {
-    "@haraka/eslint-config": "^2.0.3"
+    "@haraka/eslint-config": "^2.0.2"
   },
   "prettier": {
     "singleQuote": true,
