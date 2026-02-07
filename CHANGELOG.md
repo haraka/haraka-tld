@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
+### [1.3.0] - 2026-02-06
+
+- doc(README): improve docs with code fences
+- feat: added asParts
+- updated TLD files
+
 ### [1.2.8] - 2026-01-27
 
 - updated TLD files
@@ -211,3 +217,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 [1.2.3]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.3
 [1.2.4]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.4
 [1.2.8]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.8
+[1.3.0]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.0

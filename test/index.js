@@ -114,10 +114,7 @@ const od_test_cases = {
   // Same as above, but punycoded.
   'xn--85x722f.com.cn': ['xn--85x722f.com.cn', '食狮.com.cn'],
   'xn--85x722f.xn--55qx5d.cn': ['xn--85x722f.xn--55qx5d.cn', '食狮.公司.cn'],
-  'www.xn--85x722f.xn--55qx5d.cn': [
-    'www.xn--85x722f.xn--55qx5d.cn',
-    '食狮.公司.cn',
-  ],
+  'www.xn--85x722f.xn--55qx5d.cn': ['www.xn--85x722f.xn--55qx5d.cn', '食狮.公司.cn'],
   'shishi.xn--55qx5d.cn': ['shishi.xn--55qx5d.cn', 'shishi.公司.cn'],
   'xn--55qx5d.cn': ['xn--55qx5d.cn', null],
   // 'xn--85x722f.xn--fiqs8s': [ 'xn--85x722f.xn--fiqs8s',
@@ -127,10 +124,7 @@ const od_test_cases = {
   // 'shishi.xn--fiqs8s': [ 'shishi.xn--fiqs8s', 'shishi.xn--fiqs8s'],
   'xn--fiqs8s': ['xn--fiqs8s', null],
   // 'atweek.xn--90aekg1c8b.xn--p1ai': [ 'atweek.xn--90aekg1c8b.xn--p1ai', null ],
-  'atweek.xn--90aekg1c8b.xn--p1ai': [
-    'atweek.xn--90aekg1c8b.xn--p1ai',
-    'зтъбги.рф',
-  ],
+  'atweek.xn--90aekg1c8b.xn--p1ai': ['atweek.xn--90aekg1c8b.xn--p1ai', 'зтъбги.рф'],
 }
 
 describe('get_organizational_domain, test suite', () => {
@@ -169,22 +163,47 @@ describe('split_hostname', () => {
     assert.equal(foo[0], 'host.sub1.sub2')
     assert.equal(foo[1], 'domain.com')
   })
-  ;[1, 2, 3].forEach((level) => {
+
+  for (const level of [1, 2, 3]) {
     it(`splits on domain boundary, level ${level}`, function () {
       const foo = tlds.split_hostname('host.sub1.sub2.domain.com', level)
       assert.equal(foo[0], 'host.sub1.sub2')
       assert.equal(foo[1], 'domain.com')
     })
-  })
+  }
 
   it('splits empty host on TLD only', function () {
     assert.deepEqual(tlds.split_hostname('com'), ['', 'com'])
   })
 
   it('splits a 3-level TLD', function () {
-    assert.deepEqual(tlds.split_hostname('host.b.topica.com', 4), [
-      'host',
-      'b.topica.com',
-    ])
+    assert.deepEqual(tlds.split_hostname('host.b.topica.com', 4), ['host', 'b.topica.com'])
   })
+})
+
+describe('asParts', () => {
+  const testCases = [
+    {
+      host: 'host.sub1.sub2.domain.com',
+      part: { tld: 'com', org: 'domain', host: 'host.sub1.sub2' },
+    },
+    {
+      host: 'bbc.co.uk',
+      part: { tld: 'co.uk', org: 'bbc', host: '' },
+    },
+    {
+      host: 'www.bbc.co.uk',
+      part: { tld: 'co.uk', org: 'bbc', host: 'www' },
+    },
+    {
+      host: 'com',
+      part: { tld: 'com', org: '', host: '' },
+    },
+  ]
+
+  for (const c of testCases) {
+    it(`returns ${c.host} as parts`, function () {
+      assert.deepEqual(tlds.asParts(c.host), c.part)
+    })
+  }
 })
