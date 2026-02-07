@@ -8,14 +8,18 @@ Haraka TLD utilities
 
 ## Installation
 
-    npm install haraka-tld
+```sh
+npm install haraka-tld
+```
 
 ## Usage
 
-    const tlds = require('haraka-tld');
-    if (tlds.get_organizational_domain('mail.example.com') === 'example.com') {
-        // do something
-    }
+```js
+const tlds = require('haraka-tld')
+if (tlds.get_organizational_domain('mail.example.com') === 'example.com') {
+  // do something
+}
+```
 
 ## Functions exported
 
@@ -33,21 +37,43 @@ get_organizational_domain('mail.example.com'); // -> example.com
 
 ### Haraka usage example:
 
-    const tlds = require('haraka-tld');
-    const from_dom = tlds.get_organizational_domain(connection.transaction.mail_from.host);
-    const to_dom = tlds.get_organizational_domain(connection.transaction.rcpt_to.host);
-    if (from_dom == to_dom) {
-        // the envelope sender domain matches the envelope receiver domain
-        // eg: root@mail.example.com would match sysadmin@example.com
-    }
+```js
+const tlds = require('haraka-tld')
+const from_dom = tlds.get_organizational_domain(connection.transaction.mail_from.host)
+const to_dom = tlds.get_organizational_domain(connection.transaction.rcpt_to.host)
+if (from_dom == to_dom) {
+  // the envelope sender domain matches the envelope receiver domain
+  // eg: root@mail.example.com would match sysadmin@example.com
+}
+```
 
 ### split_hostname
 
 Split FQDN to host and domain
 
-    const split = tlds.split_hostname('host.sub1.sub2.domain.com');
-    // split[0] = 'host.sub1.sub2';
-    // split[1] = 'domain.com';
+```js
+const split = tlds.split_hostname('host.sub1.sub2.domain.com')
+// split[0] = 'host.sub1.sub2';
+// split[1] = 'domain.com';
+```
+
+### asParts
+
+Splits the FQDN into domain boundaries:
+
+```js
+tlds.asParts('host.sub1.sub2.domain.com')
+```
+
+returns:
+
+```js
+{
+  tld: 'com',
+  org: 'domain',
+  host: 'host.sub1.sub2'
+}
+```
 
 ### is_public_suffix
 
