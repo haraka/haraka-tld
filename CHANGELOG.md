@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 - doc(README): improve docs with code fences
 - feat: added asParts
+- updated TLD files
 
 ### [1.2.8] - 2026-01-27
 
