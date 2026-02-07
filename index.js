@@ -139,7 +139,7 @@ exports.asParts = function (host) {
   let greatest = 0
   for (let i = 1; i <= labels.length; i++) {
     if (!labels[i - 1]) return r // dot w/o label
-    let tld = labels.slice(0, i).reverse().join('.')
+    const tld = labels.slice(0, i).reverse().join('.')
     if (exports.is_public_suffix(tld)) {
       greatest = +(i + 1)
     } else if (exports.public_suffix_list[`!${tld}`]) {
