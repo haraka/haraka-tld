@@ -131,11 +131,8 @@ exports.asParts = function (host) {
   host = normalizeHost(host)
   if (!host) return r
 
-  // www.example.com -> [ com, example, www ]
   const labels = host.split('.').reverse()
 
-  // 4.3 Search the public suffix list for the name that matches the
-  //     largest number of labels found in the subject DNS domain.
   let greatest = 0
   for (let i = 1; i <= labels.length; i++) {
     if (!labels[i - 1]) return r // dot w/o label

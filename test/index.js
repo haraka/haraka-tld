@@ -195,6 +195,10 @@ describe('asParts', () => {
       host: 'www.bbc.co.uk',
       part: { tld: 'co.uk', org: 'bbc', host: 'www' },
     },
+    {
+      host: 'com',
+      part: { tld: 'com', org: '', host: '' },
+    },
   ]
 
   for (const c of testCases) {
