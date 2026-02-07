@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.2.8",
+  "version": "1.3.0",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "files": [
@@ -17,7 +17,7 @@
     "lint:fix": "npx eslint --fix *.js lib test",
     "prettier": "npx prettier . --check",
     "prettier:fix": "npx prettier . --write --log-level=warn",
-    "test": "npx mocha@^11",
+    "test": "npx mocha",
     "versions": "npx dependency-version-checker check",
     "versions:fix": "npx dependency-version-checker update && npm run prettier:fix"
   },
@@ -43,6 +43,7 @@
     "@haraka/eslint-config": "^2.0.2"
   },
   "prettier": {
+    "printWidth": 120,
     "singleQuote": true,
     "semi": false
   }

@@ -111,19 +111,11 @@ exports.split_hostname = function (host, level) {
     domain = split.shift() + domain
   }
   // 2nd TLD
-  if (
-    level >= 2 &&
-    split[0] &&
-    exports.two_level_tlds[`${split[0]}.${domain}`]
-  ) {
+  if (level >= 2 && split[0] && exports.two_level_tlds[`${split[0]}.${domain}`]) {
     domain = `${split.shift()}.${domain}`
   }
   // 3rd TLD
-  if (
-    level >= 3 &&
-    split[0] &&
-    exports.three_level_tlds[`${split[0]}.${domain}`]
-  ) {
+  if (level >= 3 && split[0] && exports.three_level_tlds[`${split[0]}.${domain}`]) {
     domain = `${split.shift()}.${domain}`
   }
   // Domain
@@ -131,6 +123,41 @@ exports.split_hostname = function (host, level) {
     domain = `${split.shift()}.${domain}`
   }
   return [split.reverse().join('.'), domain]
+}
+
+exports.asParts = function (host) {
+  const r = { tld: '', org: '', host: '' }
+
+  host = normalizeHost(host)
+  if (!host) return r
+
+  // www.example.com -> [ com, example, www ]
+  const labels = host.split('.').reverse()
+
+  // 4.3 Search the public suffix list for the name that matches the
+  //     largest number of labels found in the subject DNS domain.
+  let greatest = 0
+  for (let i = 1; i <= labels.length; i++) {
+    if (!labels[i - 1]) return r // dot w/o label
+    let tld = labels.slice(0, i).reverse().join('.')
+    if (exports.is_public_suffix(tld)) {
+      greatest = +(i + 1)
+    } else if (exports.public_suffix_list[`!${tld}`]) {
+      greatest = i
+    }
+  }
+
+  if (greatest === 0) return r // no valid TLD
+  r.tld = labels
+    .slice(0, greatest - 1)
+    .reverse()
+    .join('.')
+  r.org = labels
+    .slice(greatest - 1, greatest)
+    .reverse()
+    .join('.')
+  r.host = labels.slice(greatest).reverse().join('.')
+  return r
 }
 
 function load_public_suffix_list() {
@@ -163,9 +190,7 @@ function load_public_suffix_list() {
     exports.public_suffix_list[suffix] = []
   })
 
-  logger.log(
-    `loaded ${Object.keys(exports.public_suffix_list).length} Public Suffixes`,
-  )
+  logger.log(`loaded ${Object.keys(exports.public_suffix_list).length} Public Suffixes`)
 }
 
 function load_tld_files() {
