@@ -5,13 +5,12 @@ const assert = require('node:assert')
 const tlds = require('../index')
 
 describe('haraka-tld', function () {
-  it('exports lists with reasonable qty', function (done) {
+  it('exports lists with reasonable qty', function () {
     // console.log(tlds);
     assert.ok(Object.keys(tlds.public_suffix_list).length > 7000)
     assert.ok(Object.keys(tlds.top_level_tlds).length > 1000)
     assert.ok(Object.keys(tlds.two_level_tlds).length > 5000)
     assert.ok(Object.keys(tlds.three_level_tlds).length > 2000)
-    done()
   })
 })
 
