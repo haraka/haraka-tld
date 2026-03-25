@@ -124,6 +124,8 @@ ap-melbourne-1.oraclecloud.com
 ap-mumbai-1.oraclecloud.com
 ap-northeast-1.amazonaws.com
 ap-northeast-1.elasticbeanstalk.com
+ap-northeast-1.resend-clicks-a.com
+ap-northeast-1.resend-clicks.com
 ap-northeast-1.resend-links.com
 ap-northeast-2.amazonaws.com
 ap-northeast-2.elasticbeanstalk.com
@@ -454,6 +456,7 @@ click.convertkit-mail.com
 click.mailersend.net
 clicks.bzbmail.com
 clicks.dattanet.com
+clicks.memtas.com
 clicks.mlsend.com
 clicks.mlsend2.com
 clicks.mtaes.net
@@ -523,8 +526,14 @@ cun.mybluehost.me
 customer.mythic-beasts.com
 customer.voyado.com
 customers.beenergised.com
+cweb01.gamingcontrol.de
 cweb01.gamingweb.de
+cweb02.gamingcontrol.de
 cweb02.gamingweb.de
+cweb03.gamingcontrol.de
+cweb04.gamingcontrol.de
+cweb05.gamingcontrol.de
+cweb06.gamingcontrol.de
 cy.eu.org
 cye.mybluehost.me
 cyt.mybluehost.me
@@ -699,7 +708,11 @@ eu-north-1.amazonaws.com
 eu-west-1.amazonaws.com
 eu-west-1.avsvmcloud.com
 eu-west-1.awstrack.me
+eu-west-1.convex.cloud
+eu-west-1.convex.site
 eu-west-1.elasticbeanstalk.com
+eu-west-1.resend-clicks-a.com
+eu-west-1.resend-clicks.com
 eu-west-1.resend-links.com
 eu-west-2.amazonaws.com
 eu-west-2.awstrack.me
@@ -736,6 +749,8 @@ eu3.cas.ms
 eue.mybluehost.me
 europe-southwest1.run.app
 europe-west1.run.app
+europe-west2.run.app
+europe-west3.run.app
 ewr1.vultrobjects.com
 ewx.mybluehostin.me
 ex.futurecms.at
@@ -2301,6 +2316,7 @@ omsk.rt.ru
 omura.nagasaki.jp
 omuta.fukuoka.jp
 on.drv.tw
+on.expo.app
 on.fleek.co
 onagawa.miyagi.jp
 oneindonesia.co.id
@@ -2661,6 +2677,8 @@ s4hana.ondemand.com
 sa-east-1.amazonaws.com
 sa-east-1.awstrack.me
 sa-east-1.elasticbeanstalk.com
+sa-east-1.resend-clicks-a.com
+sa-east-1.resend-clicks.com
 sa-east-1.resend-links.com
 sa-santiago-1.oraclecloud.com
 sa-saopaulo-1.oraclecloud.com
@@ -3307,8 +3325,12 @@ us-chi1.upcloud.com
 us-chi1.upcloud.host
 us-east-1.awsapprunner.com
 us-east-1.awstrack.me
+us-east-1.convex.cloud
+us-east-1.convex.site
 us-east-1.elasticbeanstalk.com
 us-east-1.linodeobjects.com
+us-east-1.resend-clicks-a.com
+us-east-1.resend-clicks.com
 us-east-1.resend-links.com
 us-east-2.avsvmcloud.com
 us-east-2.awsapprunner.com
@@ -3328,6 +3350,7 @@ us-sanjose-1.oraclecloud.com
 us-sea-1.linodeobjects.com
 us-sjo1.upcloud.com
 us-sjo1.upcloud.host
+us-south1.run.app
 us-southeast-1.linodeobjects.com
 us-west-1.amazonaws.com
 us-west-1.elasticbeanstalk.com
