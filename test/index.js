@@ -1,9 +1,13 @@
 'use strict'
 
 const assert = require('node:assert/strict')
-const { describe, it } = require('node:test')
+const { before, describe, it } = require('node:test')
 
 const tlds = require('../index')
+
+before(async () => {
+  await tlds.ready
+})
 
 describe('haraka-tld', () => {
   it('exports lists with reasonable qty', () => {

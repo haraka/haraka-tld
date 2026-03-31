@@ -1,7 +1,9 @@
 'use strict'
 
 const fs = require('node:fs')
+const fsp = require('node:fs/promises')
 const path = require('node:path')
+const readline = require('node:readline')
 
 const punycode = require('punycode.js')
 
@@ -9,8 +11,6 @@ const update = require('./lib/update')
 
 const regex = {
   comment: /^\s*[;#].*$/,
-  blank: /^\s*$/,
-  line: /^\s*(.*?)\s*$/,
 }
 
 const logger = {
@@ -136,7 +136,7 @@ exports.asParts = function (host) {
     if (!labels[i - 1]) return r // dot w/o label
     const tld = labels.slice(0, i).reverse().join('.')
     if (exports.is_public_suffix(tld)) {
-      greatest = +(i + 1)
+      greatest = i + 1
     } else if (exports.public_suffix_list[`!${tld}`]) {
       greatest = i
     }
@@ -155,8 +155,9 @@ exports.asParts = function (host) {
   return r
 }
 
-function load_public_suffix_list() {
-  load_list_from_file('public-suffix-list').forEach((entry) => {
+async function load_public_suffix_list() {
+  const entries = await load_list_from_file('public-suffix-list')
+  for (const entry of entries) {
     // Parsing rules: http://publicsuffix.org/list/
     // Each line is only read up to the first whitespace
     const suffix = entry.split(/\s/).shift()
@@ -183,32 +184,27 @@ function load_public_suffix_list() {
     }
 
     exports.public_suffix_list[suffix] = []
-  })
+  }
 
   logger.log(`loaded ${Object.keys(exports.public_suffix_list).length} Public Suffixes`)
 }
 
-function load_tld_files() {
-  load_list_from_file('top-level-tlds').forEach((tld) => {
-    exports.top_level_tlds[tld] = 1
-  })
+async function load_tld_files() {
+  const [top, two, three, extra] = await Promise.all([
+    load_list_from_file('top-level-tlds'),
+    load_list_from_file('two-level-tlds'),
+    load_list_from_file('three-level-tlds'),
+    load_list_from_file('extra-tlds'),
+  ])
 
-  load_list_from_file('two-level-tlds').forEach((tld) => {
-    exports.two_level_tlds[tld] = 1
-  })
-
-  load_list_from_file('three-level-tlds').forEach((tld) => {
-    exports.three_level_tlds[tld] = 1
-  })
-
-  load_list_from_file('extra-tlds').forEach((tld) => {
+  for (const tld of top) exports.top_level_tlds[tld] = 1
+  for (const tld of two) exports.two_level_tlds[tld] = 1
+  for (const tld of three) exports.three_level_tlds[tld] = 1
+  for (const tld of extra) {
     const s = tld.split('.')
-    if (s.length === 2) {
-      exports.two_level_tlds[tld] = 1
-    } else if (s.length === 3) {
-      exports.three_level_tlds[tld] = 1
-    }
-  })
+    if (s.length === 2) exports.two_level_tlds[tld] = 1
+    else if (s.length === 3) exports.three_level_tlds[tld] = 1
+  }
 
   logger.log(`loaded TLD files:
   1=${Object.keys(exports.top_level_tlds).length}
@@ -216,31 +212,32 @@ function load_tld_files() {
   3=${Object.keys(exports.three_level_tlds).length}`)
 }
 
-function load_list_from_file(name) {
-  const result = []
-
+async function load_list_from_file(name) {
   let filePath = path.resolve(__dirname, 'etc', name)
-  if (!fs.existsSync(filePath)) {
+  try {
+    await fsp.access(filePath)
+  } catch {
     // not loaded by Haraka, use local path
     filePath = path.resolve('etc', name)
   }
 
-  fs.readFileSync(filePath, 'utf8')
-    .split(/\r\n|\r|\n/)
-    .forEach((line) => {
-      if (regex.comment.test(line)) return
-      if (regex.blank.test(line)) return
+  const result = []
+  const rl = readline.createInterface({ input: fs.createReadStream(filePath), crlfDelay: Infinity })
 
-      const line_data = regex.line.exec(line)
-      if (!line_data) return
+  for await (const line of rl) {
+    const trimmed = line.trim()
+    if (!trimmed || regex.comment.test(trimmed)) continue
+    result.push(trimmed.toLowerCase())
+  }
 
-      result.push(line_data[1].toLowerCase())
-    })
   return result
 }
 
-load_tld_files()
-load_public_suffix_list()
+// Populate all lists on load. Callers can await exports.ready before use.
+exports.ready = (async () => {
+  await load_tld_files()
+  await load_public_suffix_list()
+})()
 
 // every 15 days, check for an update. If updated, download, install,
 // and then read it into the exported object
@@ -248,7 +245,7 @@ setInterval(
   async () => {
     try {
       const updated = await update.updatePSLfile()
-      if (updated) load_public_suffix_list()
+      if (updated) await load_public_suffix_list()
     } catch (err) {
       console.error(err.message)
     }
