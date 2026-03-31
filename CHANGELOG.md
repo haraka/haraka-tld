@@ -4,6 +4,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
+### [1.3.3] - 2026-03-31
+
+
 ### [1.3.2] - 2026-03-31
 
 - style: ES2024 updates throughout
@@ -233,3 +236,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 [1.3.0]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.0
 [1.3.1]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.1
 [1.3.2]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.2
+[1.3.3]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.3
