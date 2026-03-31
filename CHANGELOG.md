@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### [1.3.2] - 2026-03-31
 
 - style: ES2024 updates throughout
+- update TLD files
 - ci: add explicit GHA permissions
 - test: replace mocha with node:test
 - test: add additional tests targeting coverage
