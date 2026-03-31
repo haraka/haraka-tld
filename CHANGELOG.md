@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### [1.3.2] - 2026-03-31
 
 - ci: add explicit GHA permissions
-- test: release process
+- test: replace mocha with node:test
 
 ### [1.3.1] - 2026-03-24
 

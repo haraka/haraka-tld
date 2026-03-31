@@ -1,12 +1,13 @@
 'use strict'
 
-const assert = require('node:assert/strict')
+const assert = require('node:assert')
 const { describe, it } = require('node:test')
 
 const tlds = require('../index')
 
 describe('haraka-tld', function () {
   it('exports lists with reasonable qty', function () {
+    // console.log(tlds);
     assert.ok(Object.keys(tlds.public_suffix_list).length > 7000)
     assert.ok(Object.keys(tlds.top_level_tlds).length > 1000)
     assert.ok(Object.keys(tlds.two_level_tlds).length > 5000)
@@ -130,7 +131,7 @@ describe('get_organizational_domain, test suite', () => {
   Object.keys(od_test_cases).forEach((descr) => {
     const tc = od_test_cases[descr]
     it(descr, function () {
-      assert.equal(tlds.get_organizational_domain(tc[0]), tc[1])
+      assert.strictEqual(tlds.get_organizational_domain(tc[0]), tc[1])
     })
   })
 })
@@ -151,7 +152,7 @@ describe('is_public_suffix', () => {
   Object.keys(ps_test_cases).forEach((descr) => {
     const tc = ps_test_cases[descr]
     it(descr, function () {
-      assert.equal(tlds.is_public_suffix(tc[0]), tc[1])
+      assert.strictEqual(tlds.is_public_suffix(tc[0]), tc[1])
     })
   })
 })
@@ -159,24 +160,24 @@ describe('is_public_suffix', () => {
 describe('split_hostname', () => {
   it('splits on domain boundary', function () {
     const foo = tlds.split_hostname('host.sub1.sub2.domain.com')
-    assert.equal(foo[0], 'host.sub1.sub2')
-    assert.equal(foo[1], 'domain.com')
+    assert.strictEqual(foo[0], 'host.sub1.sub2')
+    assert.strictEqual(foo[1], 'domain.com')
   })
 
   for (const level of [1, 2, 3]) {
     it(`splits on domain boundary, level ${level}`, function () {
       const foo = tlds.split_hostname('host.sub1.sub2.domain.com', level)
-      assert.equal(foo[0], 'host.sub1.sub2')
-      assert.equal(foo[1], 'domain.com')
+      assert.strictEqual(foo[0], 'host.sub1.sub2')
+      assert.strictEqual(foo[1], 'domain.com')
     })
   }
 
   it('splits empty host on TLD only', function () {
-    assert.deepEqual(tlds.split_hostname('com'), ['', 'com'])
+    assert.deepStrictEqual(tlds.split_hostname('com'), ['', 'com'])
   })
 
   it('splits a 3-level TLD', function () {
-    assert.deepEqual(tlds.split_hostname('host.b.topica.com', 4), ['host', 'b.topica.com'])
+    assert.deepStrictEqual(tlds.split_hostname('host.b.topica.com', 4), ['host', 'b.topica.com'])
   })
 })
 
@@ -202,7 +203,7 @@ describe('asParts', () => {
 
   for (const c of testCases) {
     it(`returns ${c.host} as parts`, function () {
-      assert.deepEqual(tlds.asParts(c.host), c.part)
+      assert.deepStrictEqual(tlds.asParts(c.host), c.part)
     })
   }
 })
