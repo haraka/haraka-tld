@@ -17,7 +17,7 @@
     "lint:fix": "npx eslint --fix *.js lib test",
     "prettier": "npx prettier . --check",
     "prettier:fix": "npx prettier . --write --log-level=warn",
-    "test": "npx mocha",
+    "test": "node --test",
     "versions": "npx npm-dep-mgr check",
     "versions:fix": "npx npm-dep-mgr update",
     "test:coverage": "npx c8 --reporter=text --reporter=text-summary npm test"
