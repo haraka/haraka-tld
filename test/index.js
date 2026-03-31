@@ -11,10 +11,10 @@ before(async () => {
 
 describe('haraka-tld', () => {
   it('exports lists with reasonable qty', () => {
-    assert.ok(Object.keys(tlds.public_suffix_list).length > 7000)
-    assert.ok(Object.keys(tlds.top_level_tlds).length > 1000)
-    assert.ok(Object.keys(tlds.two_level_tlds).length > 5000)
-    assert.ok(Object.keys(tlds.three_level_tlds).length > 2000)
+    assert.ok(tlds.public_suffix_list.size > 7000)
+    assert.ok(tlds.top_level_tlds.size > 1000)
+    assert.ok(tlds.two_level_tlds.size > 5000)
+    assert.ok(tlds.three_level_tlds.size > 2000)
   })
 })
 

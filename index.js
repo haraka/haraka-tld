@@ -24,10 +24,10 @@ const logger = {
   },
 }
 
-exports.public_suffix_list = {}
-exports.top_level_tlds = {}
-exports.two_level_tlds = {}
-exports.three_level_tlds = {}
+exports.public_suffix_list = new Map()
+exports.top_level_tlds = new Set()
+exports.two_level_tlds = new Set()
+exports.three_level_tlds = new Set()
 
 function normalizeHost(host) {
   host = host.toLowerCase()
@@ -45,15 +45,15 @@ exports.is_public_suffix = function (host) {
   if (!host) return false
   host = normalizeHost(host)
 
-  if (exports.public_suffix_list[host]) return true
+  if (exports.public_suffix_list.has(host)) return true
 
   const up_one_level = host.split('.').slice(1).join('.') // co.uk -> uk
   if (!up_one_level) return false // no dot?
 
   const wildHost = `*.${up_one_level}`
-  if (exports.public_suffix_list[wildHost]) {
+  if (exports.public_suffix_list.has(wildHost)) {
     // check exception list
-    if (exports.public_suffix_list[`!${host}`]) return false
+    if (exports.public_suffix_list.has(`!${host}`)) return false
     return true // matched a wildcard, ex: *.uk
   }
 
@@ -79,7 +79,7 @@ exports.get_organizational_domain = function (host) {
     const tld = labels.slice(0, i).reverse().join('.')
     if (exports.is_public_suffix(tld)) {
       greatest = i + 1
-    } else if (exports.public_suffix_list[`!${tld}`]) {
+    } else if (exports.public_suffix_list.has(`!${tld}`)) {
       greatest = i
     }
   }
@@ -105,15 +105,15 @@ exports.split_hostname = function (host, level) {
   const split = host.toLowerCase().split(/\./).reverse()
   let domain = ''
   // TLD
-  if (level >= 1 && split[0] && exports.top_level_tlds[split[0]]) {
+  if (level >= 1 && split[0] && exports.top_level_tlds.has(split[0])) {
     domain = split.shift() + domain
   }
   // 2nd TLD
-  if (level >= 2 && split[0] && exports.two_level_tlds[`${split[0]}.${domain}`]) {
+  if (level >= 2 && split[0] && exports.two_level_tlds.has(`${split[0]}.${domain}`)) {
     domain = `${split.shift()}.${domain}`
   }
   // 3rd TLD
-  if (level >= 3 && split[0] && exports.three_level_tlds[`${split[0]}.${domain}`]) {
+  if (level >= 3 && split[0] && exports.three_level_tlds.has(`${split[0]}.${domain}`)) {
     domain = `${split.shift()}.${domain}`
   }
   // Domain
@@ -137,7 +137,7 @@ exports.asParts = function (host) {
     const tld = labels.slice(0, i).reverse().join('.')
     if (exports.is_public_suffix(tld)) {
       greatest = i + 1
-    } else if (exports.public_suffix_list[`!${tld}`]) {
+    } else if (exports.public_suffix_list.has(`!${tld}`)) {
       greatest = i
     }
   }
@@ -164,29 +164,29 @@ async function load_public_suffix_list() {
 
     // Each line which is not entirely whitespace or begins with a comment
     // contains a rule.
-    if (!suffix) return // empty string
-    if ('/' === suffix.substring(0, 1)) return // comment
+    if (!suffix) continue // empty string
+    if (suffix.startsWith('/')) continue // comment
 
     // A rule may begin with a "!" (exclamation mark). If it does, it is
     // labelled as a "exception rule" and then treated as if the exclamation
     // mark is not present.
-    if ('!' === suffix.substring(0, 1)) {
+    if (suffix.startsWith('!')) {
       const eName = suffix.substring(1) // remove ! prefix
       // bbc.co.uk -> co.uk
       const up_one = eName.split('.').slice(1).join('.')
-      if (exports.public_suffix_list[up_one]) {
-        exports.public_suffix_list[up_one].push(eName)
-      } else if (exports.public_suffix_list[`*.${up_one}`]) {
-        exports.public_suffix_list[`*.${up_one}`].push(eName)
+      if (exports.public_suffix_list.has(up_one)) {
+        exports.public_suffix_list.get(up_one).push(eName)
+      } else if (exports.public_suffix_list.has(`*.${up_one}`)) {
+        exports.public_suffix_list.get(`*.${up_one}`).push(eName)
       } else {
         console.error(`unable to find parent for exception: ${eName}`)
       }
     }
 
-    exports.public_suffix_list[suffix] = []
+    exports.public_suffix_list.set(suffix, [])
   }
 
-  logger.log(`loaded ${Object.keys(exports.public_suffix_list).length} Public Suffixes`)
+  logger.log(`loaded ${exports.public_suffix_list.size} Public Suffixes`)
 }
 
 async function load_tld_files() {
@@ -197,19 +197,19 @@ async function load_tld_files() {
     load_list_from_file('extra-tlds'),
   ])
 
-  for (const tld of top) exports.top_level_tlds[tld] = 1
-  for (const tld of two) exports.two_level_tlds[tld] = 1
-  for (const tld of three) exports.three_level_tlds[tld] = 1
+  for (const tld of top) exports.top_level_tlds.add(tld)
+  for (const tld of two) exports.two_level_tlds.add(tld)
+  for (const tld of three) exports.three_level_tlds.add(tld)
   for (const tld of extra) {
     const s = tld.split('.')
-    if (s.length === 2) exports.two_level_tlds[tld] = 1
-    else if (s.length === 3) exports.three_level_tlds[tld] = 1
+    if (s.length === 2) exports.two_level_tlds.add(tld)
+    else if (s.length === 3) exports.three_level_tlds.add(tld)
   }
 
   logger.log(`loaded TLD files:
-  1=${Object.keys(exports.top_level_tlds).length}
-  2=${Object.keys(exports.two_level_tlds).length}
-  3=${Object.keys(exports.three_level_tlds).length}`)
+  1=${exports.top_level_tlds.size}
+  2=${exports.two_level_tlds.size}
+  3=${exports.three_level_tlds.size}`)
 }
 
 async function load_list_from_file(name) {
