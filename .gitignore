@@ -45,3 +45,5 @@ bower_components
 
 test/fixtures/out
 haraka-update.sh
+CLAUDE.md
+GEMINI.md

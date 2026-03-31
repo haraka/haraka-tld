@@ -1,7 +1,7 @@
 'use strict'
 
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 
 const punycode = require('punycode.js')
 
@@ -24,12 +24,10 @@ const logger = {
   },
 }
 
-module.exports = exports = {
-  public_suffix_list: {},
-  top_level_tlds: {},
-  two_level_tlds: {},
-  three_level_tlds: {},
-}
+exports.public_suffix_list = {}
+exports.top_level_tlds = {}
+exports.two_level_tlds = {}
+exports.three_level_tlds = {}
 
 function normalizeHost(host) {
   host = host.toLowerCase()
@@ -37,7 +35,7 @@ function normalizeHost(host) {
   if (/^xn--|\.xn--/.test(host)) {
     try {
       host = punycode.toUnicode(host)
-    } catch (ignore) {}
+    } catch {}
   }
 
   return host
@@ -80,7 +78,7 @@ exports.get_organizational_domain = function (host) {
     if (!labels[i - 1]) return null // dot w/o label
     const tld = labels.slice(0, i).reverse().join('.')
     if (exports.is_public_suffix(tld)) {
-      greatest = +(i + 1)
+      greatest = i + 1
     } else if (exports.public_suffix_list[`!${tld}`]) {
       greatest = i
     }
@@ -100,7 +98,7 @@ exports.get_organizational_domain = function (host) {
 exports.split_hostname = function (host, level) {
   if (typeof host !== 'string') return []
 
-  if (!level || (level && !(level >= 1 && level <= 3))) {
+  if (!level || level < 1 || level > 3) {
     level = 2
   }
 
@@ -174,7 +172,7 @@ function load_public_suffix_list() {
     if ('!' === suffix.substring(0, 1)) {
       const eName = suffix.substring(1) // remove ! prefix
       // bbc.co.uk -> co.uk
-      const up_one = suffix.split('.').slice(1).join('.')
+      const up_one = eName.split('.').slice(1).join('.')
       if (exports.public_suffix_list[up_one]) {
         exports.public_suffix_list[up_one].push(eName)
       } else if (exports.public_suffix_list[`*.${up_one}`]) {
@@ -191,20 +189,20 @@ function load_public_suffix_list() {
 }
 
 function load_tld_files() {
-  load_list_from_file('top-level-tlds').forEach(function (tld) {
+  load_list_from_file('top-level-tlds').forEach((tld) => {
     exports.top_level_tlds[tld] = 1
   })
 
-  load_list_from_file('two-level-tlds').forEach(function (tld) {
+  load_list_from_file('two-level-tlds').forEach((tld) => {
     exports.two_level_tlds[tld] = 1
   })
 
-  load_list_from_file('three-level-tlds').forEach(function (tld) {
+  load_list_from_file('three-level-tlds').forEach((tld) => {
     exports.three_level_tlds[tld] = 1
   })
 
-  load_list_from_file('extra-tlds').forEach(function (tld) {
-    const s = tld.split(/\./)
+  load_list_from_file('extra-tlds').forEach((tld) => {
+    const s = tld.split('.')
     if (s.length === 2) {
       exports.two_level_tlds[tld] = 1
     } else if (s.length === 3) {
@@ -227,7 +225,7 @@ function load_list_from_file(name) {
     filePath = path.resolve('etc', name)
   }
 
-  fs.readFileSync(filePath, 'UTF-8')
+  fs.readFileSync(filePath, 'utf8')
     .split(/\r\n|\r|\n/)
     .forEach((line) => {
       if (regex.comment.test(line)) return
@@ -236,7 +234,7 @@ function load_list_from_file(name) {
       const line_data = regex.line.exec(line)
       if (!line_data) return
 
-      result.push(line_data[1].trim().toLowerCase())
+      result.push(line_data[1].toLowerCase())
     })
   return result
 }
@@ -247,15 +245,13 @@ load_public_suffix_list()
 // every 15 days, check for an update. If updated, download, install,
 // and then read it into the exported object
 setInterval(
-  () => {
-    update
-      .updatePSLfile()
-      .then((updated) => {
-        if (updated) load_public_suffix_list()
-      })
-      .catch((err) => {
-        console.error(err.message)
-      })
+  async () => {
+    try {
+      const updated = await update.updatePSLfile()
+      if (updated) load_public_suffix_list()
+    } catch (err) {
+      console.error(err.message)
+    }
   },
   15 * 86400 * 1000,
 ).unref() // each 15 days
