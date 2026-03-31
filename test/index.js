@@ -1,16 +1,20 @@
 'use strict'
 
-const assert = require('node:assert')
+const assert = require('node:assert/strict')
+const { before, describe, it } = require('node:test')
 
 const tlds = require('../index')
 
-describe('haraka-tld', function () {
-  it('exports lists with reasonable qty', function () {
-    // console.log(tlds);
-    assert.ok(Object.keys(tlds.public_suffix_list).length > 7000)
-    assert.ok(Object.keys(tlds.top_level_tlds).length > 1000)
-    assert.ok(Object.keys(tlds.two_level_tlds).length > 5000)
-    assert.ok(Object.keys(tlds.three_level_tlds).length > 2000)
+before(async () => {
+  await tlds.ready
+})
+
+describe('haraka-tld', () => {
+  it('exports lists with reasonable qty', () => {
+    assert.ok(tlds.public_suffix_list.size > 7000)
+    assert.ok(tlds.top_level_tlds.size > 1000)
+    assert.ok(tlds.two_level_tlds.size > 5000)
+    assert.ok(tlds.three_level_tlds.size > 2000)
   })
 })
 
@@ -31,8 +35,6 @@ const od_test_cases = {
   // Unlisted TLD.
   example: ['example', null],
   'example.example': ['example.example', null],
-  // _org_domain(test, 'b.example.example', 'example.example');
-  // _org_domain(test, 'a.b.example.example', 'example.example');
 
   // Listed, but non-Internet, TLD.
   local: ['local', null],
@@ -106,7 +108,7 @@ const od_test_cases = {
   'shishi.公司.cn': ['shishi.公司.cn', 'shishi.公司.cn'],
   '公司.cn': ['公司.cn', null],
   '食狮.中国': ['食狮.中国', '食狮.中国'],
-  'www.食狮.中�': ['www.食狮.中国', '食狮.中国'],
+  'www.食狮.中国': ['www.食狮.中国', '食狮.中国'],
   'shishi.中国': ['shishi.中国', 'shishi.中国'],
   中国: ['中国', null],
 
@@ -116,23 +118,16 @@ const od_test_cases = {
   'www.xn--85x722f.xn--55qx5d.cn': ['www.xn--85x722f.xn--55qx5d.cn', '食狮.公司.cn'],
   'shishi.xn--55qx5d.cn': ['shishi.xn--55qx5d.cn', 'shishi.公司.cn'],
   'xn--55qx5d.cn': ['xn--55qx5d.cn', null],
-  // 'xn--85x722f.xn--fiqs8s': [ 'xn--85x722f.xn--fiqs8s',
-  //     'xn--85x722f.xn--fiqs8s'],
-  // 'www.xn--85x722f.xn--fiqs8s': [ 'www.xn--85x722f.xn--fiqs8s',
-  //         'xn--85x722f.xn--fiqs8s'],
-  // 'shishi.xn--fiqs8s': [ 'shishi.xn--fiqs8s', 'shishi.xn--fiqs8s'],
   'xn--fiqs8s': ['xn--fiqs8s', null],
-  // 'atweek.xn--90aekg1c8b.xn--p1ai': [ 'atweek.xn--90aekg1c8b.xn--p1ai', null ],
   'atweek.xn--90aekg1c8b.xn--p1ai': ['atweek.xn--90aekg1c8b.xn--p1ai', 'зтъбги.рф'],
 }
 
 describe('get_organizational_domain, test suite', () => {
-  Object.keys(od_test_cases).forEach((descr) => {
-    const tc = od_test_cases[descr]
-    it(descr, function () {
-      assert.equal(tlds.get_organizational_domain(tc[0]), tc[1])
+  for (const [descr, [input, expected]] of Object.entries(od_test_cases)) {
+    it(descr, () => {
+      assert.equal(tlds.get_organizational_domain(input), expected)
     })
-  })
+  }
 })
 
 const ps_test_cases = {
@@ -148,34 +143,33 @@ const ps_test_cases = {
 }
 
 describe('is_public_suffix', () => {
-  Object.keys(ps_test_cases).forEach((descr) => {
-    const tc = ps_test_cases[descr]
-    it(descr, function () {
-      assert.equal(tlds.is_public_suffix(tc[0]), tc[1])
+  for (const [descr, [input, expected]] of Object.entries(ps_test_cases)) {
+    it(descr, () => {
+      assert.equal(tlds.is_public_suffix(input), expected)
     })
-  })
+  }
 })
 
 describe('split_hostname', () => {
-  it('splits on domain boundary', function () {
+  it('splits on domain boundary', () => {
     const foo = tlds.split_hostname('host.sub1.sub2.domain.com')
     assert.equal(foo[0], 'host.sub1.sub2')
     assert.equal(foo[1], 'domain.com')
   })
 
   for (const level of [1, 2, 3]) {
-    it(`splits on domain boundary, level ${level}`, function () {
+    it(`splits on domain boundary, level ${level}`, () => {
       const foo = tlds.split_hostname('host.sub1.sub2.domain.com', level)
       assert.equal(foo[0], 'host.sub1.sub2')
       assert.equal(foo[1], 'domain.com')
     })
   }
 
-  it('splits empty host on TLD only', function () {
+  it('splits empty host on TLD only', () => {
     assert.deepEqual(tlds.split_hostname('com'), ['', 'com'])
   })
 
-  it('splits a 3-level TLD', function () {
+  it('splits a 3-level TLD', () => {
     assert.deepEqual(tlds.split_hostname('host.b.topica.com', 4), ['host', 'b.topica.com'])
   })
 })
@@ -200,9 +194,9 @@ describe('asParts', () => {
     },
   ]
 
-  for (const c of testCases) {
-    it(`returns ${c.host} as parts`, function () {
-      assert.deepEqual(tlds.asParts(c.host), c.part)
+  for (const { host, part } of testCases) {
+    it(`returns ${host} as parts`, () => {
+      assert.deepEqual(tlds.asParts(host), part)
     })
   }
 })

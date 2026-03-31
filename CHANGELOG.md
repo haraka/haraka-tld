@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
+### [1.3.2] - 2026-03-31
+
+- style: ES2024 updates throughout
+- update TLD files
+- ci: add explicit GHA permissions
+- test: replace mocha with node:test
+- test: add additional tests targeting coverage
+
 ### [1.3.1] - 2026-03-24
 
 - updated TLD files
@@ -224,3 +232,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 [1.2.8]: https://github.com/haraka/haraka-tld/releases/tag/v1.2.8
 [1.3.0]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.0
 [1.3.1]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.1
+[1.3.2]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.2

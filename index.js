@@ -1,7 +1,9 @@
 'use strict'
 
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const fsp = require('node:fs/promises')
+const path = require('node:path')
+const readline = require('node:readline')
 
 const punycode = require('punycode.js')
 
@@ -9,8 +11,6 @@ const update = require('./lib/update')
 
 const regex = {
   comment: /^\s*[;#].*$/,
-  blank: /^\s*$/,
-  line: /^\s*(.*?)\s*$/,
 }
 
 const logger = {
@@ -24,12 +24,10 @@ const logger = {
   },
 }
 
-module.exports = exports = {
-  public_suffix_list: {},
-  top_level_tlds: {},
-  two_level_tlds: {},
-  three_level_tlds: {},
-}
+exports.public_suffix_list = new Map()
+exports.top_level_tlds = new Set()
+exports.two_level_tlds = new Set()
+exports.three_level_tlds = new Set()
 
 function normalizeHost(host) {
   host = host.toLowerCase()
@@ -37,7 +35,7 @@ function normalizeHost(host) {
   if (/^xn--|\.xn--/.test(host)) {
     try {
       host = punycode.toUnicode(host)
-    } catch (ignore) {}
+    } catch {}
   }
 
   return host
@@ -47,15 +45,15 @@ exports.is_public_suffix = function (host) {
   if (!host) return false
   host = normalizeHost(host)
 
-  if (exports.public_suffix_list[host]) return true
+  if (exports.public_suffix_list.has(host)) return true
 
   const up_one_level = host.split('.').slice(1).join('.') // co.uk -> uk
   if (!up_one_level) return false // no dot?
 
   const wildHost = `*.${up_one_level}`
-  if (exports.public_suffix_list[wildHost]) {
+  if (exports.public_suffix_list.has(wildHost)) {
     // check exception list
-    if (exports.public_suffix_list[`!${host}`]) return false
+    if (exports.public_suffix_list.has(`!${host}`)) return false
     return true // matched a wildcard, ex: *.uk
   }
 
@@ -80,8 +78,8 @@ exports.get_organizational_domain = function (host) {
     if (!labels[i - 1]) return null // dot w/o label
     const tld = labels.slice(0, i).reverse().join('.')
     if (exports.is_public_suffix(tld)) {
-      greatest = +(i + 1)
-    } else if (exports.public_suffix_list[`!${tld}`]) {
+      greatest = i + 1
+    } else if (exports.public_suffix_list.has(`!${tld}`)) {
       greatest = i
     }
   }
@@ -100,22 +98,22 @@ exports.get_organizational_domain = function (host) {
 exports.split_hostname = function (host, level) {
   if (typeof host !== 'string') return []
 
-  if (!level || (level && !(level >= 1 && level <= 3))) {
+  if (!level || level < 1 || level > 3) {
     level = 2
   }
 
   const split = host.toLowerCase().split(/\./).reverse()
   let domain = ''
   // TLD
-  if (level >= 1 && split[0] && exports.top_level_tlds[split[0]]) {
+  if (level >= 1 && split[0] && exports.top_level_tlds.has(split[0])) {
     domain = split.shift() + domain
   }
   // 2nd TLD
-  if (level >= 2 && split[0] && exports.two_level_tlds[`${split[0]}.${domain}`]) {
+  if (level >= 2 && split[0] && exports.two_level_tlds.has(`${split[0]}.${domain}`)) {
     domain = `${split.shift()}.${domain}`
   }
   // 3rd TLD
-  if (level >= 3 && split[0] && exports.three_level_tlds[`${split[0]}.${domain}`]) {
+  if (level >= 3 && split[0] && exports.three_level_tlds.has(`${split[0]}.${domain}`)) {
     domain = `${split.shift()}.${domain}`
   }
   // Domain
@@ -138,8 +136,8 @@ exports.asParts = function (host) {
     if (!labels[i - 1]) return r // dot w/o label
     const tld = labels.slice(0, i).reverse().join('.')
     if (exports.is_public_suffix(tld)) {
-      greatest = +(i + 1)
-    } else if (exports.public_suffix_list[`!${tld}`]) {
+      greatest = i + 1
+    } else if (exports.public_suffix_list.has(`!${tld}`)) {
       greatest = i
     }
   }
@@ -157,105 +155,100 @@ exports.asParts = function (host) {
   return r
 }
 
-function load_public_suffix_list() {
-  load_list_from_file('public-suffix-list').forEach((entry) => {
+async function load_public_suffix_list() {
+  const entries = await load_list_from_file('public-suffix-list')
+  for (const entry of entries) {
     // Parsing rules: http://publicsuffix.org/list/
     // Each line is only read up to the first whitespace
     const suffix = entry.split(/\s/).shift()
 
     // Each line which is not entirely whitespace or begins with a comment
     // contains a rule.
-    if (!suffix) return // empty string
-    if ('/' === suffix.substring(0, 1)) return // comment
+    if (!suffix) continue // empty string
+    if (suffix.startsWith('/')) continue // comment
 
     // A rule may begin with a "!" (exclamation mark). If it does, it is
     // labelled as a "exception rule" and then treated as if the exclamation
     // mark is not present.
-    if ('!' === suffix.substring(0, 1)) {
+    if (suffix.startsWith('!')) {
       const eName = suffix.substring(1) // remove ! prefix
       // bbc.co.uk -> co.uk
-      const up_one = suffix.split('.').slice(1).join('.')
-      if (exports.public_suffix_list[up_one]) {
-        exports.public_suffix_list[up_one].push(eName)
-      } else if (exports.public_suffix_list[`*.${up_one}`]) {
-        exports.public_suffix_list[`*.${up_one}`].push(eName)
+      const up_one = eName.split('.').slice(1).join('.')
+      if (exports.public_suffix_list.has(up_one)) {
+        exports.public_suffix_list.get(up_one).push(eName)
+      } else if (exports.public_suffix_list.has(`*.${up_one}`)) {
+        exports.public_suffix_list.get(`*.${up_one}`).push(eName)
       } else {
         console.error(`unable to find parent for exception: ${eName}`)
       }
     }
 
-    exports.public_suffix_list[suffix] = []
-  })
+    exports.public_suffix_list.set(suffix, [])
+  }
 
-  logger.log(`loaded ${Object.keys(exports.public_suffix_list).length} Public Suffixes`)
+  logger.log(`loaded ${exports.public_suffix_list.size} Public Suffixes`)
 }
 
-function load_tld_files() {
-  load_list_from_file('top-level-tlds').forEach(function (tld) {
-    exports.top_level_tlds[tld] = 1
-  })
+async function load_tld_files() {
+  const [top, two, three, extra] = await Promise.all([
+    load_list_from_file('top-level-tlds'),
+    load_list_from_file('two-level-tlds'),
+    load_list_from_file('three-level-tlds'),
+    load_list_from_file('extra-tlds'),
+  ])
 
-  load_list_from_file('two-level-tlds').forEach(function (tld) {
-    exports.two_level_tlds[tld] = 1
-  })
-
-  load_list_from_file('three-level-tlds').forEach(function (tld) {
-    exports.three_level_tlds[tld] = 1
-  })
-
-  load_list_from_file('extra-tlds').forEach(function (tld) {
-    const s = tld.split(/\./)
-    if (s.length === 2) {
-      exports.two_level_tlds[tld] = 1
-    } else if (s.length === 3) {
-      exports.three_level_tlds[tld] = 1
-    }
-  })
+  for (const tld of top) exports.top_level_tlds.add(tld)
+  for (const tld of two) exports.two_level_tlds.add(tld)
+  for (const tld of three) exports.three_level_tlds.add(tld)
+  for (const tld of extra) {
+    const s = tld.split('.')
+    if (s.length === 2) exports.two_level_tlds.add(tld)
+    else if (s.length === 3) exports.three_level_tlds.add(tld)
+  }
 
   logger.log(`loaded TLD files:
-  1=${Object.keys(exports.top_level_tlds).length}
-  2=${Object.keys(exports.two_level_tlds).length}
-  3=${Object.keys(exports.three_level_tlds).length}`)
+  1=${exports.top_level_tlds.size}
+  2=${exports.two_level_tlds.size}
+  3=${exports.three_level_tlds.size}`)
 }
 
-function load_list_from_file(name) {
-  const result = []
-
+async function load_list_from_file(name) {
   let filePath = path.resolve(__dirname, 'etc', name)
-  if (!fs.existsSync(filePath)) {
+  try {
+    await fsp.access(filePath)
+  } catch {
     // not loaded by Haraka, use local path
     filePath = path.resolve('etc', name)
   }
 
-  fs.readFileSync(filePath, 'UTF-8')
-    .split(/\r\n|\r|\n/)
-    .forEach((line) => {
-      if (regex.comment.test(line)) return
-      if (regex.blank.test(line)) return
+  const result = []
+  const rl = readline.createInterface({ input: fs.createReadStream(filePath), crlfDelay: Infinity })
 
-      const line_data = regex.line.exec(line)
-      if (!line_data) return
+  for await (const line of rl) {
+    const trimmed = line.trim()
+    if (!trimmed || regex.comment.test(trimmed)) continue
+    result.push(trimmed.toLowerCase())
+  }
 
-      result.push(line_data[1].trim().toLowerCase())
-    })
   return result
 }
 
-load_tld_files()
-load_public_suffix_list()
+// Populate all lists on load. Callers can await exports.ready before use.
+exports.ready = (async () => {
+  await load_tld_files()
+  await load_public_suffix_list()
+})()
 
 // every 15 days, check for an update. If updated, download, install,
 // and then read it into the exported object
 setInterval(
-  () => {
-    update
-      .updatePSLfile()
-      .then((updated) => {
-        if (updated) load_public_suffix_list()
-      })
-      .catch((err) => {
-        console.error(err.message)
-      })
+  async () => {
+    try {
+      const updated = await update.updatePSLfile()
+      if (updated) await load_public_suffix_list()
+    } catch (err) {
+      console.error(err.message)
+    }
   },
   15 * 86400 * 1000,
 ).unref() // each 15 days
