@@ -1,12 +1,13 @@
-name: 'CodeQL'
+name: CodeQL
 
 on:
   push:
-    branches: [master]
+    branches: ['master', 'main']
   pull_request:
-    branches: [master]
+    branches: ['master', 'main']
   schedule:
-    - cron: '18 7 * * 4'
+    - cron: '18 7 */14 * 4'
+  workflow_dispatch:
 
 jobs:
   codeql:
