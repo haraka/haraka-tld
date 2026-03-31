@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 - ci: add explicit GHA permissions
 - test: replace mocha with node:test
+- test: add additional tests targeting coverage
+- test: ES2024 updates
 
 ### [1.3.1] - 2026-03-24
 
