@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### [1.3.4] - 2026-05-13
 
+- chore: update TLD files
+- ci: updates
 
 ### [1.3.3] - 2026-03-31
 
