@@ -7,8 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### [1.3.5] - 2026-05-27
 
 - fix(split_hostname): normalize Unicode IDN input to punycode before TLD lookup
-- fix(load_public_suffix_list): clear map before repopulating so stale rules drop
-- fix(load_tld_files): clear sets before repopulating
+- fix(load_public_suffix_list): replace maps so stale rules drop
+- chore(update): replace node:https with fetch for PSL updates
 - chore(load_public_suffix_list): tighten PSL comment check to `//`
 - chore: export `load_public_suffix_list` and `load_tld_files`
 - docs(README): `top_level_tlds` is a `Set`; use `.has(name)` not `[name]`

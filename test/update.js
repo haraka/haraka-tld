@@ -8,11 +8,14 @@ const { describe, it, after } = require('node:test')
 
 const update = require('../lib/update')
 
+const mockFetch =
+  ({ status = 200, body = '' } = {}) =>
+  async () =>
+    new Response(body, { status })
+
 after(async () => {
-  try {
-    await fsPromises.unlink(path.join('test', 'fixtures', 'tmpfile'))
-  } catch (ignore) {
-    // ignore if it doesn't exist
+  for (const f of ['tmpfile', 'download-test', 'download-test.tmp']) {
+    await fsPromises.unlink(path.join('test', 'fixtures', f)).catch(() => {})
   }
 })
 
@@ -37,93 +40,125 @@ describe('getFileStats', () => {
 })
 
 describe('isRemoteNewer', () => {
-  it('a HTTP POST returns false if remote file is newer', async () => {
-    const isNewer = await update.isRemoteNewer(null)
-    if (isNewer) {
-      assert.equal(isNewer, true)
-    } else {
-      assert.equal(isNewer, false)
-    }
+  it('returns true on 200', async () => {
+    const isNewer = await update.isRemoteNewer(null, { fetch: mockFetch({ status: 200 }) })
+    assert.equal(isNewer, true)
   })
 
-  it('a HTTP POST returns false when remote non-existing', async () => {
-    const isNewer = await update.isRemoteNewer(null, { path: '/invalid/url' })
+  it('returns false on 304', async () => {
+    const isNewer = await update.isRemoteNewer(null, { fetch: mockFetch({ status: 304 }) })
     assert.equal(isNewer, false)
   })
 
   it('returns false on 403', async () => {
-    const isNewer = await update.isRemoteNewer(null, { hostname: 'httpbin.org', path: '/status/403' })
+    const isNewer = await update.isRemoteNewer(null, { fetch: mockFetch({ status: 403 }) })
     assert.equal(isNewer, false)
   })
 
   it('returns false on 404', async () => {
-    const isNewer = await update.isRemoteNewer(null, { hostname: 'httpbin.org', path: '/status/404' })
+    const isNewer = await update.isRemoteNewer(null, { fetch: mockFetch({ status: 404 }) })
     assert.equal(isNewer, false)
   })
 
   it('returns false on 500', async () => {
-    const isNewer = await update.isRemoteNewer(null, { hostname: 'httpbin.org', path: '/status/500' })
+    const isNewer = await update.isRemoteNewer(null, { fetch: mockFetch({ status: 500 }) })
     assert.equal(isNewer, false)
   })
 
-  it('a HTTP POST returns false when local and remote non-existing', { skip: true }, async () => {
-    const isNewer = await update.isRemoteNewer('non/exist', { path: '/invalid/url' })
-    assert.equal(isNewer, false)
-  })
-})
-
-describe('getWritableStream', () => {
-  it('opens a file for writing a stream to', async () => {
-    const filePath = path.join('test', 'fixtures', 'tmpfile')
-    const ws = await update.getWritableStream(filePath)
-    assert.equal(ws.writable, true)
-    ws.close()
-  })
-
-  it('throws when it cannot open file', async () => {
-    const filePath = path.join('non', 'existent', 'dir', 'tmpfile')
-    await assert.rejects(async () => {
-      await update.getWritableStream(filePath)
+  it('returns false when fetch throws (network failure)', async () => {
+    const isNewer = await update.isRemoteNewer(null, {
+      fetch: async () => {
+        throw new Error('synthetic network failure')
+      },
     })
+    assert.equal(isNewer, false)
+  })
+
+  it('sends If-Modified-Since when local file exists', async () => {
+    let seenHeaders
+    const captureFetch = async (_url, init) => {
+      seenHeaders = init.headers
+      return new Response('', { status: 304 })
+    }
+    await update.isRemoteNewer(null, { fetch: captureFetch })
+    assert.ok(seenHeaders['If-Modified-Since'], 'header set when file exists')
+  })
+
+  it('omits If-Modified-Since when local file is missing', async () => {
+    let seenHeaders
+    const captureFetch = async (_url, init) => {
+      seenHeaders = init.headers
+      return new Response('', { status: 200 })
+    }
+    await update.isRemoteNewer('non/existent/path', { fetch: captureFetch })
+    assert.equal(seenHeaders['If-Modified-Since'], undefined)
   })
 })
 
 describe('download', () => {
-  const testOpts = {
-    hostname: 'raw.githubusercontent.com',
-    path: '/haraka/haraka-tld/master/etc/public-suffix-list',
-  }
+  const dest = path.join('test', 'fixtures', 'download-test')
+
+  it('downloads and writes file via stubbed fetch', async () => {
+    const body = 'foo\nbar\nbaz\n'
+    const installed = await update.download(dest, { fetch: mockFetch({ status: 200, body }) })
+    assert.equal(installed, true)
+    const content = await fsPromises.readFile(dest, 'utf8')
+    assert.equal(content, body)
+  })
+
+  it('strips // comments through CommentStripper', async () => {
+    const body = '// header comment\nfoo\n\nbar\n'
+    await update.download(dest, { fetch: mockFetch({ status: 200, body }) })
+    const content = await fsPromises.readFile(dest, 'utf8')
+    assert.equal(content, 'foo\nbar\n')
+  })
+
+  it('throws on non-2xx response', async () => {
+    await assert.rejects(update.download(dest, { fetch: mockFetch({ status: 500 }) }), /response code 500/)
+  })
+
+  it('cleans up tmp file when fetch throws', async () => {
+    const failingFetch = async () => {
+      throw new Error('synthetic network failure')
+    }
+    await assert.rejects(update.download(dest, { fetch: failingFetch }), /synthetic network failure/)
+    assert.equal(fs.existsSync(`${dest}.tmp`), false, 'tmp file removed on failure')
+  })
 
   it('errors if it cannot open tmp file', async () => {
     const filePath = path.join('non', 'existent', 'dir', 'test')
-    await assert.rejects(async () => {
-      await update.download(filePath, testOpts)
-    })
-  })
-
-  // avoid transient errors, only run these manually
-  it('use HTTP GET to fetch newer PSL', { skip: true }, async () => {
-    const installed = await update.download(null, testOpts)
-    assert.equal(installed, true)
+    await assert.rejects(update.download(filePath, { fetch: mockFetch({ status: 200, body: 'x' }) }))
   })
 })
 
 describe('updatePSLfile', () => {
-  it('returns false when no update needed', async () => {
-    const res = await update.updatePSLfile()
+  it('returns false when remote reports not-newer', async () => {
+    const res = await update.updatePSLfile({ fetch: mockFetch({ status: 304 }) })
     assert.equal(res, false)
   })
-})
 
-describe('atomicWrite', () => {
-  it('renames a file', async () => {
-    const tmp = path.join('test', 'fixtures', 'tmp-atomic')
-    const dest = path.join('test', 'fixtures', 'dest-atomic')
-    await fsPromises.writeFile(tmp, 'test')
-    const res = await update.atomicWrite(tmp, dest)
-    assert.equal(res, true)
-    const content = await fsPromises.readFile(dest, 'utf8')
-    assert.equal(content, 'test')
-    await fsPromises.unlink(dest)
+  it('returns true and downloads when remote is newer', async () => {
+    // First call (HEAD) returns 200, second call (GET) returns body.
+    let nthCall = 0
+    const fakeFetch = async () => {
+      nthCall += 1
+      if (nthCall === 1) return new Response('', { status: 200 })
+      return new Response('updated\n', { status: 200 })
+    }
+    // Point download at a fixture path so we don't clobber the real PSL.
+    // updatePSLfile hardcodes pslFile internally, so we exercise isRemoteNewer
+    // and download independently above; this test verifies the composition.
+    const origDownload = update.download
+    let downloadCalled = false
+    update.download = async () => {
+      downloadCalled = true
+    }
+    try {
+      const res = await update.updatePSLfile({ fetch: fakeFetch })
+      assert.equal(res, true)
+      assert.equal(downloadCalled, true)
+    } finally {
+      update.download = origDownload
+    }
   })
 })
