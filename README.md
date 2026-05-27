@@ -1,6 +1,6 @@
 [![Build Status][ci-img]][ci-url]
 [![Code Coverage][cov-img]][cov-url]
-[![Code Climate][clim-img]][clim-url]
+[![Code Quality][qlty-img]][qlty-url]
 
 # haraka-tld
 
@@ -88,9 +88,12 @@ returns:
 
 ### Check for a TLD
 
-    if (tlds.top_level_tlds['com']) {
+    if (tlds.top_level_tlds.has('com')) {
         // true
     }
+
+`top_level_tlds`, `two_level_tlds`, and `three_level_tlds` are `Set`s;
+`public_suffix_list` is a `Map`. Use `.has(name)` for membership checks.
 
 ## The following files are included
 
@@ -133,5 +136,5 @@ git add . && git commit
 [ci-url]: https://github.com/haraka/haraka-tld/actions/workflows/ci.yml
 [cov-img]: https://codecov.io/github/haraka/haraka-tld/coverage.svg
 [cov-url]: https://codecov.io/github/haraka/haraka-tld
-[clim-img]: https://codeclimate.com/github/haraka/haraka-tld/badges/gpa.svg
-[clim-url]: https://codeclimate.com/github/haraka/haraka-tld
+[qlty-img]: https://qlty.sh/gh/haraka/projects/haraka-tld/maintainability.svg
+[qlty-url]: https://qlty.sh/gh/haraka/projects/haraka-tld

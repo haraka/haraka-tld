@@ -4,8 +4,7 @@ const fs = require('node:fs')
 const fsp = require('node:fs/promises')
 const path = require('node:path')
 const readline = require('node:readline')
-
-const punycode = require('punycode.js')
+const { domainToASCII, domainToUnicode } = require('node:url')
 
 const update = require('./lib/update')
 
@@ -29,19 +28,18 @@ exports.top_level_tlds = new Set()
 exports.two_level_tlds = new Set()
 exports.three_level_tlds = new Set()
 
-function normalizeHost(host) {
+const normalizeHost = (host) => {
   host = host.toLowerCase()
 
   if (/^xn--|\.xn--/.test(host)) {
-    try {
-      host = punycode.toUnicode(host)
-    } catch {}
+    const unicode = domainToUnicode(host)
+    if (unicode) host = unicode
   }
 
   return host
 }
 
-exports.is_public_suffix = function (host) {
+exports.is_public_suffix = (host) => {
   if (!host) return false
   host = normalizeHost(host)
 
@@ -60,7 +58,7 @@ exports.is_public_suffix = function (host) {
   return false
 }
 
-exports.get_organizational_domain = function (host) {
+exports.get_organizational_domain = (host) => {
   // the domain that was registered with a domain name registrar. See
   // https://datatracker.ietf.org/doc/draft-kucherawy-dmarc-base/?include_text=1
   //   section 3.2
@@ -91,18 +89,20 @@ exports.get_organizational_domain = function (host) {
   if (greatest > labels.length) return null // not enough labels
   if (greatest === labels.length) return host // same
 
-  const orgName = labels.slice(0, greatest).reverse().join('.')
-  return orgName
+  return labels.slice(0, greatest).reverse().join('.')
 }
 
-exports.split_hostname = function (host, level) {
+exports.split_hostname = (host, level) => {
   if (typeof host !== 'string') return []
 
   if (!level || level < 1 || level > 3) {
     level = 2
   }
 
-  const split = host.toLowerCase().split(/\./).reverse()
+  // TLD sets store punycode/ASCII, so normalize Unicode IDN input.
+  // domainToASCII returns '' for malformed input; fall back to the original.
+  const ascii = (domainToASCII(host) || host).toLowerCase()
+  const split = ascii.split('.').reverse()
   let domain = ''
   // TLD
   if (level >= 1 && split[0] && exports.top_level_tlds.has(split[0])) {
@@ -123,7 +123,7 @@ exports.split_hostname = function (host, level) {
   return [split.reverse().join('.'), domain]
 }
 
-exports.asParts = function (host) {
+exports.asParts = (host) => {
   const r = { tld: '', org: '', host: '' }
 
   host = normalizeHost(host)
@@ -155,41 +155,61 @@ exports.asParts = function (host) {
   return r
 }
 
-async function load_public_suffix_list() {
-  const entries = await load_list_from_file('public-suffix-list')
-  for (const entry of entries) {
-    // Parsing rules: http://publicsuffix.org/list/
-    // Each line is only read up to the first whitespace
-    const suffix = entry.split(/\s/).shift()
+// Refuse a reload if the new container differs in size by more than 10% from
+// the old one. Guards against partial/truncated files. Skipped on first load
+// (current size 0).
+const RELOAD_SIZE_TOLERANCE = 0.1
 
-    // Each line which is not entirely whitespace or begins with a comment
-    // contains a rule.
-    if (!suffix) continue // empty string
-    if (suffix.startsWith('/')) continue // comment
-
-    // A rule may begin with a "!" (exclamation mark). If it does, it is
-    // labelled as a "exception rule" and then treated as if the exclamation
-    // mark is not present.
-    if (suffix.startsWith('!')) {
-      const eName = suffix.substring(1) // remove ! prefix
-      // bbc.co.uk -> co.uk
-      const up_one = eName.split('.').slice(1).join('.')
-      if (exports.public_suffix_list.has(up_one)) {
-        exports.public_suffix_list.get(up_one).push(eName)
-      } else if (exports.public_suffix_list.has(`*.${up_one}`)) {
-        exports.public_suffix_list.get(`*.${up_one}`).push(eName)
-      } else {
-        console.error(`unable to find parent for exception: ${eName}`)
-      }
-    }
-
-    exports.public_suffix_list.set(suffix, [])
+const within_tolerance = (next_size, current_size, label) => {
+  if (current_size === 0) return true
+  const drift = Math.abs(next_size - current_size) / current_size
+  if (drift > RELOAD_SIZE_TOLERANCE) {
+    logger.log(
+      `${label} reload size drift ${(drift * 100).toFixed(1)}% exceeds ${RELOAD_SIZE_TOLERANCE * 100}% (${current_size} -> ${next_size}); keeping existing`,
+    )
+    return false
   }
-
-  logger.log(`loaded ${exports.public_suffix_list.size} Public Suffixes`)
+  return true
 }
 
-async function load_tld_files() {
+// Build a fresh PSL map from disk. Caller swaps it into exports atomically;
+// if the load fails or yields nothing usable, the existing map is untouched.
+const build_psl_map = async () => {
+  // Parsing rules: http://publicsuffix.org/list/
+  const entries = await load_list_from_file('public-suffix-list')
+  const next = new Map()
+  for (const entry of entries) {
+    const suffix = entry.split(/\s/).shift()
+    if (!suffix) continue
+    if (suffix.startsWith('//')) continue
+    // Exception rules (`!name`) are stored under their literal key;
+    // is_public_suffix and get_organizational_domain look them up by that form.
+    next.set(suffix, [])
+  }
+  return next
+}
+
+// Best-effort: any failure logs a warning and leaves the existing map intact.
+// Initial-load failure is caught by the post-condition check in `exports.ready`.
+exports.load_public_suffix_list = async () => {
+  let next
+  try {
+    next = await build_psl_map()
+  } catch (err) {
+    logger.log(`public-suffix-list reload failed: ${err.message}; keeping existing`)
+    return
+  }
+  if (next.size === 0) {
+    logger.log('public-suffix-list reload produced an empty map; keeping existing')
+    return
+  }
+  if (!within_tolerance(next.size, exports.public_suffix_list.size, 'public-suffix-list')) return
+
+  exports.public_suffix_list = next
+  logger.log(`loaded ${next.size} Public Suffixes`)
+}
+
+const build_tld_sets = async () => {
   const [top, two, three, extra] = await Promise.all([
     load_list_from_file('top-level-tlds'),
     load_list_from_file('two-level-tlds'),
@@ -197,22 +217,43 @@ async function load_tld_files() {
     load_list_from_file('extra-tlds'),
   ])
 
-  for (const tld of top) exports.top_level_tlds.add(tld)
-  for (const tld of two) exports.two_level_tlds.add(tld)
-  for (const tld of three) exports.three_level_tlds.add(tld)
+  const sets = { top: new Set(top), two: new Set(two), three: new Set(three) }
   for (const tld of extra) {
     const s = tld.split('.')
-    if (s.length === 2) exports.two_level_tlds.add(tld)
-    else if (s.length === 3) exports.three_level_tlds.add(tld)
+    if (s.length === 2) sets.two.add(tld)
+    else if (s.length === 3) sets.three.add(tld)
   }
-
-  logger.log(`loaded TLD files:
-  1=${exports.top_level_tlds.size}
-  2=${exports.two_level_tlds.size}
-  3=${exports.three_level_tlds.size}`)
+  return sets
 }
 
-async function load_list_from_file(name) {
+exports.load_tld_files = async () => {
+  let next
+  try {
+    next = await build_tld_sets()
+  } catch (err) {
+    logger.log(`tld files reload failed: ${err.message}; keeping existing`)
+    return
+  }
+  if (next.top.size === 0 || next.two.size === 0 || next.three.size === 0) {
+    logger.log('tld files reload produced an empty set; keeping existing')
+    return
+  }
+  const ok =
+    within_tolerance(next.top.size, exports.top_level_tlds.size, 'top-level-tlds') &&
+    within_tolerance(next.two.size, exports.two_level_tlds.size, 'two-level-tlds') &&
+    within_tolerance(next.three.size, exports.three_level_tlds.size, 'three-level-tlds')
+  if (!ok) return
+
+  exports.top_level_tlds = next.top
+  exports.two_level_tlds = next.two
+  exports.three_level_tlds = next.three
+  logger.log(`loaded TLD files:
+  1=${next.top.size}
+  2=${next.two.size}
+  3=${next.three.size}`)
+}
+
+const load_list_from_file = async (name) => {
   let filePath = path.resolve(__dirname, 'etc', name)
   try {
     await fsp.access(filePath)
@@ -234,24 +275,32 @@ async function load_list_from_file(name) {
 }
 
 // Populate all lists on load. Callers can await exports.ready before use.
+// Reloads are best-effort and log on failure, so this is the only place that
+// can signal a hard initial-load failure.
 exports.ready = (async () => {
-  await load_tld_files()
-  await load_public_suffix_list()
+  await exports.load_tld_files()
+  await exports.load_public_suffix_list()
+  if (
+    exports.public_suffix_list.size === 0 ||
+    exports.top_level_tlds.size === 0 ||
+    exports.two_level_tlds.size === 0 ||
+    exports.three_level_tlds.size === 0
+  ) {
+    throw new Error('haraka-tld initial load failed: one or more lists are empty')
+  }
 })()
 
-// every 15 days, check for an update. If updated, download, install,
-// and then read it into the exported object
+// every 15 days, check for an update. If updated, reload the PSL.
+// The catch is only for update.updatePSLfile (HTTP/disk); load_public_suffix_list
+// is best-effort and never throws.
 setInterval(
   async () => {
     try {
       const updated = await update.updatePSLfile()
-      if (updated) await load_public_suffix_list()
+      if (updated) await exports.load_public_suffix_list()
     } catch (err) {
-      console.error(err.message)
+      logger.log(`PSL update check failed: ${err.message}`)
     }
   },
   15 * 86400 * 1000,
-).unref() // each 15 days
-
-// the .unref() on the interval tells node to ignore this
-// timer when deciding whether the process is done.
+).unref()

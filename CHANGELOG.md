@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
+### [1.3.5] - 2026-05-27
+
+- fix(split_hostname): normalize Unicode IDN input to punycode before TLD lookup
+- fix(load_public_suffix_list): clear map before repopulating so stale rules drop
+- fix(load_tld_files): clear sets before repopulating
+- chore(load_public_suffix_list): tighten PSL comment check to `//`
+- chore: export `load_public_suffix_list` and `load_tld_files`
+- docs(README): `top_level_tlds` is a `Set`; use `.has(name)` not `[name]`
+- dep(punycode.js): removed, use node:url
+
 ### [1.3.4] - 2026-05-13
 
 - chore: update TLD files
@@ -244,3 +254,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 [1.3.2]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.2
 [1.3.3]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.3
 [1.3.4]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.4
+[1.3.5]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.5
