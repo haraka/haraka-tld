@@ -172,6 +172,103 @@ describe('split_hostname', () => {
   it('splits a 3-level TLD', () => {
     assert.deepEqual(tlds.split_hostname('host.b.topica.com', 4), ['host', 'b.topica.com'])
   })
+
+  it('splits a Unicode IDN hostname', () => {
+    assert.deepEqual(tlds.split_hostname('www.домен.рф'), ['www', 'xn--d1acufc.xn--p1ai'])
+  })
+
+  it('splits a punycoded IDN hostname', () => {
+    assert.deepEqual(tlds.split_hostname('www.xn--d1acufc.xn--p1ai'), ['www', 'xn--d1acufc.xn--p1ai'])
+  })
+})
+
+describe('load_public_suffix_list reload', () => {
+  it('drops entries that are no longer present after reload', async () => {
+    const sentinel = '___stale___.invalid'
+    tlds.public_suffix_list.set(sentinel, [])
+    assert.equal(tlds.public_suffix_list.has(sentinel), true)
+    await tlds.load_public_suffix_list()
+    assert.equal(tlds.public_suffix_list.has(sentinel), false)
+  })
+})
+
+describe('load_tld_files reload', () => {
+  it('drops entries that are no longer present after reload', async () => {
+    const sentinel = '___stale_tld___'
+    tlds.top_level_tlds.add(sentinel)
+    tlds.two_level_tlds.add(sentinel)
+    tlds.three_level_tlds.add(sentinel)
+    await tlds.load_tld_files()
+    assert.equal(tlds.top_level_tlds.has(sentinel), false)
+    assert.equal(tlds.two_level_tlds.has(sentinel), false)
+    assert.equal(tlds.three_level_tlds.has(sentinel), false)
+  })
+})
+
+describe('reload safety (best-effort, no throw)', () => {
+  it('leaves PSL intact when file I/O fails', async () => {
+    const sentinel = '___kept_psl___'
+    tlds.public_suffix_list.set(sentinel, [])
+    const before = tlds.public_suffix_list
+
+    const fs = require('node:fs')
+    const orig = fs.createReadStream
+    fs.createReadStream = () => {
+      throw new Error('synthetic I/O failure')
+    }
+    try {
+      await tlds.load_public_suffix_list()
+    } finally {
+      fs.createReadStream = orig
+    }
+
+    assert.equal(tlds.public_suffix_list, before)
+    assert.equal(tlds.public_suffix_list.has(sentinel), true)
+    tlds.public_suffix_list.delete(sentinel)
+  })
+
+  it('leaves TLD sets intact when file I/O fails', async () => {
+    const sentinel = '___kept_tld___'
+    tlds.top_level_tlds.add(sentinel)
+    const before = tlds.top_level_tlds
+
+    const fs = require('node:fs')
+    const orig = fs.createReadStream
+    fs.createReadStream = () => {
+      throw new Error('synthetic I/O failure')
+    }
+    try {
+      await tlds.load_tld_files()
+    } finally {
+      fs.createReadStream = orig
+    }
+
+    assert.equal(tlds.top_level_tlds, before)
+    assert.equal(tlds.top_level_tlds.has(sentinel), true)
+    tlds.top_level_tlds.delete(sentinel)
+  })
+
+  it('skips PSL reload when size drifts > 10%', async () => {
+    const saved = tlds.public_suffix_list
+    tlds.public_suffix_list = new Map([['only.example', []]])
+    try {
+      await tlds.load_public_suffix_list()
+      assert.equal(tlds.public_suffix_list.size, 1, 'skipped reload must not mutate')
+    } finally {
+      tlds.public_suffix_list = saved
+    }
+  })
+
+  it('skips TLD reload when size drifts > 10%', async () => {
+    const saved = tlds.top_level_tlds
+    tlds.top_level_tlds = new Set(['only-one'])
+    try {
+      await tlds.load_tld_files()
+      assert.equal(tlds.top_level_tlds.size, 1, 'skipped reload must not mutate')
+    } finally {
+      tlds.top_level_tlds = saved
+    }
+  })
 })
 
 describe('asParts', () => {

@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "files": [
@@ -8,19 +8,18 @@
     "etc",
     "lib"
   ],
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "format": "npm run prettier:fix && npm run lint:fix",
     "lint": "npx eslint *.js lib test",
     "lint:fix": "npx eslint --fix *.js lib test",
     "prettier": "npx prettier . --check",
     "prettier:fix": "npx prettier . --write --log-level=warn",
+    "qlty": "qlty smells --all",
     "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage 'test/*.js'",
+    "test:coverage:lcov": "mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage/lcov.info",
     "versions": "npx npm-dep-mgr check",
-    "versions:fix": "npx npm-dep-mgr update",
-    "test:coverage": "npx c8 --reporter=text --reporter=text-summary npm test"
+    "versions:fix": "npx npm-dep-mgr update"
   },
   "repository": {
     "type": "git",
@@ -37,11 +36,8 @@
     "url": "https://github.com/haraka/haraka-tld/issues"
   },
   "homepage": "https://github.com/haraka/haraka-tld#readme",
-  "dependencies": {
-    "punycode.js": "^2.3.1"
-  },
   "devDependencies": {
-    "@haraka/eslint-config": "^2.0.4"
+    "@haraka/eslint-config": "^3.0.0"
   },
   "prettier": {
     "printWidth": 120,
