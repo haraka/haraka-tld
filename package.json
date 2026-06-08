@@ -1,6 +1,6 @@
 {
   "name": "haraka-tld",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Haraka TLD utilities",
   "main": "index.js",
   "files": [
@@ -9,6 +9,7 @@
     "lib"
   ],
   "scripts": {
+    "prepare": "git rev-parse --git-dir >/dev/null 2>&1 && git config core.hooksPath .githooks || true",
     "format": "npm run prettier:fix && npm run lint:fix",
     "lint": "npx eslint *.js lib test",
     "lint:fix": "npx eslint --fix *.js lib test",

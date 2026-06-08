@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
+### [1.3.6] - 2026-06-08
+
+- trim output in load_tld_files to 2 lines
+- chore: update TLD files
+
 ### [1.3.5] - 2026-05-27
 
 - fix(split_hostname): normalize Unicode IDN input to punycode before TLD lookup
@@ -255,3 +260,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 [1.3.3]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.3
 [1.3.4]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.4
 [1.3.5]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.5
+[1.3.6]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.6

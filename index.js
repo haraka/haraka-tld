@@ -206,7 +206,7 @@ exports.load_public_suffix_list = async () => {
   if (!within_tolerance(next.size, exports.public_suffix_list.size, 'public-suffix-list')) return
 
   exports.public_suffix_list = next
-  logger.log(`loaded ${next.size} Public Suffixes`)
+  logger.log(`loaded Public Suffixes: ${next.size} `)
 }
 
 const build_tld_sets = async () => {
@@ -234,23 +234,20 @@ exports.load_tld_files = async () => {
     logger.log(`tld files reload failed: ${err.message}; keeping existing`)
     return
   }
-  if (next.top.size === 0 || next.two.size === 0 || next.three.size === 0) {
-    logger.log('tld files reload produced an empty set; keeping existing')
-    return
-  }
-  const ok =
-    within_tolerance(next.top.size, exports.top_level_tlds.size, 'top-level-tlds') &&
-    within_tolerance(next.two.size, exports.two_level_tlds.size, 'two-level-tlds') &&
-    within_tolerance(next.three.size, exports.three_level_tlds.size, 'three-level-tlds')
-  if (!ok) return
 
-  exports.top_level_tlds = next.top
-  exports.two_level_tlds = next.two
-  exports.three_level_tlds = next.three
-  logger.log(`loaded TLD files:
-  1=${next.top.size}
-  2=${next.two.size}
-  3=${next.three.size}`)
+  for (const t of ['top', 'two', 'three']) {
+    if (next[t].size === 0) {
+      logger.log(`${t} tld reload produced an empty set; keeping existing`)
+      continue
+    }
+    if (within_tolerance(next[t].size, exports[`${t}_level_tlds`].size, `${t}-level-tlds`)) {
+      exports[`${t}_level_tlds`] = next[t]
+    } else {
+      logger.log(`skipping ${t}-level-tlds reload due to size drift`)
+    }
+  }
+
+  logger.log(`loaded TLD files: 1=${next.top.size} 2=${next.two.size} 3=${next.three.size}`)
 }
 
 const load_list_from_file = async (name) => {
