@@ -4,6 +4,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
+### [1.3.7] - 2026-11-03
+
 ### [1.3.6] - 2026-06-08
 
 - trim output in load_tld_files to 2 lines
@@ -261,3 +263,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 [1.3.4]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.4
 [1.3.5]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.5
 [1.3.6]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.6
+[1.3.7]: https://github.com/haraka/haraka-tld/releases/tag/v1.3.7
