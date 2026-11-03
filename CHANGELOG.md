@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### [1.3.7] - 2026-11-03
 
+- chore: update TLD files
+
 ### [1.3.6] - 2026-06-08
 
 - trim output in load_tld_files to 2 lines
